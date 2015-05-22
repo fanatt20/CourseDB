@@ -1196,7 +1196,6 @@
             this.Controls.Add(this.mainTabControl);
             this.Name = "Form1";
             this.Text = "HR-helper";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.mainTabControl.ResumeLayout(false);
             this.accountPage.ResumeLayout(false);
             this.accountPage.PerformLayout();

@@ -40,16 +40,15 @@ namespace CourseWork
             globalInfoDatagrid.Columns.Clear();
             globalInfoDatagrid.Rows.Clear();
             for (int i = 0; i < reader.FieldCount; i++)
-            {
                 globalInfoDatagrid.Columns.Add(reader.GetName(i), reader.GetName(i));
-            }
-            DataGridViewRow row = new DataGridViewRow();
+
+            var list = new List<object>();
             while (reader.Read())
             {
-
-
-                globalInfoDatagrid.Rows.Add(reader[0], reader[1], reader[2], reader[3]);
-
+                for (int i = 0; i < reader.FieldCount; i++)
+                    list.Add(reader[i]);
+                globalInfoDatagrid.Rows.Add(list.ToArray());
+                list.Clear();
             }
 
         }
@@ -57,7 +56,7 @@ namespace CourseWork
         private Dictionary<int, T> GetColumnCollection<T>(int index, DataGridView table)
         {
             var result = new Dictionary<int, T>();
-            for (int i = 0; i < table.Rows.Count-_uncommitedRow; i++)
+            for (int i = 0; i < table.Rows.Count - _uncommitedRow; i++)
                 result.Add(i, (T)table.Rows[i].Cells[index].Value);
             return result;
         }
@@ -109,11 +108,6 @@ namespace CourseWork
         private void staffAllowChangeRadioButton_CheckedChanged(object sender, EventArgs e)
         {
             globalInfoDatagrid.ReadOnly = !globalInfoDatagrid.ReadOnly;
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void selectGlobalInfoButton_Click(object sender, EventArgs e)
@@ -169,20 +163,35 @@ namespace CourseWork
 
                 if (keys.Count() != (globalInfoDatagrid.Rows.Count - _uncommitedRow))
                     filterButton_Click(null, EventArgs.Empty);
+                else
+                    filtersColumnSelector_SelectedIndexChanged(null, EventArgs.Empty);
             }
             else MessageBox.Show("Выбирите столбец");
         }
 
         private void loginButton_Click(object sender, EventArgs e)
         {
-            var connect = new SqlConnection(@"Data Source=VNZK\SQLEXPRESS;Initial Catalog=CourseWork;Integrated Security=false;" +
-                                             "User ID=" + loginTextBox.Text + ";" +
-                                             "Password=" + passwordTextBox.Text + ";");
+            var sqlStringBuilder = new SqlConnectionStringBuilder()
+            {
+                UserID = loginTextBox.Text,
+                Password = passwordTextBox.Text,
+                IntegratedSecurity = false,
+                DataSource = @"VNZK\SQLEXPRESS"
+            };
+            var connect = new SqlConnection(sqlStringBuilder.ConnectionString);
             try
             {
                 connect.Open();
                 MessageBox.Show(connect.Database);
-                SqlCommand cmd = new SqlCommand("EXEC sp_tables;", connect);
+                SqlCommand cmd = new SqlCommand(@"SELECT 
+sysobjects.Name AS [Name],
+CASE PERMISSIONS(OBJECT_ID(sysobjects.Name))&1 WHEN 1 THEN 1 ELSE 0 END AS [Select],
+CASE PERMISSIONS(OBJECT_ID(sysobjects.Name))&2 WHEN 2 THEN 1 ELSE 0 END AS [Update],
+CASE PERMISSIONS(OBJECT_ID(sysobjects.Name))&8 WHEN 8 THEN 1 ELSE 0 END AS [Insert],
+CASE PERMISSIONS(OBJECT_ID(sysobjects.Name))&16 WHEN 16 THEN 1 ELSE 0 END AS [Delete]
+
+FROM sysobjects 
+WHERE xtype = 'U'", connect);
                 SqlDataReader sqlDataReader = cmd.ExecuteReader();
                 ReadToDataGridViewFromSqlDataReader(sqlDataReader);
 
