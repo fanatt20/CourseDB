@@ -9,14 +9,6 @@ using System.Data.Common;
 using System.Data.SqlClient;
 namespace CourseWork
 {
-    class DBAccount
-    {
-        private SecureString password;
-        private SecureString login;
-
-        
-
-    }
     enum RoleInDB
     {
         Nothing=-1,

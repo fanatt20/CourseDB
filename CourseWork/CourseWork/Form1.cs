@@ -16,10 +16,9 @@ using System.Reflection;
 
 namespace CourseWork
 {
-    class CustomDictionary<TKey, TValue> : Dictionary<TKey, TValue>
-    { }
     public partial class Form1 : Form
     {
+        private SqlConnection connectionToDataBase;
         #region Constants
         //Filter ComboBox Constatnts
         const byte _filterByValue = 0;
@@ -61,8 +60,44 @@ namespace CourseWork
         {
             var result = new Dictionary<int, dynamic>();
             for (int i = 0; i < table.Rows.Count - _uncommitedRow; i++)
-                result.Add(i, table.Rows[i].Cells[index].Value);
+                if (table.Rows[i].Cells[index].Value != DBNull.Value)
+                    result.Add(i, table.Rows[i].Cells[index].Value);
+                else
+                    result.Add(i, null);
             return result;
+        }
+
+
+        private DataTable ReadFromSqlDataReader(SqlDataReader reader, string name)
+        {
+            var table = new DataTable(name);
+            for (int i = 0; i < reader.FieldCount; i++)
+                table.Columns.Add(reader.GetName(i), reader.GetFieldType(i));
+
+
+            while (reader.Read())
+            {
+                var row = table.NewRow();
+                for (int i = 0; i < reader.FieldCount; i++)
+                    row[i] = reader[i];
+                table.Rows.Add(row);
+            }
+
+            return table;
+        }
+
+        private void HideMainTabPagesForGuest()
+        {
+            infoPage.Hide();
+            insertPage.Hide();
+            adminPage.Hide();
+
+        }
+        private void ShowMainTabPagesForAdmin()
+        {
+            infoPage.Show();
+            insertPage.Show();
+            adminPage.Show();
         }
 
 
@@ -72,10 +107,20 @@ namespace CourseWork
         public Form1()
         {
             InitializeComponent();
-
+            HideMainTabPagesForGuest();
             globalInfoDatagrid.Columns.CollectionChanged += Columns_CollectionChanged;
             Columns_CollectionChanged(null, EventArgs.Empty);
             filtersColumnSelector.SelectedIndexChanged += filtersColumnSelector_SelectedIndexChanged;
+        }
+
+        void connectionToDataBase_StateChange(object sender, StateChangeEventArgs e)
+        {
+            switch (e.CurrentState)
+            {
+                case ConnectionState.Open:
+                    ShowMainTabPagesForAdmin();
+                    break;
+            }
         }
 
         void filtersColumnSelector_SelectedIndexChanged(object sender, EventArgs e)
@@ -118,13 +163,58 @@ namespace CourseWork
 
         private void selectGlobalInfoButton_Click(object sender, EventArgs e)
         {
+            try
+            {
+
+                connectionToDataBase.Open();
+                //var cmd = new SqlCommand(@"SELECT sysobjects.Name AS [Name]," + Environment.NewLine +
+                //                        @"CASE PERMISSIONS(OBJECT_ID(sysobjects.Name))&1 WHEN 1 THEN 1 ELSE 0 END AS [Select]," + Environment.NewLine +
+                //                        @"CASE PERMISSIONS(OBJECT_ID(sysobjects.Name))&2 WHEN 2 THEN 1 ELSE 0 END AS [Update]," + Environment.NewLine +
+                //                        @"CASE PERMISSIONS(OBJECT_ID(sysobjects.Name))&8 WHEN 8 THEN 1 ELSE 0 END AS [Insert]," + Environment.NewLine +
+                //                        @"CASE PERMISSIONS(OBJECT_ID(sysobjects.Name))&16 WHEN 16 THEN 1 ELSE 0 END AS [Delete]" + Environment.NewLine +
+                //                        @"FROM sysobjects" + Environment.NewLine +
+                //                        @"WHERE xtype = 'U'", connectionToDataBase);
+                var cmd = new SqlCommand("select * from Positions", connectionToDataBase);
+                var reader = cmd.ExecuteReader();
+
+                globalInfoDatagrid.Columns.Clear();
+                globalInfoDatagrid.DataSource = ReadFromSqlDataReader(reader, "FirstQuery");
+
+            }
+            finally
+            {
+                connectionToDataBase.Close();
+            }
+
+
         }
 
         private void filterButton_Click(object sender, EventArgs e)
         {
             if (filtersColumnSelector.SelectedIndex >= 0)
             {
-                var column = from keyValuePair in GetColumnCollection(filtersColumnSelector.SelectedIndex,globalInfoDatagrid) select keyValuePair;
+                var columnType = globalInfoDatagrid.Columns[filtersColumnSelector.SelectedIndex].ValueType;
+                var columnIndex = filtersColumnSelector.SelectedIndex;
+                var column = from keyValuePair in GetColumnCollection(columnIndex, globalInfoDatagrid) select keyValuePair;
+                dynamic newInctance = "";
+                try
+                {
+                    newInctance = Activator.CreateInstance(columnType);
+                }
+                catch (MissingMethodException) { }
+
+                dynamic convertedFilterTextBox = newInctance;
+                if (!String.IsNullOrEmpty(filterTextBox.Text))
+                    try
+                    {
+
+                        convertedFilterTextBox = TypeDescriptor.GetConverter(columnType).ConvertFromString(filterTextBox.Text.ToUpper());
+                    }
+                    catch (NotSupportedException exc)
+                    {
+                        MessageBox.Show(exc.Message);
+                    }
+
 
                 switch (filtersTypeSelector.SelectedIndex)
                 {
@@ -135,44 +225,67 @@ namespace CourseWork
                                  select keyValuePair;
                         break;
                     case _filterMoreThan:
-                        column = from keyValuePair in column
-                                 where (keyValuePair.Value ?? _emptyCell).CompareTo(filterTextBox.Text) > 0
-                                 select keyValuePair;
+                        if (columnType == typeof(string))
+                            column = from keyValuePair in column
+                                     where (keyValuePair.Value ?? newInctance).CompareTo(convertedFilterTextBox) < 0
+                                     select keyValuePair;
+                        else
+                            column = from keyValuePair in column
+                                     where (keyValuePair.Value ?? newInctance).CompareTo(convertedFilterTextBox) > 0
+                                     select keyValuePair;
                         break;
                     case _filterMoreThanOrEqual:
-                        column = from keyValuePair in column
-                                 where (keyValuePair.Value ?? _emptyCell).CompareTo(filterTextBox.Text) >= 0
-                                 select keyValuePair;
+                        if (columnType == typeof(string))
+                            column = from keyValuePair in column
+                                     where (keyValuePair.Value ?? newInctance).CompareTo(convertedFilterTextBox) <= 0
+                                     select keyValuePair;
+                        else
+                            column = from keyValuePair in column
+                                     where (keyValuePair.Value ?? newInctance).CompareTo(convertedFilterTextBox) >= 0
+                                     select keyValuePair;
                         break;
+
                     case _filterLessThan:
-                        column = from keyValuePair in column
-                                 where (keyValuePair.Value ?? _emptyCell).CompareTo(filterTextBox.Text) < 0
-                                 select keyValuePair;
+                        if (columnType == typeof(string))
+                            column = from keyValuePair in column
+                                     where (keyValuePair.Value ?? newInctance).CompareTo(convertedFilterTextBox) > 0
+                                     select keyValuePair;
+                        else
+                            column = from keyValuePair in column
+                                     where (keyValuePair.Value ?? newInctance).CompareTo(convertedFilterTextBox) < 0
+                                     select keyValuePair;
                         break;
+
                     case _filterLessThanOrEqual:
-                        column = from keyValuePair in column
-                                 where (keyValuePair.Value ?? _emptyCell).CompareTo(filterTextBox.Text) <= 0
-                                 select keyValuePair;
+                        if (columnType == typeof(string))
+                            column = from keyValuePair in column
+                                     where (keyValuePair.Value ?? newInctance).CompareTo(convertedFilterTextBox) >= 0
+                                     select keyValuePair;
+                        else
+                            column = from keyValuePair in column
+                                     where (keyValuePair.Value ?? newInctance).CompareTo(convertedFilterTextBox) <= 0
+                                     select keyValuePair;
                         break;
+
                     case _filerEqual:
                         column = from keyValuePair in column
-                                 where (keyValuePair.Value ?? _emptyCell).CompareTo(filterTextBox.Text) == 0
+                                 where (keyValuePair.Value ?? newInctance).CompareTo(convertedFilterTextBox) == 0
                                  select keyValuePair;
                         break;
                 }
 
-                var keys = from keyValue in column select keyValue.Key;
+                var values = from keyValue in column select keyValue.Value;
 
                 foreach (var row in globalInfoDatagrid.Rows.Cast<DataGridViewRow>())
                 {
-                    if (!keys.Contains(row.Index) && !row.IsNewRow)
+                    if (!values.Contains(row.Cells[columnIndex].Value) && !row.IsNewRow)
                         globalInfoDatagrid.Rows.Remove(row);
-                    
+
                 }
-                //if (keys.Count() != (globalInfoDatagrid.Rows.Count - _uncommitedRow))
-                //    filterButton_Click(null, EventArgs.Empty);
-                //else
-                //    filtersColumnSelector_SelectedIndexChanged(null, EventArgs.Empty);
+                if (values.Count() != (globalInfoDatagrid.Rows.Count - _uncommitedRow))
+                    filterButton_Click(null, EventArgs.Empty);
+                else
+                    filtersColumnSelector_SelectedIndexChanged(null, EventArgs.Empty);
             }
             else MessageBox.Show("Выберите столбец");
         }
@@ -184,29 +297,22 @@ namespace CourseWork
                 UserID = loginTextBox.Text,
                 Password = passwordTextBox.Text,
                 IntegratedSecurity = false,
-                DataSource = @"VNZK\SQLEXPRESS"
+                DataSource = @"VNZK\SQLEXPRESS",
+                Pooling = true
             };
-            var connect = new SqlConnection(sqlStringBuilder.ConnectionString);
-            SqlCommand cmd = new SqlCommand(@"SELECT sysobjects.Name AS [Name]," + Environment.NewLine +
-                                    @"CASE PERMISSIONS(OBJECT_ID(sysobjects.Name))&1 WHEN 1 THEN 1 ELSE 0 END AS [Select]," + Environment.NewLine +
-                                    @"CASE PERMISSIONS(OBJECT_ID(sysobjects.Name))&2 WHEN 2 THEN 1 ELSE 0 END AS [Update]," + Environment.NewLine +
-                                    @"CASE PERMISSIONS(OBJECT_ID(sysobjects.Name))&8 WHEN 8 THEN 1 ELSE 0 END AS [Insert]," + Environment.NewLine +
-                                    @"CASE PERMISSIONS(OBJECT_ID(sysobjects.Name))&16 WHEN 16 THEN 1 ELSE 0 END AS [Delete]" + Environment.NewLine +
-                                    @"FROM sysobjects" + Environment.NewLine +
-                                    @"WHERE xtype = 'U'", connect);
+            connectionToDataBase = new SqlConnection(sqlStringBuilder.ConnectionString);
+            connectionToDataBase.StateChange += connectionToDataBase_StateChange;
+
             try
             {
-                connect.Open();
-                MessageBox.Show(connect.Database);
+                connectionToDataBase.Open();
 
-                SqlDataReader sqlDataReader = cmd.ExecuteReader();
-                ReadToDataGridViewFromSqlDataReader(sqlDataReader);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-            finally { connect.Close(); }
+            finally { connectionToDataBase.Close(); }
         }
 
         private void cathegoryInfoComboBox_SelectedIndexChanged(object sender, EventArgs e)
