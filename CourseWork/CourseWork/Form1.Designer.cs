@@ -492,6 +492,7 @@
             this.filtersColumnSelector.Name = "filtersColumnSelector";
             this.filtersColumnSelector.Size = new System.Drawing.Size(281, 21);
             this.filtersColumnSelector.TabIndex = 16;
+            this.filtersColumnSelector.SelectedIndexChanged += new System.EventHandler(this.filtersColumnSelector_SelectedIndexChanged);
             // 
             // filtersCheckedListBox
             // 

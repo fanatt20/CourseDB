@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,9 +12,12 @@ using System.Data.SqlClient;
 using System.Data.Sql;
 using System.Data.SqlTypes;
 using System.Data.Common;
+using System.Reflection;
 
 namespace CourseWork
 {
+    class CustomDictionary<TKey, TValue> : Dictionary<TKey, TValue>
+    { }
     public partial class Form1 : Form
     {
         #region Constants
@@ -53,11 +57,11 @@ namespace CourseWork
 
         }
 
-        private Dictionary<int, T> GetColumnCollection<T>(int index, DataGridView table)
+        public Dictionary<int, dynamic> GetColumnCollection(int index, DataGridView table)
         {
-            var result = new Dictionary<int, T>();
+            var result = new Dictionary<int, dynamic>();
             for (int i = 0; i < table.Rows.Count - _uncommitedRow; i++)
-                result.Add(i, (T)table.Rows[i].Cells[index].Value);
+                result.Add(i, table.Rows[i].Cells[index].Value);
             return result;
         }
 
@@ -78,10 +82,12 @@ namespace CourseWork
         {
             var selectedIndex = filtersColumnSelector.SelectedIndex;
             filtersCheckedListBox.Items.Clear();
-            var cellValue = "";
+            dynamic cellValue = "";
             for (int i = 0; i < globalInfoDatagrid.Rows.Count - _uncommitedRow; i++)
             {
-                cellValue = (string)globalInfoDatagrid.Rows[i].Cells[selectedIndex].Value ?? _emptyCell;
+                if (globalInfoDatagrid.Rows[i].Cells[selectedIndex].Value != null)
+                    cellValue = globalInfoDatagrid.Rows[i].Cells[selectedIndex].Value;
+                else cellValue = _emptyCell;
 
                 if (!filtersCheckedListBox.Items.Contains(cellValue))
                     filtersCheckedListBox.Items.Add(cellValue);
@@ -118,7 +124,7 @@ namespace CourseWork
         {
             if (filtersColumnSelector.SelectedIndex >= 0)
             {
-                var column = from keyValuePair in GetColumnCollection<string>(filtersColumnSelector.SelectedIndex, globalInfoDatagrid) select keyValuePair;
+                var column = from keyValuePair in GetColumnCollection(filtersColumnSelector.SelectedIndex,globalInfoDatagrid) select keyValuePair;
 
                 switch (filtersTypeSelector.SelectedIndex)
                 {
@@ -157,16 +163,18 @@ namespace CourseWork
 
                 var keys = from keyValue in column select keyValue.Key;
 
-                for (int i = 0; i < globalInfoDatagrid.Rows.Count - _uncommitedRow; i++)
-                    if (!keys.Contains(i))
-                        globalInfoDatagrid.Rows.RemoveAt(i);
-
-                if (keys.Count() != (globalInfoDatagrid.Rows.Count - _uncommitedRow))
-                    filterButton_Click(null, EventArgs.Empty);
-                else
-                    filtersColumnSelector_SelectedIndexChanged(null, EventArgs.Empty);
+                foreach (var row in globalInfoDatagrid.Rows.Cast<DataGridViewRow>())
+                {
+                    if (!keys.Contains(row.Index) && !row.IsNewRow)
+                        globalInfoDatagrid.Rows.Remove(row);
+                    
+                }
+                //if (keys.Count() != (globalInfoDatagrid.Rows.Count - _uncommitedRow))
+                //    filterButton_Click(null, EventArgs.Empty);
+                //else
+                //    filtersColumnSelector_SelectedIndexChanged(null, EventArgs.Empty);
             }
-            else MessageBox.Show("Выбирите столбец");
+            else MessageBox.Show("Выберите столбец");
         }
 
         private void loginButton_Click(object sender, EventArgs e)
@@ -179,22 +187,20 @@ namespace CourseWork
                 DataSource = @"VNZK\SQLEXPRESS"
             };
             var connect = new SqlConnection(sqlStringBuilder.ConnectionString);
+            SqlCommand cmd = new SqlCommand(@"SELECT sysobjects.Name AS [Name]," + Environment.NewLine +
+                                    @"CASE PERMISSIONS(OBJECT_ID(sysobjects.Name))&1 WHEN 1 THEN 1 ELSE 0 END AS [Select]," + Environment.NewLine +
+                                    @"CASE PERMISSIONS(OBJECT_ID(sysobjects.Name))&2 WHEN 2 THEN 1 ELSE 0 END AS [Update]," + Environment.NewLine +
+                                    @"CASE PERMISSIONS(OBJECT_ID(sysobjects.Name))&8 WHEN 8 THEN 1 ELSE 0 END AS [Insert]," + Environment.NewLine +
+                                    @"CASE PERMISSIONS(OBJECT_ID(sysobjects.Name))&16 WHEN 16 THEN 1 ELSE 0 END AS [Delete]" + Environment.NewLine +
+                                    @"FROM sysobjects" + Environment.NewLine +
+                                    @"WHERE xtype = 'U'", connect);
             try
             {
                 connect.Open();
                 MessageBox.Show(connect.Database);
-                SqlCommand cmd = new SqlCommand(@"SELECT 
-sysobjects.Name AS [Name],
-CASE PERMISSIONS(OBJECT_ID(sysobjects.Name))&1 WHEN 1 THEN 1 ELSE 0 END AS [Select],
-CASE PERMISSIONS(OBJECT_ID(sysobjects.Name))&2 WHEN 2 THEN 1 ELSE 0 END AS [Update],
-CASE PERMISSIONS(OBJECT_ID(sysobjects.Name))&8 WHEN 8 THEN 1 ELSE 0 END AS [Insert],
-CASE PERMISSIONS(OBJECT_ID(sysobjects.Name))&16 WHEN 16 THEN 1 ELSE 0 END AS [Delete]
 
-FROM sysobjects 
-WHERE xtype = 'U'", connect);
                 SqlDataReader sqlDataReader = cmd.ExecuteReader();
                 ReadToDataGridViewFromSqlDataReader(sqlDataReader);
-
             }
             catch (Exception ex)
             {
