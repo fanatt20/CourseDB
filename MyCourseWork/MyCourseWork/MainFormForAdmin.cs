@@ -46,6 +46,8 @@ namespace MyCourseWork
         DataTable set = new DataTable();
         private void button1_Click(object sender, EventArgs e)
         {
+            set.Clear();
+            set.Columns.Clear();
             var select = String.Empty;
             var valueOfCategory = selectCategoryValueListBox.SelectedIndex;
             switch (selectCategoryComboBox.SelectedIndex)
@@ -74,13 +76,13 @@ namespace MyCourseWork
                         case _selectAllPosition:
                             break;
                         case _selectHalfTimePosition:
-                            select += " WHERE [Состояние позиции] = [Требуется полставки] ";
+                            select += @" WHERE [Состояние позиции] = 'Требуется полставки' ";
                             break;
                         case _selectVacantPostion:
-                            select += " WHERE [Состояние позиции] = [Вакантная позиция] ";
+                            select += @" WHERE [Состояние позиции] = 'Вакантная позиция' ";
                             break;
                         case _selectClosedPosition:
-                            select += " WHERE [Состояние позиции] = [Закрытая позиция] ";
+                            select += @" WHERE [Состояние позиции] = 'Закрытая позиция' ";
                             break;
                     }
                     break;
@@ -117,7 +119,7 @@ namespace MyCourseWork
                     }
                     break;
                 case _selectUserDefined:
-                    select = (string)userDefinedQuery[selectCategoryValueListBox.SelectedItem];
+                    select = userDefinedQuery[(string)selectCategoryValueListBox.SelectedItem];
                     break;
             }
             adapter.SelectCommand = new SqlCommand(select, connection);
