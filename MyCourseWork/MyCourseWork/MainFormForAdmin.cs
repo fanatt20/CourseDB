@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
+using System.Data.Common;
 
 namespace MyCourseWork
 {
@@ -22,29 +23,45 @@ namespace MyCourseWork
         const byte _filterPickMoreOrEqual = 3;
         const byte _filterPickLessOrEqual = 4;
         const byte _filtePickerEqual = 5;
+        SqlDataAdapter adapter;
+        DataTable set = new DataTable();
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //var cmd = new SqlDataAdapter(queryRichTextBox.Text, connection);
+            adapter.SelectCommand = new SqlCommand(queryRichTextBox.Text, connection);
 
+            try
+            {
+                connection.Open();
+                adapter.Fill(set);
+                bindingSource1.RemoveFilter();
+                bindingSource1.DataSource = set;
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            FillFilterColumnComboBox();
+        }
 
         private SqlConnection connection;
         public MainFormForAdmin(SqlConnection connection)
         {
             InitializeComponent();
             this.connection = connection;
+            adapter = new SqlDataAdapter();
 
-            mainInfoDataGrid.Columns.Add("C1", "C1");
-            mainInfoDataGrid.Columns.Add("C2", "C2");
-            mainInfoDataGrid.Columns[0].ValueType = typeof(string);
-            mainInfoDataGrid.Columns[1].ValueType = typeof(string);
-            mainInfoDataGrid.Rows.Add("HELLO", "My");
-            mainInfoDataGrid.Rows.Add("Dear", "Friend");
-            mainInfoDataGrid.Rows.Add("Dear", "Friend");
-            mainInfoDataGrid.Rows.Add("Dear2", "Friend1");
-            mainInfoDataGrid.Rows.Add("Dear3", "Friend4");
-            //mainInfoDataGrid.DataSource = (new List<string> { "HELLO", "My", "Dear", "Friend" }).ToArray();
+            mainInfoDataGrid.DataSource = bindingSource1;
         }
         private Dictionary<int, dynamic> ReadColumnFromDataGridview(int index, DataGridView table)
         {
             var result = new Dictionary<int, dynamic>();
-            for (var i = 0; i < table.Rows.Count ; i++)
+            for (var i = 0; i < table.Rows.Count; i++)
             {
                 if (table.Rows[i].Cells[index].Value == DBNull.Value)
                     result.Add(i, null);
@@ -65,15 +82,15 @@ namespace MyCourseWork
 
             filterValueCheckedListBox.Items.Clear();
             var index = filterColumnComboBox.SelectedIndex;
-                        dynamic defaultValue = String.Empty;
-                        try
-                        {
-                            defaultValue = Activator.CreateInstance(mainInfoDataGrid.Columns[index].ValueType);
+            dynamic defaultValue = String.Empty;
+            try
+            {
+                defaultValue = Activator.CreateInstance(mainInfoDataGrid.Columns[index].ValueType);
 
-                        }
-                        catch (MissingMethodException) { }
-            
-            var cells = from keyValue in ReadColumnFromDataGridview(index,mainInfoDataGrid) select keyValue.Value;
+            }
+            catch (MissingMethodException) { }
+
+            var cells = from keyValue in ReadColumnFromDataGridview(index, mainInfoDataGrid) select keyValue.Value;
             foreach (var cellValue in cells.Distinct())
                 if (!DBNull.Value.Equals(cellValue))
                     filterValueCheckedListBox.Items.Add(cellValue ?? defaultValue);
@@ -100,100 +117,53 @@ namespace MyCourseWork
         {
 
         }
-        void filterColumnComboBox_SelectedIndexChanged(object sender, EventArgs e) { FillFilterValueCheckedListBox(); }
+        void filterColumnComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FillFilterValueCheckedListBox();
+        }
 
         private void filterButton_Click(object sender, EventArgs e)
         {
+            bindingSource1.RemoveFilter();
             var index = filterColumnComboBox.SelectedIndex;
-            var column = from keyValue in ReadColumnFromDataGridview(index, mainInfoDataGrid) select keyValue;
-            var columnType = mainInfoDataGrid.Columns[index].ValueType;
-            dynamic newInstance = String.Empty;
-            dynamic compareValue = String.Empty;
-            try
-            {
-                if (filterOperationComboBox.SelectedIndex > 0)
-                    compareValue = TypeDescriptor.GetConverter(columnType).ConvertFromString(filterCompareTextBox.Text);
-                newInstance = Activator.CreateInstance(columnType);
-
-            }
-            catch (MissingMethodException) { }
-
-
-            bool columnTypeIsString = columnType == typeof(string);
-
+            var filter = String.Empty;
+            var columnName = mainInfoDataGrid.Columns[index].Name;
             switch (filterOperationComboBox.SelectedIndex)
             {
+                default:
                 case _filterPickFromValue:
-                    column = from keyValue in column
-                             where filterValueCheckedListBox.Items.Contains(keyValue.Value ?? newInstance)
-                             select keyValue;
-                    break;
-                case _filterPickMoreThan:
-                    if (columnTypeIsString)
-                        column = from keyValue in column
-                                 where (keyValue.Value ?? newInstance).CompareTo(compareValue) < 0
-                                 select keyValue;
-                    else
-                        column = from keyValue in column
-                                 where (keyValue.Value ?? newInstance).CompareTo(compareValue) > 0
-                                 select keyValue;
+                    foreach (var selectedItem in filterValueCheckedListBox.CheckedItems)
+                        filter += columnName + @"='" + selectedItem.ToString() + @"' OR ";
+                    filter = filter.Remove(filter.LastIndexOf("OR"), 2);
                     break;
                 case _filterPickMoreOrEqual:
-                    if (columnTypeIsString)
-                        column = from keyValue in column
-                                 where (keyValue.Value ?? newInstance).CompareTo(compareValue) <= 0
-                                 select keyValue;
-                    else
-                        column = from keyValue in column
-                                 where (keyValue.Value ?? newInstance).CompareTo(compareValue) >= 0
-                                 select keyValue;
+                    filter += columnName + @">='" + filterCompareTextBox.Text + @"'";
+                    break;
+                case _filterPickMoreThan:
+                    filter += columnName + @">'" + filterCompareTextBox.Text + @"'";
                     break;
                 case _filterPickLessThan:
-                    if (columnTypeIsString)
-                        column = from keyValue in column
-                                 where (keyValue.Value ?? newInstance).CompareTo(compareValue) > 0
-                                 select keyValue;
-                    else
-                        column = from keyValue in column
-                                 where (keyValue.Value ?? newInstance).CompareTo(compareValue) < 0
-                                 select keyValue;
+                    filter += columnName + @"<'" + filterCompareTextBox.Text + @"'";
                     break;
                 case _filterPickLessOrEqual:
-                    if (columnTypeIsString)
-                        column = from keyValue in column
-                                 where (keyValue.Value ?? newInstance).CompareTo(compareValue) >= 0
-                                 select keyValue;
-                    else
-                        column = from keyValue in column
-                                 where (keyValue.Value ?? newInstance).CompareTo(compareValue) <= 0
-                                 select keyValue;
+                    filter += columnName + @"<='" + filterCompareTextBox.Text + @"'";
                     break;
                 case _filtePickerEqual:
-                    column = from keyValue in column
-                             where (keyValue.Value ?? newInstance).CompareTo(compareValue) == 0
-                             select keyValue;
+                    filter += columnName + @"='" + filterCompareTextBox.Text + @"'";
                     break;
             }
-                        var values= from keyValue in column select keyValue.Value;
-                     
 
-                        foreach (var row in mainInfoDataGrid.Rows.Cast<DataGridViewRow>())
-                        {
-                            if (DBNull.Value.Equals(row.Cells[index].Value))
-                            {
-                                if (!values.Contains(null))
-                                    mainInfoDataGrid.Rows.Remove(row);
-                            }
-                            else if (!row.IsNewRow && !values.Contains(row.Cells[index].Value))
-                                mainInfoDataGrid.Rows.Remove(row);
-                        }
-
+            try
+            {
+                bindingSource1.Filter = filter;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            FillFilterColumnComboBox();
-        }
+
     }
 }

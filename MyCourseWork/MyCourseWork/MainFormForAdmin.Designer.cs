@@ -35,6 +35,7 @@
             this.mainInfoDataGrid = new System.Windows.Forms.DataGridView();
             this.mainInfoTab = new System.Windows.Forms.TabControl();
             this.mainInfoSelectPage = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
             this.mainInfoFilterPage = new System.Windows.Forms.TabPage();
             this.filterCompareTextBox = new System.Windows.Forms.TextBox();
             this.filterButton = new System.Windows.Forms.Button();
@@ -43,7 +44,7 @@
             this.filterColumnComboBox = new System.Windows.Forms.ComboBox();
             this.mainActionPage = new System.Windows.Forms.TabPage();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.button1 = new System.Windows.Forms.Button();
+            this.queryRichTextBox = new System.Windows.Forms.RichTextBox();
             this.mainFormTab.SuspendLayout();
             this.mainInfoPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.infoPageSplitContainer)).BeginInit();
@@ -61,19 +62,21 @@
             // 
             this.mainFormTab.Controls.Add(this.mainInfoPage);
             this.mainFormTab.Controls.Add(this.mainActionPage);
-            this.mainFormTab.Location = new System.Drawing.Point(12, 12);
+            this.mainFormTab.Location = new System.Drawing.Point(9, 10);
+            this.mainFormTab.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.mainFormTab.Name = "mainFormTab";
             this.mainFormTab.SelectedIndex = 0;
-            this.mainFormTab.Size = new System.Drawing.Size(975, 518);
+            this.mainFormTab.Size = new System.Drawing.Size(731, 421);
             this.mainFormTab.TabIndex = 0;
             // 
             // mainInfoPage
             // 
             this.mainInfoPage.Controls.Add(this.infoPageSplitContainer);
-            this.mainInfoPage.Location = new System.Drawing.Point(4, 25);
+            this.mainInfoPage.Location = new System.Drawing.Point(4, 22);
+            this.mainInfoPage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.mainInfoPage.Name = "mainInfoPage";
-            this.mainInfoPage.Padding = new System.Windows.Forms.Padding(3);
-            this.mainInfoPage.Size = new System.Drawing.Size(967, 489);
+            this.mainInfoPage.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.mainInfoPage.Size = new System.Drawing.Size(723, 395);
             this.mainInfoPage.TabIndex = 0;
             this.mainInfoPage.Text = "Информация";
             this.mainInfoPage.UseVisualStyleBackColor = true;
@@ -81,7 +84,8 @@
             // infoPageSplitContainer
             // 
             this.infoPageSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.infoPageSplitContainer.Location = new System.Drawing.Point(3, 3);
+            this.infoPageSplitContainer.Location = new System.Drawing.Point(2, 2);
+            this.infoPageSplitContainer.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.infoPageSplitContainer.Name = "infoPageSplitContainer";
             // 
             // infoPageSplitContainer.Panel1
@@ -91,39 +95,55 @@
             // infoPageSplitContainer.Panel2
             // 
             this.infoPageSplitContainer.Panel2.Controls.Add(this.mainInfoTab);
-            this.infoPageSplitContainer.Size = new System.Drawing.Size(961, 483);
-            this.infoPageSplitContainer.SplitterDistance = 665;
+            this.infoPageSplitContainer.Size = new System.Drawing.Size(719, 391);
+            this.infoPageSplitContainer.SplitterDistance = 497;
+            this.infoPageSplitContainer.SplitterWidth = 3;
             this.infoPageSplitContainer.TabIndex = 0;
             // 
             // mainInfoDataGrid
             // 
             this.mainInfoDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.mainInfoDataGrid.Location = new System.Drawing.Point(3, 3);
+            this.mainInfoDataGrid.Location = new System.Drawing.Point(2, 2);
+            this.mainInfoDataGrid.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.mainInfoDataGrid.Name = "mainInfoDataGrid";
             this.mainInfoDataGrid.RowTemplate.Height = 24;
-            this.mainInfoDataGrid.Size = new System.Drawing.Size(659, 477);
+            this.mainInfoDataGrid.Size = new System.Drawing.Size(494, 388);
             this.mainInfoDataGrid.TabIndex = 0;
             // 
             // mainInfoTab
             // 
             this.mainInfoTab.Controls.Add(this.mainInfoSelectPage);
             this.mainInfoTab.Controls.Add(this.mainInfoFilterPage);
-            this.mainInfoTab.Location = new System.Drawing.Point(3, 3);
+            this.mainInfoTab.Location = new System.Drawing.Point(2, 2);
+            this.mainInfoTab.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.mainInfoTab.Name = "mainInfoTab";
             this.mainInfoTab.SelectedIndex = 0;
-            this.mainInfoTab.Size = new System.Drawing.Size(289, 477);
+            this.mainInfoTab.Size = new System.Drawing.Size(217, 388);
             this.mainInfoTab.TabIndex = 0;
             // 
             // mainInfoSelectPage
             // 
+            this.mainInfoSelectPage.Controls.Add(this.queryRichTextBox);
             this.mainInfoSelectPage.Controls.Add(this.button1);
-            this.mainInfoSelectPage.Location = new System.Drawing.Point(4, 25);
+            this.mainInfoSelectPage.Location = new System.Drawing.Point(4, 22);
+            this.mainInfoSelectPage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.mainInfoSelectPage.Name = "mainInfoSelectPage";
-            this.mainInfoSelectPage.Padding = new System.Windows.Forms.Padding(3);
-            this.mainInfoSelectPage.Size = new System.Drawing.Size(281, 448);
+            this.mainInfoSelectPage.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.mainInfoSelectPage.Size = new System.Drawing.Size(209, 362);
             this.mainInfoSelectPage.TabIndex = 0;
             this.mainInfoSelectPage.Text = "Выбрать";
             this.mainInfoSelectPage.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(5, 295);
+            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(200, 63);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // mainInfoFilterPage
             // 
@@ -132,26 +152,29 @@
             this.mainInfoFilterPage.Controls.Add(this.filterValueCheckedListBox);
             this.mainInfoFilterPage.Controls.Add(this.filterOperationComboBox);
             this.mainInfoFilterPage.Controls.Add(this.filterColumnComboBox);
-            this.mainInfoFilterPage.Location = new System.Drawing.Point(4, 25);
+            this.mainInfoFilterPage.Location = new System.Drawing.Point(4, 22);
+            this.mainInfoFilterPage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.mainInfoFilterPage.Name = "mainInfoFilterPage";
-            this.mainInfoFilterPage.Padding = new System.Windows.Forms.Padding(3);
-            this.mainInfoFilterPage.Size = new System.Drawing.Size(281, 448);
+            this.mainInfoFilterPage.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.mainInfoFilterPage.Size = new System.Drawing.Size(209, 362);
             this.mainInfoFilterPage.TabIndex = 1;
             this.mainInfoFilterPage.Text = "Фильтровать";
             this.mainInfoFilterPage.UseVisualStyleBackColor = true;
             // 
             // filterCompareTextBox
             // 
-            this.filterCompareTextBox.Location = new System.Drawing.Point(81, 172);
+            this.filterCompareTextBox.Location = new System.Drawing.Point(61, 140);
+            this.filterCompareTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.filterCompareTextBox.Name = "filterCompareTextBox";
-            this.filterCompareTextBox.Size = new System.Drawing.Size(194, 22);
+            this.filterCompareTextBox.Size = new System.Drawing.Size(146, 20);
             this.filterCompareTextBox.TabIndex = 4;
             // 
             // filterButton
             // 
-            this.filterButton.Location = new System.Drawing.Point(3, 397);
+            this.filterButton.Location = new System.Drawing.Point(2, 323);
+            this.filterButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.filterButton.Name = "filterButton";
-            this.filterButton.Size = new System.Drawing.Size(272, 45);
+            this.filterButton.Size = new System.Drawing.Size(204, 37);
             this.filterButton.TabIndex = 3;
             this.filterButton.Text = "Фильтровать";
             this.filterButton.UseVisualStyleBackColor = true;
@@ -160,9 +183,10 @@
             // filterValueCheckedListBox
             // 
             this.filterValueCheckedListBox.FormattingEnabled = true;
-            this.filterValueCheckedListBox.Location = new System.Drawing.Point(59, 212);
+            this.filterValueCheckedListBox.Location = new System.Drawing.Point(44, 172);
+            this.filterValueCheckedListBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.filterValueCheckedListBox.Name = "filterValueCheckedListBox";
-            this.filterValueCheckedListBox.Size = new System.Drawing.Size(216, 174);
+            this.filterValueCheckedListBox.Size = new System.Drawing.Size(163, 139);
             this.filterValueCheckedListBox.TabIndex = 2;
             // 
             // filterOperationComboBox
@@ -176,51 +200,49 @@
             "Больше либо равно",
             "Меньше либо равно",
             "Равно"});
-            this.filterOperationComboBox.Location = new System.Drawing.Point(81, 100);
+            this.filterOperationComboBox.Location = new System.Drawing.Point(61, 81);
+            this.filterOperationComboBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.filterOperationComboBox.Name = "filterOperationComboBox";
-            this.filterOperationComboBox.Size = new System.Drawing.Size(194, 24);
+            this.filterOperationComboBox.Size = new System.Drawing.Size(146, 21);
             this.filterOperationComboBox.TabIndex = 1;
             // 
             // filterColumnComboBox
             // 
             this.filterColumnComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.filterColumnComboBox.FormattingEnabled = true;
-            this.filterColumnComboBox.Location = new System.Drawing.Point(81, 39);
+            this.filterColumnComboBox.Location = new System.Drawing.Point(61, 32);
+            this.filterColumnComboBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.filterColumnComboBox.Name = "filterColumnComboBox";
-            this.filterColumnComboBox.Size = new System.Drawing.Size(194, 24);
+            this.filterColumnComboBox.Size = new System.Drawing.Size(146, 21);
             this.filterColumnComboBox.TabIndex = 0;
             this.filterColumnComboBox.SelectedIndexChanged += new System.EventHandler(this.filterColumnComboBox_SelectedIndexChanged);
             // 
             // mainActionPage
             // 
-            this.mainActionPage.Location = new System.Drawing.Point(4, 25);
+            this.mainActionPage.Location = new System.Drawing.Point(4, 22);
+            this.mainActionPage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.mainActionPage.Name = "mainActionPage";
-            this.mainActionPage.Padding = new System.Windows.Forms.Padding(3);
-            this.mainActionPage.Size = new System.Drawing.Size(967, 489);
+            this.mainActionPage.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.mainActionPage.Size = new System.Drawing.Size(723, 395);
             this.mainActionPage.TabIndex = 1;
             this.mainActionPage.Text = "Действия";
             this.mainActionPage.UseVisualStyleBackColor = true;
             // 
-            // bindingSource1
+            // queryRichTextBox
             // 
-            this.bindingSource1.CurrentChanged += new System.EventHandler(this.bindingSource1_CurrentChanged);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(50, 380);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.queryRichTextBox.Location = new System.Drawing.Point(5, 5);
+            this.queryRichTextBox.Name = "queryRichTextBox";
+            this.queryRichTextBox.Size = new System.Drawing.Size(199, 285);
+            this.queryRichTextBox.TabIndex = 1;
+            this.queryRichTextBox.Text = "";
             // 
             // MainFormForAdmin
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(999, 542);
+            this.ClientSize = new System.Drawing.Size(749, 440);
             this.Controls.Add(this.mainFormTab);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "MainFormForAdmin";
             this.Text = "MainForm";
             this.mainFormTab.ResumeLayout(false);
@@ -256,6 +278,7 @@
         private System.Windows.Forms.ComboBox filterColumnComboBox;
         private System.Windows.Forms.TextBox filterCompareTextBox;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.RichTextBox queryRichTextBox;
 
     }
 }
