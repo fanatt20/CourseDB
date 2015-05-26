@@ -16,12 +16,23 @@ namespace MyCourseWork
 {
     public partial class MainFormForAdmin : Form
     {
+        #region Constants
+        //Filter column selector ComboBox
         const byte _filterPickFromValue = 0;
         const byte _filterPickMoreThan = 1;
         const byte _filterPickLessThan = 2;
         const byte _filterPickMoreOrEqual = 3;
         const byte _filterPickLessOrEqual = 4;
         const byte _filtePickerEqual = 5;
+
+        //Select category ComboBox
+        const byte _selectContracts = 0;
+        const byte _selectPositions = 1;
+        const byte _selectComunication = 2;
+        const byte _selectHuman = 3;
+        const byte _selectUserDefined = 4;
+        #endregion
+        Dictionary<string, string> userDefinedQuery = new Dictionary<string, string>();
         SqlDataAdapter adapter;
         DataTable set = new DataTable();
         private void button1_Click(object sender, EventArgs e)
@@ -160,6 +171,37 @@ namespace MyCourseWork
 
         }
 
-
+        private void mainInfoComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            selectCategoryValueListBox.Items.Clear();
+            switch ((sender as ComboBox).SelectedIndex)
+            {
+                case _selectContracts:
+                    selectCategoryValueListBox.Items.Add("Все");
+                    selectCategoryValueListBox.Items.Add("Действующие");
+                    selectCategoryValueListBox.Items.Add("Не действующие контракты");
+                    break;
+                case _selectPositions:
+                    selectCategoryValueListBox.Items.Add("Все");
+                    selectCategoryValueListBox.Items.Add("Свободные");
+                    selectCategoryValueListBox.Items.Add("Требующие полставки");
+                    selectCategoryValueListBox.Items.Add("Закрытые");
+                    break;
+                case _selectComunication:
+                    selectCategoryValueListBox.Items.Add("Все люди в системе");
+                    selectCategoryValueListBox.Items.Add("Работники");
+                    selectCategoryValueListBox.Items.Add("Не работающие");
+                    break;
+                case _selectHuman:
+                    selectCategoryValueListBox.Items.Add("Все люди");
+                    selectCategoryValueListBox.Items.Add("Работники");
+                    selectCategoryValueListBox.Items.Add("Не работающие");
+                    break;
+                case _selectUserDefined:
+                    foreach (var key in userDefinedQuery.Keys)
+                        selectCategoryValueListBox.Items.Add(key);
+                    break;
+            }
+        }
     }
 }

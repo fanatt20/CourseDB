@@ -35,6 +35,8 @@ namespace MyCourseWork
                 connection.Open();
                 var newform = new MainFormForAdmin(connection);
                 this.Hide();
+                loginLoginTextBox.Text = String.Empty;
+                loginPasswordTextBox.Text = String.Empty;
                 newform.Show();
                 newform.FormClosed += newform_FormClosed;
             }

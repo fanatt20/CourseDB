@@ -35,19 +35,19 @@
             this.mainInfoDataGrid = new System.Windows.Forms.DataGridView();
             this.mainInfoTab = new System.Windows.Forms.TabControl();
             this.mainInfoSelectPage = new System.Windows.Forms.TabPage();
-            this.button1 = new System.Windows.Forms.Button();
+            this.selectCategoryComboBox = new System.Windows.Forms.ComboBox();
+            this.selectButton = new System.Windows.Forms.Button();
             this.mainInfoFilterPage = new System.Windows.Forms.TabPage();
             this.filterCompareTextBox = new System.Windows.Forms.TextBox();
             this.filterButton = new System.Windows.Forms.Button();
             this.filterValueCheckedListBox = new System.Windows.Forms.CheckedListBox();
             this.filterOperationComboBox = new System.Windows.Forms.ComboBox();
             this.filterColumnComboBox = new System.Windows.Forms.ComboBox();
-            this.mainActionPage = new System.Windows.Forms.TabPage();
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.mainInfoSqlPage = new System.Windows.Forms.TabPage();
             this.queryRichTextBox = new System.Windows.Forms.RichTextBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.mainActionPage = new System.Windows.Forms.TabPage();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.selectCategoryValueListBox = new System.Windows.Forms.ListBox();
             this.mainFormTab.SuspendLayout();
             this.mainInfoPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.infoPageSplitContainer)).BeginInit();
@@ -58,8 +58,8 @@
             this.mainInfoTab.SuspendLayout();
             this.mainInfoSelectPage.SuspendLayout();
             this.mainInfoFilterPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.mainInfoSqlPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // mainFormTab
@@ -128,9 +128,9 @@
             // 
             // mainInfoSelectPage
             // 
-            this.mainInfoSelectPage.Controls.Add(this.checkedListBox1);
-            this.mainInfoSelectPage.Controls.Add(this.comboBox1);
-            this.mainInfoSelectPage.Controls.Add(this.button1);
+            this.mainInfoSelectPage.Controls.Add(this.selectCategoryValueListBox);
+            this.mainInfoSelectPage.Controls.Add(this.selectCategoryComboBox);
+            this.mainInfoSelectPage.Controls.Add(this.selectButton);
             this.mainInfoSelectPage.Location = new System.Drawing.Point(4, 22);
             this.mainInfoSelectPage.Margin = new System.Windows.Forms.Padding(2);
             this.mainInfoSelectPage.Name = "mainInfoSelectPage";
@@ -140,16 +140,31 @@
             this.mainInfoSelectPage.Text = "Выбрать";
             this.mainInfoSelectPage.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // selectCategoryComboBox
             // 
-            this.button1.Location = new System.Drawing.Point(5, 295);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(199, 63);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.selectCategoryComboBox.FormattingEnabled = true;
+            this.selectCategoryComboBox.Items.AddRange(new object[] {
+            "Контракты",
+            "Позиции",
+            "Связи",
+            "Люди",
+            "Определенные пользователем"});
+            this.selectCategoryComboBox.Location = new System.Drawing.Point(5, 5);
+            this.selectCategoryComboBox.Name = "selectCategoryComboBox";
+            this.selectCategoryComboBox.Size = new System.Drawing.Size(199, 21);
+            this.selectCategoryComboBox.TabIndex = 1;
+            this.selectCategoryComboBox.SelectedIndexChanged += new System.EventHandler(this.mainInfoComboBox_SelectedIndexChanged);
+            // 
+            // selectButton
+            // 
+            this.selectButton.Location = new System.Drawing.Point(5, 295);
+            this.selectButton.Margin = new System.Windows.Forms.Padding(2);
+            this.selectButton.Name = "selectButton";
+            this.selectButton.Size = new System.Drawing.Size(199, 63);
+            this.selectButton.TabIndex = 0;
+            this.selectButton.Text = "Выбрать";
+            this.selectButton.UseVisualStyleBackColor = true;
+            this.selectButton.Click += new System.EventHandler(this.button1_Click);
             // 
             // mainInfoFilterPage
             // 
@@ -223,17 +238,6 @@
             this.filterColumnComboBox.TabIndex = 0;
             this.filterColumnComboBox.SelectedIndexChanged += new System.EventHandler(this.filterColumnComboBox_SelectedIndexChanged);
             // 
-            // mainActionPage
-            // 
-            this.mainActionPage.Location = new System.Drawing.Point(4, 22);
-            this.mainActionPage.Margin = new System.Windows.Forms.Padding(2);
-            this.mainActionPage.Name = "mainActionPage";
-            this.mainActionPage.Padding = new System.Windows.Forms.Padding(2);
-            this.mainActionPage.Size = new System.Drawing.Size(723, 395);
-            this.mainActionPage.TabIndex = 1;
-            this.mainActionPage.Text = "Действия";
-            this.mainActionPage.UseVisualStyleBackColor = true;
-            // 
             // mainInfoSqlPage
             // 
             this.mainInfoSqlPage.Controls.Add(this.queryRichTextBox);
@@ -253,21 +257,24 @@
             this.queryRichTextBox.TabIndex = 2;
             this.queryRichTextBox.Text = "";
             // 
-            // comboBox1
+            // mainActionPage
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(5, 5);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(199, 21);
-            this.comboBox1.TabIndex = 1;
+            this.mainActionPage.Location = new System.Drawing.Point(4, 22);
+            this.mainActionPage.Margin = new System.Windows.Forms.Padding(2);
+            this.mainActionPage.Name = "mainActionPage";
+            this.mainActionPage.Padding = new System.Windows.Forms.Padding(2);
+            this.mainActionPage.Size = new System.Drawing.Size(723, 395);
+            this.mainActionPage.TabIndex = 1;
+            this.mainActionPage.Text = "Действия";
+            this.mainActionPage.UseVisualStyleBackColor = true;
             // 
-            // checkedListBox1
+            // selectCategoryValueListBox
             // 
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(5, 32);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(199, 259);
-            this.checkedListBox1.TabIndex = 2;
+            this.selectCategoryValueListBox.FormattingEnabled = true;
+            this.selectCategoryValueListBox.Location = new System.Drawing.Point(5, 32);
+            this.selectCategoryValueListBox.Name = "selectCategoryValueListBox";
+            this.selectCategoryValueListBox.Size = new System.Drawing.Size(199, 251);
+            this.selectCategoryValueListBox.TabIndex = 2;
             // 
             // MainFormForAdmin
             // 
@@ -289,8 +296,8 @@
             this.mainInfoSelectPage.ResumeLayout(false);
             this.mainInfoFilterPage.ResumeLayout(false);
             this.mainInfoFilterPage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.mainInfoSqlPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -311,11 +318,11 @@
         private System.Windows.Forms.ComboBox filterOperationComboBox;
         private System.Windows.Forms.ComboBox filterColumnComboBox;
         private System.Windows.Forms.TextBox filterCompareTextBox;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Button selectButton;
+        private System.Windows.Forms.ComboBox selectCategoryComboBox;
         private System.Windows.Forms.TabPage mainInfoSqlPage;
         private System.Windows.Forms.RichTextBox queryRichTextBox;
+        private System.Windows.Forms.ListBox selectCategoryValueListBox;
 
     }
 }
