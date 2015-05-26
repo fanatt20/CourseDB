@@ -39,7 +39,7 @@ namespace MyCourseWork
         const byte _selectAllPosition = 0;
         const byte _selectVacantPostion = 1;
         const byte _selectHalfTimePosition = 2;
-        const byte _selctClosedPosition = 3;
+        const byte _selectClosedPosition = 3;
         #endregion
         Dictionary<string, string> userDefinedQuery = new Dictionary<string, string>();
         SqlDataAdapter adapter;
@@ -51,19 +51,73 @@ namespace MyCourseWork
             switch (selectCategoryComboBox.SelectedIndex)
             {
                 case _selectContracts:
-                    select="SELECT * FROM [Все контракты] " ;
+                    select = "SELECT * FROM [Все контракты] ";
                     switch (valueOfCategory)
                     {
+                        default:
                         case _selectAll:
-                            
+
                             break;
                         case _selectWorkers:
-                            select+=" WHERE [Фактическое окончание] IS NULL" ;
+                            select += " WHERE [Фактическое окончание] IS NULL ";
                             break;
                         case _selectNotWorkers:
-                            select += " WHERE [Фактическое окончание] IS NOT NULL";
+                            select += " WHERE [Фактическое окончание] IS NOT NULL ";
                             break;
                     }
+                    break;
+                case _selectPositions:
+                    select = "SELECT * FROM [Позиции] ";
+                    switch (valueOfCategory)
+                    {
+                        default:
+                        case _selectAllPosition:
+                            break;
+                        case _selectHalfTimePosition:
+                            select += " WHERE [Состояние позиции] = [Требуется полставки] ";
+                            break;
+                        case _selectVacantPostion:
+                            select += " WHERE [Состояние позиции] = [Вакантная позиция] ";
+                            break;
+                        case _selectClosedPosition:
+                            select += " WHERE [Состояние позиции] = [Закрытая позиция] ";
+                            break;
+                    }
+                    break;
+                case _selectComunication:
+                    select = "SELECT * FROM [Связи с людьми] ";
+                    switch (valueOfCategory)
+                    {
+                        default:
+                        case _selectAll:
+
+                            break;
+                        case _selectWorkers:
+                            select += " WHERE [Является работником] =1 ";
+                            break;
+                        case _selectNotWorkers:
+                            select += " WHERE [Является работником] =0 ";
+                            break;
+                    }
+                    break;
+                case _selectHuman:
+                    select = "SELECT * FROM [Сотрудники]";
+                    switch (valueOfCategory)
+                    {
+                        default:
+                        case _selectAll:
+
+                            break;
+                        case _selectWorkers:
+                            select += " WHERE [Зарплата] IS NOT NULL ";
+                            break;
+                        case _selectNotWorkers:
+                            select += " WHERE [Зарплата] IS NULL ";
+                            break;
+                    }
+                    break;
+                case _selectUserDefined:
+                    select = (string)userDefinedQuery[selectCategoryValueListBox.SelectedItem];
                     break;
             }
             adapter.SelectCommand = new SqlCommand(select, connection);
