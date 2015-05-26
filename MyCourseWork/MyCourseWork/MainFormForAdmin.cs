@@ -46,8 +46,7 @@ namespace MyCourseWork
         DataTable set = new DataTable();
         private void button1_Click(object sender, EventArgs e)
         {
-            set.Clear();
-            set.Columns.Clear();
+            
             var select = String.Empty;
             var valueOfCategory = selectCategoryValueListBox.SelectedIndex;
             switch (selectCategoryComboBox.SelectedIndex)
@@ -127,6 +126,7 @@ namespace MyCourseWork
             {
                 connection.Open();
                 set.Clear();
+                set.Columns.Clear();
                 adapter.Fill(set);
                 bindingSource1.RemoveFilter();
                 FillFilterColumnComboBox();
