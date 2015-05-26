@@ -31,20 +31,49 @@ namespace MyCourseWork
         const byte _selectComunication = 2;
         const byte _selectHuman = 3;
         const byte _selectUserDefined = 4;
+        const byte _selectSchudele = 5;
+        //select value category listBox
+        const byte _selectAll = 0;
+        const byte _selectWorkers = 1;
+        const byte _selectNotWorkers = 2;
+        const byte _selectAllPosition = 0;
+        const byte _selectVacantPostion = 1;
+        const byte _selectHalfTimePosition = 2;
+        const byte _selctClosedPosition = 3;
         #endregion
         Dictionary<string, string> userDefinedQuery = new Dictionary<string, string>();
         SqlDataAdapter adapter;
         DataTable set = new DataTable();
         private void button1_Click(object sender, EventArgs e)
         {
-            adapter.SelectCommand = new SqlCommand(queryRichTextBox.Text, connection);
-
+            var select = String.Empty;
+            var valueOfCategory = selectCategoryValueListBox.SelectedIndex;
+            switch (selectCategoryComboBox.SelectedIndex)
+            {
+                case _selectContracts:
+                    select="SELECT * FROM [Все контракты] " ;
+                    switch (valueOfCategory)
+                    {
+                        case _selectAll:
+                            
+                            break;
+                        case _selectWorkers:
+                            select+=" WHERE [Фактическое окончание] IS NULL" ;
+                            break;
+                        case _selectNotWorkers:
+                            select += " WHERE [Фактическое окончание] IS NOT NULL";
+                            break;
+                    }
+                    break;
+            }
+            adapter.SelectCommand = new SqlCommand(select, connection);
             try
             {
                 connection.Open();
                 set.Clear();
                 adapter.Fill(set);
                 bindingSource1.RemoveFilter();
+                FillFilterColumnComboBox();
             }
             catch (Exception exc)
             {
@@ -55,7 +84,6 @@ namespace MyCourseWork
                 connection.Close();
             }
 
-            FillFilterColumnComboBox();
         }
 
         private SqlConnection connection;
@@ -188,7 +216,7 @@ namespace MyCourseWork
                     selectCategoryValueListBox.Items.Add("Закрытые");
                     break;
                 case _selectComunication:
-                    selectCategoryValueListBox.Items.Add("Все люди в системе");
+                    selectCategoryValueListBox.Items.Add("Все люди");
                     selectCategoryValueListBox.Items.Add("Работники");
                     selectCategoryValueListBox.Items.Add("Не работающие");
                     break;
@@ -200,6 +228,9 @@ namespace MyCourseWork
                 case _selectUserDefined:
                     foreach (var key in userDefinedQuery.Keys)
                         selectCategoryValueListBox.Items.Add(key);
+                    break;
+                case _selectSchudele:
+
                     break;
             }
         }
