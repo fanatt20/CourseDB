@@ -16,7 +16,6 @@ namespace MyCourseWork
 {
     public partial class MainFormForAdmin : Form
     {
-        const byte _uncommitedRow = 1;
         const byte _filterPickFromValue = 0;
         const byte _filterPickMoreThan = 1;
         const byte _filterPickLessThan = 2;
@@ -27,15 +26,14 @@ namespace MyCourseWork
         DataTable set = new DataTable();
         private void button1_Click(object sender, EventArgs e)
         {
-            //var cmd = new SqlDataAdapter(queryRichTextBox.Text, connection);
             adapter.SelectCommand = new SqlCommand(queryRichTextBox.Text, connection);
 
             try
             {
                 connection.Open();
+                set.Clear();
                 adapter.Fill(set);
                 bindingSource1.RemoveFilter();
-                bindingSource1.DataSource = set;
             }
             catch (Exception exc)
             {
@@ -55,6 +53,7 @@ namespace MyCourseWork
             InitializeComponent();
             this.connection = connection;
             adapter = new SqlDataAdapter();
+            bindingSource1.DataSource = set;
 
             mainInfoDataGrid.DataSource = bindingSource1;
         }
@@ -82,7 +81,7 @@ namespace MyCourseWork
 
             filterValueCheckedListBox.Items.Clear();
             var index = filterColumnComboBox.SelectedIndex;
-            dynamic defaultValue = String.Empty;
+            dynamic defaultValue = null;
             try
             {
                 defaultValue = Activator.CreateInstance(mainInfoDataGrid.Columns[index].ValueType);
@@ -92,11 +91,8 @@ namespace MyCourseWork
 
             var cells = from keyValue in ReadColumnFromDataGridview(index, mainInfoDataGrid) select keyValue.Value;
             foreach (var cellValue in cells.Distinct())
-                if (!DBNull.Value.Equals(cellValue))
-                    filterValueCheckedListBox.Items.Add(cellValue ?? defaultValue);
-                else
-                    if (!cells.Contains(null))
-                        filterValueCheckedListBox.Items.Add(defaultValue);
+                filterValueCheckedListBox.Items.Add(cellValue ?? DBNull.Value);
+
         }
         private void ReadToDataGridViewFromSQLReader(DataGridView table, SqlDataReader reader)
         {
