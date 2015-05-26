@@ -43,10 +43,12 @@ namespace MyCourseWork
         #endregion
         Dictionary<string, string> userDefinedQuery = new Dictionary<string, string>();
         SqlDataAdapter adapter;
-        DataTable set = new DataTable();
+        DataTable set = new DataTable(); 
+        private SqlConnection connection;
         private void button1_Click(object sender, EventArgs e)
         {
-            
+            set.Clear();
+            set.Columns.Clear();
             var select = String.Empty;
             var valueOfCategory = selectCategoryValueListBox.SelectedIndex;
             switch (selectCategoryComboBox.SelectedIndex)
@@ -121,7 +123,13 @@ namespace MyCourseWork
                     select = userDefinedQuery[(string)selectCategoryValueListBox.SelectedItem];
                     break;
             }
-            adapter.SelectCommand = new SqlCommand(select, connection);
+            ExecuteSelectCommand(select);
+
+        }
+
+        private void ExecuteSelectCommand(string command)
+        {
+            adapter.SelectCommand = new SqlCommand(command, connection);
             try
             {
                 connection.Open();
@@ -141,8 +149,6 @@ namespace MyCourseWork
             }
 
         }
-
-        private SqlConnection connection;
         public MainFormForAdmin(SqlConnection connection)
         {
             InitializeComponent();
@@ -289,6 +295,17 @@ namespace MyCourseWork
 
                     break;
             }
+        }
+
+        private void sqlExcecuteButton_Click(object sender, EventArgs e)
+        {
+            ExecuteSelectCommand(queryRichTextBox.Text);
+        }
+
+        
+        private void sqlAddToCollectionButton_Click(object sender, EventArgs e)
+        {
+            var name = new AddUserQueryToCollection(userDefinedQuery.Add,queryRichTextBox.Text);
         }
     }
 }
