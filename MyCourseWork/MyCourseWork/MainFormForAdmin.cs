@@ -43,12 +43,11 @@ namespace MyCourseWork
         #endregion
         Dictionary<string, string> userDefinedQuery = new Dictionary<string, string>();
         SqlDataAdapter adapter;
-        DataTable set = new DataTable(); 
+
         private SqlConnection connection;
         private void button1_Click(object sender, EventArgs e)
         {
-            set.Clear();
-            set.Columns.Clear();
+
             var select = String.Empty;
             var valueOfCategory = selectCategoryValueListBox.SelectedIndex;
             switch (selectCategoryComboBox.SelectedIndex)
@@ -129,23 +128,40 @@ namespace MyCourseWork
 
         private void ExecuteSelectCommand(string command)
         {
-            adapter.SelectCommand = new SqlCommand(command, connection);
-            try
+            var str = command.ToUpper();
+            var ilegal = str.Contains("INSERT ") || str.Contains("DROP ") ||
+                str.Contains("DELETE") || str.Contains("CREATE ") ||
+                str.Contains("USE ") || str.Contains("GRANT ") ||
+                str.Contains("REVOKE ") || str.Contains("TRIGGER ") ||
+                str.Contains("UPDATE ") || str.Contains("TABLE ") ||
+                str.Contains("ALTER ");
+
+            if (ilegal)
             {
-                connection.Open();
-                set.Clear();
-                set.Columns.Clear();
-                adapter.Fill(set);
-                bindingSource1.RemoveFilter();
-                FillFilterColumnComboBox();
+                MessageBox.Show("Не надо так...");
             }
-            catch (Exception exc)
+            else
             {
-                MessageBox.Show(exc.Message);
-            }
-            finally
-            {
-                connection.Close();
+                adapter.SelectCommand = new SqlCommand(command, connection);
+                try
+                {
+                    DataTable set = new DataTable();
+                    connection.Open();
+                    set.Clear();
+                    set.Columns.Clear();
+                    adapter.Fill(set);
+                    bindingSource1.DataSource = set;
+                    bindingSource1.RemoveFilter();
+                    FillFilterColumnComboBox();
+                }
+                catch (Exception exc)
+                {
+                    MessageBox.Show(exc.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
             }
 
         }
@@ -154,9 +170,9 @@ namespace MyCourseWork
             InitializeComponent();
             this.connection = connection;
             adapter = new SqlDataAdapter();
-            bindingSource1.DataSource = set;
 
             mainInfoDataGrid.DataSource = bindingSource1;
+            mainInfoDataGrid.ReadOnly = true;
         }
         private Dictionary<int, dynamic> ReadColumnFromDataGridview(int index, DataGridView table)
         {
@@ -173,6 +189,7 @@ namespace MyCourseWork
         }
         private void FillFilterColumnComboBox()
         {
+            filterColumnComboBox.Items.Clear();
             foreach (var column in mainInfoDataGrid.Columns.Cast<DataGridViewColumn>())
                 if (!filterColumnComboBox.Items.Contains(column.HeaderText))
                     filterColumnComboBox.Items.Add(column.HeaderText);
@@ -221,10 +238,14 @@ namespace MyCourseWork
 
         private void filterButton_Click(object sender, EventArgs e)
         {
-            bindingSource1.RemoveFilter();
             var index = filterColumnComboBox.SelectedIndex;
             var filter = String.Empty;
-            var columnName = mainInfoDataGrid.Columns[index].Name;
+            if (!String.IsNullOrEmpty(bindingSource1.Filter))
+                filter = bindingSource1.Filter + "AND (";
+            else 
+                filter = "(";
+
+            var columnName = "[" + mainInfoDataGrid.Columns[index].Name + "]";
             switch (filterOperationComboBox.SelectedIndex)
             {
                 default:
@@ -252,10 +273,11 @@ namespace MyCourseWork
 
             try
             {
-                bindingSource1.Filter = filter;
+                bindingSource1.Filter = filter + ")";
             }
             catch (Exception ex)
             {
+                bindingSource1.Filter = bindingSource1.Filter.Remove(bindingSource1.Filter.Length - filter.Length - 1);
                 MessageBox.Show(ex.Message);
             }
 
@@ -302,10 +324,29 @@ namespace MyCourseWork
             ExecuteSelectCommand(queryRichTextBox.Text);
         }
 
-        
+
         private void sqlAddToCollectionButton_Click(object sender, EventArgs e)
         {
-            var name = new AddUserQueryToCollection(userDefinedQuery.Add,queryRichTextBox.Text);
+            var name = new AddUserQueryToCollection(userDefinedQuery.Add, queryRichTextBox.Text);
+            name.Show();
+        }
+
+        private void mainFormTab_TabIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("select Name from Positions group by Name", connection);
+                var ad = new SqlDataAdapter(cmd.CommandText, connection);
+                var dt = new DataTable();
+                ad.Fill(dt);
+                var bsource = new BindingSource();
+                bsource.DataSource = dt;
+
+                bindingNavigator1.BindingSource = bsource;
+
+            }
+            finally { connection.Close(); }
         }
     }
 }
