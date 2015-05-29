@@ -48,6 +48,7 @@ namespace MyCourseWork
         Dictionary<string, string> userDefinedQuery = new Dictionary<string, string>();
         SqlDataAdapter adapter;
         BindingSource holidayTable;
+        List<VacantDepartment> vacantDepartments = new List<VacantDepartment>();
 
         private SqlConnection connection;
         private void button1_Click(object sender, EventArgs e)
@@ -181,6 +182,11 @@ namespace MyCourseWork
             mainInfoDataGrid.ReadOnly = true;
             mainInfoSqlPage.Hide();
             addMemberComunicationDataGrid.AllowUserToAddRows = false;
+            TimeSpan begin = new TimeSpan(9, 0, 0);
+            TimeSpan end = new TimeSpan(17, 0, 0);
+            contractSchudeleDataGridView.Rows.Add("Начало", begin, begin, begin, begin, begin, null, null);
+            contractSchudeleDataGridView.Rows.Add("Конец", end, end, end, end, end, null, null);
+            contractSchudeleDataGridView.AllowUserToAddRows = false;
         }
         private Dictionary<int, dynamic> ReadColumnFromDataGridview(int index, DataGridView table)
         {
@@ -348,12 +354,8 @@ namespace MyCourseWork
             name.Show();
         }
 
-        private void mainFormTab_TabIndexChanged(object sender, EventArgs e)
+        private void FillActionAddMemberPage()
         {
-            switch ((sender as TabControl).SelectedIndex)
-            {
-
-            }
             try
             {
                 connection.Open();
@@ -366,7 +368,51 @@ namespace MyCourseWork
             }
             finally { connection.Close(); }
         }
+        private void FillActionAddContractPage()
+        {
+            var selectVacantPositions = connection.CreateCommand();
+            selectVacantPositions.CommandText = "Select * from [Свободные позиции]";
+            SqlDataReader reader = null;
+            try
+            {
+                connection.Open();
+                reader = selectVacantPositions.ExecuteReader();
 
+                while (reader.Read())
+                {
+                    var department = new VacantDepartment((int)reader[5], (string)reader[1]);
+                    if (!vacantDepartments.Contains(department))
+                        vacantDepartments.Add(department);
+                    var position = new VacantPosition((int)reader[4], (Decimal)reader[2], (string)reader[0], new PositionState((int)reader[7], (string)(reader[6])));
+                    if (!department.VacantPositions.Contains(position))
+                        department.AddToDepartment(position);
+                }
+            }
+            finally
+            {
+                connection.Close();
+            }
+            foreach (var department in vacantDepartments)
+                contractDepartmentComboBox.Items.Add(department);
+            contractDepartmentComboBox.SelectedIndex = 0;
+        }
+
+
+
+        private void ActionsPage_TabIndexChanged(object sender, EventArgs e)
+        {
+            switch ((sender as TabControl).SelectedIndex)
+            {
+                case _actionAddMember:
+                    FillActionAddMemberPage();
+                    break;
+                case _actionAddContract:
+                    FillActionAddContractPage();
+                    break;
+
+            }
+
+        }
         private void MainFormForAdmin_Load(object sender, EventArgs e)
         {
             // TODO: данная строка кода позволяет загрузить данные в таблицу "courseWorkSecondVariantDataSet.AbsenceRegister". При необходимости она может быть перемещена или удалена.
@@ -422,6 +468,35 @@ namespace MyCourseWork
             }
 
         }
+        private void FillContractHumanSelectorTree()
+        {
 
+
+        }
+
+        private void contractDepartmentComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            contractPositionComboBox.Items.Clear();
+            var comboBox = sender as ComboBox;
+            foreach (var position in (comboBox.SelectedItem as VacantDepartment).VacantPositions)
+            {
+                contractPositionComboBox.Items.Add(position);
+
+            }
+        }
+
+        private void contractPositionComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var comboBox = sender as ComboBox;
+            var selectedPosition = comboBox.SelectedItem as VacantPosition;
+            salaryLabel.Text = "<=" + selectedPosition.MaxSalary.ToString();
+            if (!salaryLabel.Visible)
+                salaryLabel.Visible = true;
+            contractTypeSelector.Items.Clear();
+            foreach (var state in selectedPosition.State.GetPossibleStates())
+            {
+                contractTypeSelector.Items.Add(state);
+            }
+        }
     }
 }
