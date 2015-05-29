@@ -352,11 +352,7 @@ namespace MyCourseWork
                 var reader = cmd.ExecuteReader();
                 while (reader.Read())
                     addMemberComunicationDataGrid.Rows.Add(reader[0], String.Empty);
-
-
-
-
-
+                   
             }
             finally { connection.Close(); }
         }
@@ -367,7 +363,7 @@ namespace MyCourseWork
             this.absenceRegisterTableAdapter.Fill(this.courseWorkSecondVariantDataSet.AbsenceRegister);
 
         }
-        
+
         private void addMemberSubmitButton_Click(object sender, EventArgs e)
         {
             var insert = connection.CreateCommand();
@@ -389,9 +385,8 @@ namespace MyCourseWork
                 insert.CommandText = "Insert into Comunication values ";
                 foreach (var item in addMemberComunicationDataGrid.Rows.Cast<DataGridViewRow>())
                 {
-                    if (!String.IsNullOrEmpty(item[1]))
-                        insert += "( " + item[1] + "," + item[0] +","+index +")";
-                 
+                    if (!String.IsNullOrEmpty(item.Cells[1].Value.ToString()))
+                        insert.CommandText += "( " + item.Cells[1].Value.ToString() + "," + item.Cells[0].Value.ToString() + "," + index + ")";
                 }
 
             }
@@ -405,5 +400,6 @@ namespace MyCourseWork
             }
 
         }
+
     }
 }
