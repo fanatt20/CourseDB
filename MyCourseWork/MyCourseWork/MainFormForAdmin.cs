@@ -390,12 +390,9 @@ namespace MyCourseWork
                 foreach (var item in addMemberComunicationDataGrid.Rows.Cast<DataGridViewRow>())
                 {
                     if (!String.IsNullOrEmpty(item[1]))
-                        insert += "( " + item[1] + "," + item[0] + ")";
-                    
-                    
+                        insert += "( " + item[1] + "," + item[0] +","+index +")";
+                 
                 }
-                
-
 
             }
             catch (Exception ex)
