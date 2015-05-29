@@ -50,6 +50,11 @@
     <Compile Include="AddUserQueryToCollection.Designer.cs">
       <DependentUpon>AddUserQueryToCollection.cs</DependentUpon>
     </Compile>
+    <Compile Include="CourseWorkSecondVariantDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CourseWorkSecondVariantDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="loginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,6 +87,17 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="CourseWorkSecondVariantDataSet.xsc">
+      <DependentUpon>CourseWorkSecondVariantDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="CourseWorkSecondVariantDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>CourseWorkSecondVariantDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CourseWorkSecondVariantDataSet.xss">
+      <DependentUpon>CourseWorkSecondVariantDataSet.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

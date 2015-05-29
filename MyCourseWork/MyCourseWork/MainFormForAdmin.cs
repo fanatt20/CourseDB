@@ -43,6 +43,7 @@ namespace MyCourseWork
         #endregion
         Dictionary<string, string> userDefinedQuery = new Dictionary<string, string>();
         SqlDataAdapter adapter;
+        BindingSource holidayTable;
 
         private SqlConnection connection;
         private void button1_Click(object sender, EventArgs e)
@@ -170,9 +171,11 @@ namespace MyCourseWork
             InitializeComponent();
             this.connection = connection;
             adapter = new SqlDataAdapter();
+            filterOperationComboBox.SelectedIndex = 0;
 
             mainInfoDataGrid.DataSource = bindingSource1;
             mainInfoDataGrid.ReadOnly = true;
+            mainInfoSqlPage.Hide();
         }
         private Dictionary<int, dynamic> ReadColumnFromDataGridview(int index, DataGridView table)
         {
@@ -193,6 +196,8 @@ namespace MyCourseWork
             foreach (var column in mainInfoDataGrid.Columns.Cast<DataGridViewColumn>())
                 if (!filterColumnComboBox.Items.Contains(column.HeaderText))
                     filterColumnComboBox.Items.Add(column.HeaderText);
+            if (filterColumnComboBox.Items.Count != 0)
+                filterColumnComboBox.SelectedIndex = 0;
         }
         private void FillFilterValueCheckedListBox()
         {
@@ -238,48 +243,55 @@ namespace MyCourseWork
 
         private void filterButton_Click(object sender, EventArgs e)
         {
+
             var index = filterColumnComboBox.SelectedIndex;
-            var filter = String.Empty;
-            if (!String.IsNullOrEmpty(bindingSource1.Filter))
-                filter = bindingSource1.Filter + "AND (";
-            else 
-                filter = "(";
+            if (index >= 0)
+            {
+                var filter = String.Empty;
+                if (!String.IsNullOrEmpty(bindingSource1.Filter))
+                    filter = bindingSource1.Filter + "AND (";
+                else
+                    filter = "(";
 
-            var columnName = "[" + mainInfoDataGrid.Columns[index].Name + "]";
-            switch (filterOperationComboBox.SelectedIndex)
-            {
-                default:
-                case _filterPickFromValue:
-                    foreach (var selectedItem in filterValueCheckedListBox.CheckedItems)
-                        filter += columnName + @"='" + selectedItem.ToString() + @"' OR ";
-                    filter = filter.Remove(filter.LastIndexOf("OR"), 2);
-                    break;
-                case _filterPickMoreOrEqual:
-                    filter += columnName + @">='" + filterCompareTextBox.Text + @"'";
-                    break;
-                case _filterPickMoreThan:
-                    filter += columnName + @">'" + filterCompareTextBox.Text + @"'";
-                    break;
-                case _filterPickLessThan:
-                    filter += columnName + @"<'" + filterCompareTextBox.Text + @"'";
-                    break;
-                case _filterPickLessOrEqual:
-                    filter += columnName + @"<='" + filterCompareTextBox.Text + @"'";
-                    break;
-                case _filtePickerEqual:
-                    filter += columnName + @"='" + filterCompareTextBox.Text + @"'";
-                    break;
-            }
+                var columnName = "[" + mainInfoDataGrid.Columns[index].Name + "]";
+                switch (filterOperationComboBox.SelectedIndex)
+                {
+                    default:
+                    case _filterPickFromValue:
+                        foreach (var selectedItem in filterValueCheckedListBox.CheckedItems)
+                            if (!String.IsNullOrEmpty(selectedItem.ToString()))
+                                filter += columnName + @"='" + selectedItem.ToString() + @"' OR ";
+                            else filter += columnName + @" IS NULL OR ";
+                        filter = filter.Remove(filter.LastIndexOf("OR"), 2);
+                        break;
+                    case _filterPickMoreOrEqual:
+                        filter += columnName + @">='" + filterCompareTextBox.Text + @"'";
+                        break;
+                    case _filterPickMoreThan:
+                        filter += columnName + @">'" + filterCompareTextBox.Text + @"'";
+                        break;
+                    case _filterPickLessThan:
+                        filter += columnName + @"<'" + filterCompareTextBox.Text + @"'";
+                        break;
+                    case _filterPickLessOrEqual:
+                        filter += columnName + @"<='" + filterCompareTextBox.Text + @"'";
+                        break;
+                    case _filtePickerEqual:
+                        filter += columnName + @"='" + filterCompareTextBox.Text + @"'";
+                        break;
+                }
 
-            try
-            {
-                bindingSource1.Filter = filter + ")";
+                try
+                {
+                    bindingSource1.Filter = filter + ")";
+                }
+                catch (Exception ex)
+                {
+                    bindingSource1.Filter = bindingSource1.Filter.Remove(bindingSource1.Filter.Length - filter.Length - 1);
+                    MessageBox.Show(ex.Message);
+                }
             }
-            catch (Exception ex)
-            {
-                bindingSource1.Filter = bindingSource1.Filter.Remove(bindingSource1.Filter.Length - filter.Length - 1);
-                MessageBox.Show(ex.Message);
-            }
+            else MessageBox.Show("Выберите столбец");
 
         }
 
@@ -336,17 +348,65 @@ namespace MyCourseWork
             try
             {
                 connection.Open();
-                SqlCommand cmd = new SqlCommand("select Name from Positions group by Name", connection);
-                var ad = new SqlDataAdapter(cmd.CommandText, connection);
-                var dt = new DataTable();
-                ad.Fill(dt);
-                var bsource = new BindingSource();
-                bsource.DataSource = dt;
+                SqlCommand cmd = new SqlCommand("select Name from ComunicationType", connection);
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                    addMemberComunicationDataGrid.Rows.Add(reader[0], String.Empty);
 
-                bindingNavigator1.BindingSource = bsource;
+
+
+
 
             }
             finally { connection.Close(); }
+        }
+
+        private void MainFormForAdmin_Load(object sender, EventArgs e)
+        {
+            // TODO: данная строка кода позволяет загрузить данные в таблицу "courseWorkSecondVariantDataSet.AbsenceRegister". При необходимости она может быть перемещена или удалена.
+            this.absenceRegisterTableAdapter.Fill(this.courseWorkSecondVariantDataSet.AbsenceRegister);
+
+        }
+        
+        private void addMemberSubmitButton_Click(object sender, EventArgs e)
+        {
+            var insert = connection.CreateCommand();
+            insert.CommandText = @"Insert into humans values(@Name,@Surname,@Patronimyc,@Birthday,@MedicalCard,@Education)";
+            insert.Parameters.AddWithValue("Name", addMemebrNameTextBox.Text);
+            insert.Parameters.AddWithValue("Surname", addMemeberSurnameTextBox.Text);
+            insert.Parameters.AddWithValue("Patronimyc", addMemebrPatronimycTextBox.Text);
+            insert.Parameters.AddWithValue("Birthday", addMemberBirthdayDatePicker.Value);
+            insert.Parameters.AddWithValue("MedicalCard", addMemberMedicalCardTextBox.Text);
+            insert.Parameters.AddWithValue("Education", addMemeberEducationRichTextBox.Text);
+            try
+            {
+                connection.Open();
+                connection.BeginTransaction();
+                insert.ExecuteNonQuery();
+                var query = connection.CreateCommand();
+                query.CommandText = "Select HumanID from Human order by HumanID desc top 1";
+                var index = (int)query.ExecuteScalar();
+                insert.CommandText = "Insert into Comunication values ";
+                foreach (var item in addMemberComunicationDataGrid.Rows.Cast<DataGridViewRow>())
+                {
+                    if (!String.IsNullOrEmpty(item[1]))
+                        insert += "( " + item[1] + "," + item[0] + ")";
+                    
+                    
+                }
+                
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+
         }
     }
 }
