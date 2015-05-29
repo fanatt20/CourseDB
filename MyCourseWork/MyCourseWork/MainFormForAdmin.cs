@@ -40,6 +40,10 @@ namespace MyCourseWork
         const byte _selectVacantPostion = 1;
         const byte _selectHalfTimePosition = 2;
         const byte _selectClosedPosition = 3;
+        //actionTab indexes
+        const byte _actionAddMember = 0;
+        const byte _actionAddContract = 1;
+        const byte _actionAbsence = 2;
         #endregion
         Dictionary<string, string> userDefinedQuery = new Dictionary<string, string>();
         SqlDataAdapter adapter;
@@ -176,6 +180,7 @@ namespace MyCourseWork
             mainInfoDataGrid.DataSource = bindingSource1;
             mainInfoDataGrid.ReadOnly = true;
             mainInfoSqlPage.Hide();
+            addMemberComunicationDataGrid.AllowUserToAddRows = false;
         }
         private Dictionary<int, dynamic> ReadColumnFromDataGridview(int index, DataGridView table)
         {
@@ -345,14 +350,19 @@ namespace MyCourseWork
 
         private void mainFormTab_TabIndexChanged(object sender, EventArgs e)
         {
+            switch ((sender as TabControl).SelectedIndex)
+            {
+
+            }
             try
             {
                 connection.Open();
                 SqlCommand cmd = new SqlCommand("select Name from ComunicationType", connection);
                 var reader = cmd.ExecuteReader();
+                addMemberComunicationDataGrid.Rows.Clear();
                 while (reader.Read())
                     addMemberComunicationDataGrid.Rows.Add(reader[0], String.Empty);
-                   
+
             }
             finally { connection.Close(); }
         }
@@ -366,33 +376,45 @@ namespace MyCourseWork
 
         private void addMemberSubmitButton_Click(object sender, EventArgs e)
         {
-            var insert = connection.CreateCommand();
-            insert.CommandText = @"Insert into humans values(@Name,@Surname,@Patronimyc,@Birthday,@MedicalCard,@Education)";
-            insert.Parameters.AddWithValue("Name", addMemebrNameTextBox.Text);
-            insert.Parameters.AddWithValue("Surname", addMemeberSurnameTextBox.Text);
-            insert.Parameters.AddWithValue("Patronimyc", addMemebrPatronimycTextBox.Text);
-            insert.Parameters.AddWithValue("Birthday", addMemberBirthdayDatePicker.Value);
-            insert.Parameters.AddWithValue("MedicalCard", addMemberMedicalCardTextBox.Text);
-            insert.Parameters.AddWithValue("Education", addMemeberEducationRichTextBox.Text);
+            var insertInHuman = connection.CreateCommand();
+            insertInHuman.CommandText = @"Insert into Human values(@Name,@Surname,@Patronimyc,@Birthday,@MedicalCard,@Education)";
+            insertInHuman.Parameters.AddWithValue("Name", (dynamic)addMemebrNameTextBox.Text ?? (dynamic)DBNull.Value);
+            insertInHuman.Parameters.AddWithValue("Surname", (dynamic)addMemeberSurnameTextBox.Text ?? (dynamic)DBNull.Value);
+            insertInHuman.Parameters.AddWithValue("Patronimyc", (dynamic)addMemebrPatronimycTextBox.Text ?? (dynamic)DBNull.Value);
+            insertInHuman.Parameters.AddWithValue("Birthday", (dynamic)addMemberBirthdayDatePicker.Value ?? (dynamic)DBNull.Value);
+            insertInHuman.Parameters.AddWithValue("MedicalCard", (dynamic)addMemberMedicalCardTextBox.Text ?? (dynamic)DBNull.Value);
+            insertInHuman.Parameters.AddWithValue("Education", (dynamic)addMemeberEducationRichTextBox.Text ?? (dynamic)DBNull.Value);
+            SqlTransaction transaction = null;
+
             try
             {
                 connection.Open();
-                connection.BeginTransaction();
-                insert.ExecuteNonQuery();
-                var query = connection.CreateCommand();
-                query.CommandText = "Select HumanID from Human order by HumanID desc top 1";
-                var index = (int)query.ExecuteScalar();
-                insert.CommandText = "Insert into Comunication values ";
+                transaction = connection.BeginTransaction(IsolationLevel.RepeatableRead);
+                insertInHuman.Transaction = transaction;
+                insertInHuman.ExecuteNonQuery();
+                var selectCurrentHumanID = connection.CreateCommand();
+                selectCurrentHumanID.CommandText = "Select TOP(1)HumanID from Human order by HumanID desc ";
+                selectCurrentHumanID.Transaction = transaction;
+                var index = (int)selectCurrentHumanID.ExecuteScalar();
+                var InsertIntoComunicationCmd = "Insert into Comunications values ";
                 foreach (var item in addMemberComunicationDataGrid.Rows.Cast<DataGridViewRow>())
                 {
-                    if (!String.IsNullOrEmpty(item.Cells[1].Value.ToString()))
-                        insert.CommandText += "( " + item.Cells[1].Value.ToString() + "," + item.Cells[0].Value.ToString() + "," + index + ")";
+                    if (!item.IsNewRow && !String.IsNullOrEmpty(item.Cells[0].Value.ToString()) && !String.IsNullOrEmpty(item.Cells[1].Value.ToString()))
+                        InsertIntoComunicationCmd += @"(' " + index + @"','" + item.Index + @"','" + item.Cells[1].Value.ToString() + @"'),";
                 }
-
+                InsertIntoComunicationCmd = InsertIntoComunicationCmd.Remove(InsertIntoComunicationCmd.Length - 1);
+                var insertIntoComunication = connection.CreateCommand();
+                insertIntoComunication.CommandText = InsertIntoComunicationCmd;
+                insertIntoComunication.Transaction = transaction;
+                insertIntoComunication.ExecuteNonQuery();
+                transaction.Commit();
+                MessageBox.Show("Запись успешно добавлена");
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+                if (transaction != null) transaction.Rollback();
+
             }
             finally
             {
