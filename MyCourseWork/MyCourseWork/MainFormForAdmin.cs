@@ -1,30 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MyCourseWork.Utils;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SqlClient;
-using System.Data.SqlTypes;
-using System.Data.Common;
 
 namespace MyCourseWork
 {
     public partial class MainFormForAdmin : Form
     {
         #region Constants
-        //Filter column selector ComboBox
-        const byte _filterPickFromValue = 0;
-        const byte _filterPickMoreThan = 1;
-        const byte _filterPickLessThan = 2;
-        const byte _filterPickMoreOrEqual = 3;
-        const byte _filterPickLessOrEqual = 4;
-        const byte _filtePickerEqual = 5;
-
         //Select category ComboBox
         const byte _selectContracts = 0;
         const byte _selectPositions = 1;
@@ -41,10 +34,65 @@ namespace MyCourseWork
         const byte _selectHalfTimePosition = 2;
         const byte _selectClosedPosition = 3;
         //actionTab indexes
-        const byte _actionAddMember = 0;
-        const byte _actionAddContract = 1;
-        const byte _actionAbsence = 2;
+        public enum ActionTabs
+        {
+            AddMember = 0,
+            AddContract = 1,
+            Absence = 2,
+        }
         #endregion
+        public enum MainInfoCategories
+        {
+            Contracts = 0,
+            Positions,
+            Humans,
+            Comunications,
+            UserDefined
+        }
+        public enum Operand
+        {
+            PickFromValue = 0,
+            LessThan,
+            MoreThen,
+            LessOrEqualThan,
+            MoreOrEqualThan,
+            Equal,
+            NotEqual
+
+        }
+        public enum Days
+        {
+            Monday = 1,
+            Tuesday = 2,
+            Wednesday = 3,
+            Thursday = 4,
+            Friday = 5,
+            Saturday = 6,
+            Sunday = 7
+
+        }
+
+        private Dictionary<Operand, string> _operands = new Dictionary<Operand, string> { 
+                                                            { Operand.Equal, "=" },              { Operand.NotEqual, "<>" },
+                                                            { Operand.MoreThen, ">" },           { Operand.LessThan, "<" },
+                                                            { Operand.MoreOrEqualThan, ">=" },   { Operand.LessOrEqualThan, "<=" } };
+
+        Dictionary<MainInfoCategories, string[]> _mainInfoCategories = new Dictionary<MainInfoCategories, string[]> {
+                                                            { MainInfoCategories.Contracts, new string[]        { "Все" , "Действующие" , "Не действующие контракты" } },
+                                                            { MainInfoCategories.Positions, new string[]        { "Все" , "Свободные" , "Требующие полставки" , "Закрытые" } },
+                                                            { MainInfoCategories.Humans, new string []          { "Все люди" , "Работники" , "Не работающие" } },
+                                                            { MainInfoCategories.Comunications, new string []   { "Все люди" , "Работники" , "Не работающие" } }
+            };
+        Dictionary<Days, string> _days = new Dictionary<Days, string>{
+                                {Days.Monday     ,"Понедельник"},
+                                {Days.Tuesday    ,"Вторник"},
+                                {Days.Wednesday  ,"Среда"},
+                                {Days.Thursday   ,"Четверг"},
+                                {Days.Friday     ,"Пятница"},
+                                {Days.Saturday   ,"Суббота"},
+                                {Days.Sunday     ,"Воскресенье"},
+        };
+
         Dictionary<string, string> userDefinedQuery = new Dictionary<string, string>();
         SqlDataAdapter adapter;
         BindingSource holidayTable;
@@ -125,7 +173,7 @@ namespace MyCourseWork
                     }
                     break;
                 case _selectUserDefined:
-                    select = userDefinedQuery[(string)selectCategoryValueListBox.SelectedItem];
+                    select = userDefinedQuery[(string)selectCategoryValueListBox.SelectedValue];
                     break;
             }
             ExecuteSelectCommand(select);
@@ -178,12 +226,14 @@ namespace MyCourseWork
             adapter = new SqlDataAdapter();
             filterOperationComboBox.SelectedIndex = 0;
 
+            dataGridView2.AllowUserToAddRows = false;
             mainInfoDataGrid.DataSource = bindingSource1;
             mainInfoDataGrid.ReadOnly = true;
             mainInfoSqlPage.Hide();
             addMemberComunicationDataGrid.AllowUserToAddRows = false;
-            TimeSpan begin = new TimeSpan(9, 0, 0);
-            TimeSpan end = new TimeSpan(17, 0, 0);
+            mainInfoDataGrid.AllowUserToAddRows = false;
+            string begin = new TimeSpan(9, 0, 0).ToString();
+            string end = new TimeSpan(17, 0, 0).ToString();
             contractSchudeleDataGridView.Rows.Add("Начало", begin, begin, begin, begin, begin, null, null);
             contractSchudeleDataGridView.Rows.Add("Конец", end, end, end, end, end, null, null);
             contractSchudeleDataGridView.AllowUserToAddRows = false;
@@ -252,94 +302,100 @@ namespace MyCourseWork
             FillFilterValueCheckedListBox();
         }
 
+
+
+        private string SimpleFilter(string columnName, Operand operand, string value)
+        {
+            return string.Join(" ", "[", columnName, "]", _operands[operand], "'", value, "'");
+        }
+
+        private string InFilter(string columnName, string[] values)
+        {
+            var filter = String.Empty;
+            bool isFirst = true;
+            foreach (var value in values)
+            {
+                if (!isFirst)
+                {
+                    filter += " OR ";
+                }
+                else
+                {
+                    isFirst = false;
+                }
+                if (string.IsNullOrEmpty(value))
+                    filter += "[" + columnName + @"] IS NULL ";
+                else
+                    filter += "[" + columnName + @"]='" + value + @"'";
+
+            }
+            return filter;
+        }
+
         private void filterButton_Click(object sender, EventArgs e)
         {
 
             var index = filterColumnComboBox.SelectedIndex;
-            if (index >= 0)
+            var columnName = filterColumnComboBox.SelectedItem.ToString();
+            if (index < 0)
             {
-                var filter = String.Empty;
-                if (!String.IsNullOrEmpty(bindingSource1.Filter))
-                    filter = bindingSource1.Filter + "AND (";
-                else
-                    filter = "(";
-
-                var columnName = "[" + mainInfoDataGrid.Columns[index].Name + "]";
-                switch (filterOperationComboBox.SelectedIndex)
-                {
-                    default:
-                    case _filterPickFromValue:
-                        foreach (var selectedItem in filterValueCheckedListBox.CheckedItems)
-                            if (!String.IsNullOrEmpty(selectedItem.ToString()))
-                                filter += columnName + @"='" + selectedItem.ToString() + @"' OR ";
-                            else filter += columnName + @" IS NULL OR ";
-                        filter = filter.Remove(filter.LastIndexOf("OR"), 2);
-                        break;
-                    case _filterPickMoreOrEqual:
-                        filter += columnName + @">='" + filterCompareTextBox.Text + @"'";
-                        break;
-                    case _filterPickMoreThan:
-                        filter += columnName + @">'" + filterCompareTextBox.Text + @"'";
-                        break;
-                    case _filterPickLessThan:
-                        filter += columnName + @"<'" + filterCompareTextBox.Text + @"'";
-                        break;
-                    case _filterPickLessOrEqual:
-                        filter += columnName + @"<='" + filterCompareTextBox.Text + @"'";
-                        break;
-                    case _filtePickerEqual:
-                        filter += columnName + @"='" + filterCompareTextBox.Text + @"'";
-                        break;
-                }
-
-                try
-                {
-                    bindingSource1.Filter = filter + ")";
-                }
-                catch (Exception ex)
-                {
-                    bindingSource1.Filter = bindingSource1.Filter.Remove(bindingSource1.Filter.Length - filter.Length - 1);
-                    MessageBox.Show(ex.Message);
-                }
+                UserNotification.Info("Выберите столбец");
+                return;
             }
-            else MessageBox.Show("Выберите столбец");
+            var filter = String.Empty;
+            if (!String.IsNullOrEmpty(bindingSource1.Filter))
+                filter = bindingSource1.Filter + "AND (";
+            else
+                filter = "(";
+            switch ((Operand)filterOperationComboBox.SelectedIndex)
+            {
+                case Operand.PickFromValue:
+                    if (filterValueCheckedListBox.CheckedItems.Contains(DBNull.Value))
+                    {
+                        filterValueCheckedListBox.SetItemChecked(filterValueCheckedListBox.Items.IndexOf(DBNull.Value), false);
+                        filter += "[" + columnName + "] IS NULL" + ((filterValueCheckedListBox.CheckedItems.Count != 0) ? " OR " : "");
+                    }
+                    filter += InFilter(columnName, filterValueCheckedListBox.CheckedItems.Cast<string>().ToArray());
+                    break;
+                default:
+                    filter += SimpleFilter(columnName, (Operand)filterOperationComboBox.SelectedIndex, filterCompareTextBox.Text);
+                    break;
+            }
+
+            try
+            {
+                bindingSource1.Filter = filter + ")";
+            }
+            catch (Exception ex)
+            {
+                bindingSource1.Filter = bindingSource1.Filter.Remove(bindingSource1.Filter.Length - filter.Length - 1);
+                MessageBox.Show(ex.Message);
+            }
+
 
         }
 
+
+
         private void mainInfoComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            selectCategoryValueListBox.Items.Clear();
-            switch ((sender as ComboBox).SelectedIndex)
-            {
-                case _selectContracts:
-                    selectCategoryValueListBox.Items.Add("Все");
-                    selectCategoryValueListBox.Items.Add("Действующие");
-                    selectCategoryValueListBox.Items.Add("Не действующие контракты");
-                    break;
-                case _selectPositions:
-                    selectCategoryValueListBox.Items.Add("Все");
-                    selectCategoryValueListBox.Items.Add("Свободные");
-                    selectCategoryValueListBox.Items.Add("Требующие полставки");
-                    selectCategoryValueListBox.Items.Add("Закрытые");
-                    break;
-                case _selectComunication:
-                    selectCategoryValueListBox.Items.Add("Все люди");
-                    selectCategoryValueListBox.Items.Add("Работники");
-                    selectCategoryValueListBox.Items.Add("Не работающие");
-                    break;
-                case _selectHuman:
-                    selectCategoryValueListBox.Items.Add("Все люди");
-                    selectCategoryValueListBox.Items.Add("Работники");
-                    selectCategoryValueListBox.Items.Add("Не работающие");
-                    break;
-                case _selectUserDefined:
-                    foreach (var key in userDefinedQuery.Keys)
-                        selectCategoryValueListBox.Items.Add(key);
-                    break;
-                case _selectSchudele:
 
-                    break;
-            }
+
+
+            selectCategoryValueListBox.Items.Clear();
+            var mainInfoCategory = (MainInfoCategories)(sender as ComboBox).SelectedIndex;
+            if (_mainInfoCategories.ContainsKey(mainInfoCategory))
+                selectCategoryValueListBox.Items.AddRange(_mainInfoCategories[mainInfoCategory]);
+            else
+                if (mainInfoCategory == MainInfoCategories.UserDefined)
+                    if (userDefinedQuery.Keys.Count != 0)
+                        foreach (var key in userDefinedQuery.Keys)
+                            selectCategoryValueListBox.Items.Add(key);
+
+                    else
+                        throw new NotSupportedException("MainInfo Categories does not contain category: " + (sender as ComboBox).SelectedText);
+
+
         }
 
         private void sqlExcecuteButton_Click(object sender, EventArgs e)
@@ -380,17 +436,29 @@ namespace MyCourseWork
 
                 while (reader.Read())
                 {
-                    var department = new VacantDepartment((int)reader[5], (string)reader[1]);
+                    var department = new VacantDepartment(reader.GetInt32(5), reader.GetString(1));
                     if (!vacantDepartments.Contains(department))
                         vacantDepartments.Add(department);
                     var position = new VacantPosition((int)reader[4], (Decimal)reader[2], (string)reader[0], new PositionState((int)reader[7], (string)(reader[6])));
                     if (!department.VacantPositions.Contains(position))
                         department.AddToDepartment(position);
                 }
+                reader.Close();
+                adapter.SelectCommand = new SqlCommand("SELECT * FROM [Сотрудники] WHERE EndAtPractically IS NULL AND [Дата Подписания контракта] IS NULL", connection);
+                var dt = new DataTable();
+                adapter.Fill(dt);
+                dataGridView2.DataSource = dt;
+
+
+            }
+            catch (Exception ex)
+            {
+                UserNotification.Error(ex.Message);
             }
             finally
             {
                 connection.Close();
+
             }
             foreach (var department in vacantDepartments)
                 contractDepartmentComboBox.Items.Add(department);
@@ -401,14 +469,17 @@ namespace MyCourseWork
 
         private void ActionsPage_TabIndexChanged(object sender, EventArgs e)
         {
-            switch ((sender as TabControl).SelectedIndex)
+
+            switch ((ActionTabs)(sender as TabControl).SelectedIndex)
             {
-                case _actionAddMember:
+                case ActionTabs.AddMember:
                     FillActionAddMemberPage();
                     break;
-                case _actionAddContract:
+                case ActionTabs.AddContract:
                     FillActionAddContractPage();
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException("Invalid Tab index");
 
             }
 
@@ -424,18 +495,18 @@ namespace MyCourseWork
         {
             var insertInHuman = connection.CreateCommand();
             insertInHuman.CommandText = @"Insert into Human values(@Name,@Surname,@Patronimyc,@Birthday,@MedicalCard,@Education)";
-            insertInHuman.Parameters.AddWithValue("Name", (dynamic)addMemebrNameTextBox.Text ?? (dynamic)DBNull.Value);
-            insertInHuman.Parameters.AddWithValue("Surname", (dynamic)addMemeberSurnameTextBox.Text ?? (dynamic)DBNull.Value);
-            insertInHuman.Parameters.AddWithValue("Patronimyc", (dynamic)addMemebrPatronimycTextBox.Text ?? (dynamic)DBNull.Value);
-            insertInHuman.Parameters.AddWithValue("Birthday", (dynamic)addMemberBirthdayDatePicker.Value ?? (dynamic)DBNull.Value);
-            insertInHuman.Parameters.AddWithValue("MedicalCard", (dynamic)addMemberMedicalCardTextBox.Text ?? (dynamic)DBNull.Value);
-            insertInHuman.Parameters.AddWithValue("Education", (dynamic)addMemeberEducationRichTextBox.Text ?? (dynamic)DBNull.Value);
+            insertInHuman.Parameters.AddWithValue("Name", String.IsNullOrEmpty(addMemebrNameTextBox.Text) ? null : addMemebrNameTextBox.Text);
+            insertInHuman.Parameters.AddWithValue("Surname", String.IsNullOrEmpty(addMemeberSurnameTextBox.Text) ? null : addMemeberSurnameTextBox.Text);
+            insertInHuman.Parameters.AddWithValue("Patronimyc", addMemebrPatronimycTextBox.Text);
+            insertInHuman.Parameters.AddWithValue("Birthday", addMemberBirthdayDatePicker.Value);
+            insertInHuman.Parameters.AddWithValue("MedicalCard", addMemberMedicalCardTextBox.Text);
+            insertInHuman.Parameters.AddWithValue("Education", addMemeberEducationRichTextBox.Text);
             SqlTransaction transaction = null;
 
             try
             {
                 connection.Open();
-                transaction = connection.BeginTransaction(IsolationLevel.RepeatableRead);
+                transaction = connection.BeginTransaction();
                 insertInHuman.Transaction = transaction;
                 insertInHuman.ExecuteNonQuery();
                 var selectCurrentHumanID = connection.CreateCommand();
@@ -468,11 +539,6 @@ namespace MyCourseWork
             }
 
         }
-        private void FillContractHumanSelectorTree()
-        {
-
-
-        }
 
         private void contractDepartmentComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -482,6 +548,10 @@ namespace MyCourseWork
             {
                 contractPositionComboBox.Items.Add(position);
 
+            }
+            if (contractPositionComboBox.Items.Count > 0)
+            {
+                contractPositionComboBox.SelectedIndex = 0;
             }
         }
 
@@ -497,6 +567,99 @@ namespace MyCourseWork
             {
                 contractTypeSelector.Items.Add(state);
             }
+        }
+
+        private void absentFromDepartmentComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void contractAddNew_Click(object sender, EventArgs e)
+        {
+            if (dataGridView2.SelectedCells.Count != 1 && dataGridView2.SelectedCells.Count != 13)
+                UserNotification.Warn("Выберите строку");
+            else
+            {
+                SqlTransaction trans = null;
+                try
+                {
+                    var selectedHuman = (dataGridView2.SelectedRows.Count == 1) ? dataGridView2.SelectedRows[0].Cells["HumanID"].Value :
+                                                                                    dataGridView2["HumanID", dataGridView2.SelectedCells[0].RowIndex].Value;
+                    var insertIntoContracts = connection.CreateCommand();
+                    insertIntoContracts.CommandText = "Insert into Contracts  values (@HumanID,@IDPosition,@Salary,@DateOfSigning,@EndAt,NULL,NULL)";
+                    insertIntoContracts.Parameters.AddWithValue("HumanID", selectedHuman);
+                    insertIntoContracts.Parameters.AddWithValue("IDPosition", (contractPositionComboBox.SelectedItem as VacantPosition).ID);
+                    if (Decimal.Parse(contractSalaryTextBox.Text) > Decimal.Parse(salaryLabel.Text.Replace("<=", "")))
+                        throw new ArgumentOutOfRangeException();
+                    insertIntoContracts.Parameters.AddWithValue("Salary", Decimal.Parse(contractSalaryTextBox.Text));
+                    insertIntoContracts.Parameters.AddWithValue("DateOfSigning", DateTime.Now.Date.ToString("yyyy-MM-dd"));
+                    insertIntoContracts.Parameters.AddWithValue("EndAt", dateTimePicker1.Value.Date.ToString("yyyy-MM-dd"));
+
+                    connection.Open();
+                    trans = connection.BeginTransaction();
+
+
+                    insertIntoContracts.Transaction = trans;
+                    insertIntoContracts.ExecuteNonQuery();
+
+                    var update = connection.CreateCommand();
+                    update.Transaction = trans;
+                    update.CommandText = "UPDATE Positions Set PositionStateID = " + ((contractPositionComboBox.SelectedItem as VacantPosition).State.GetPossibleStates().Count - (contractTypeSelector.SelectedItem as PositionState).ID).ToString() +
+                        "  where IDPosition = " + (contractPositionComboBox.SelectedItem as VacantPosition).ID.ToString();
+                    update.ExecuteNonQuery();
+                    var selectCurrentContractID = connection.CreateCommand();
+                    selectCurrentContractID.CommandText = "Select TOP(1)ContractID from Contracts order by ContractID desc ";
+                    selectCurrentContractID.Transaction = trans;
+                    var index = (int)selectCurrentContractID.ExecuteScalar();
+                    var insertIntoShcudele = connection.CreateCommand();
+                    insertIntoShcudele.Transaction = trans;
+                    insertIntoShcudele.CommandText = "Insert into MembersSchedule values";
+                    var value = String.Empty;
+                    var firstColumn = true;
+
+                    foreach (var column in contractSchudeleDataGridView.Columns.Cast<DataGridViewColumn>())
+                    {
+                        if (firstColumn)
+                            firstColumn = false;
+                        else
+                        {
+                            string begin = "NULL";
+                            string end = "NULL";
+                            TimeSpan buffer;
+                            if (contractSchudeleDataGridView[column.Name, 0].Value != null)
+                                if (TimeSpan.TryParse((string)contractSchudeleDataGridView[column.Name, 0].Value, out buffer))
+                                    begin = "'" + buffer.ToString() + "'";
+                            if (contractSchudeleDataGridView[column.Name, 1].Value != null)
+                                if (TimeSpan.TryParse((string)contractSchudeleDataGridView[column.Name, 1].Value, out buffer))
+                                    end = "'" + buffer.ToString() + "'";
+                            value = String.Join(" ", "(", index, ",'", column.HeaderText, "',", begin, ",", end, "),");
+                        }
+                        insertIntoShcudele.CommandText += " " + value;
+                    }
+                    insertIntoShcudele.CommandText = insertIntoShcudele.CommandText.Remove(insertIntoShcudele.CommandText.Length - 1);
+                    insertIntoShcudele.ExecuteNonQuery();
+
+
+                    trans.Commit();
+                }
+                catch (Exception ex)
+                {
+                    if (trans != null) trans.Rollback();
+                    UserNotification.Error(ex.Message);
+                }
+                finally { connection.Close(); }
+            }
+        }
+
+        private void dataGridView2_SelectionChanged(object sender, EventArgs e)
+        {
+            var grid = sender as DataGridView;
+
+        }
+
+        private void mainFormTab_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FillActionAddMemberPage();
         }
     }
 }

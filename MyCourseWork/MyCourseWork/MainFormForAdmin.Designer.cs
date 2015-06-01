@@ -53,6 +53,7 @@
             this.absentToReasonComboBox = new System.Windows.Forms.ComboBox();
             this.button2 = new System.Windows.Forms.Button();
             this.absentToDatePicker = new System.Windows.Forms.DateTimePicker();
+            this.button3 = new System.Windows.Forms.Button();
             this.absentFromDatePicker = new System.Windows.Forms.DateTimePicker();
             this.absentFromReasonComboBox = new System.Windows.Forms.ComboBox();
             this.absentFromHumanListBox = new System.Windows.Forms.ListBox();
@@ -93,20 +94,6 @@
             this.addMemeberSurnameTextBox = new System.Windows.Forms.TextBox();
             this.addMemebrNameTextBox = new System.Windows.Forms.TextBox();
             this.actionsAddContract = new System.Windows.Forms.TabPage();
-            this.salaryLabel = new System.Windows.Forms.Label();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.contractHumanSelectorTreeView = new System.Windows.Forms.TreeView();
-            this.button1 = new System.Windows.Forms.Button();
-            this.contractTypeSelector = new System.Windows.Forms.ComboBox();
-            this.label16 = new System.Windows.Forms.Label();
-            this.contractSalaryTextBox = new System.Windows.Forms.TextBox();
-            this.contractPositionComboBox = new System.Windows.Forms.ComboBox();
-            this.contractDepartmentComboBox = new System.Windows.Forms.ComboBox();
-            this.actionsHolidayPage = new System.Windows.Forms.TabPage();
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.courseWorkSecondVariantDataSet = new MyCourseWork.CourseWorkSecondVariantDataSet();
-            this.absenceRegisterBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.absenceRegisterTableAdapter = new MyCourseWork.CourseWorkSecondVariantDataSetTableAdapters.AbsenceRegisterTableAdapter();
             this.contractSchudeleDataGridView = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Monday = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -116,6 +103,23 @@
             this.Friday = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Saturday = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Sunday = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.salaryLabel = new System.Windows.Forms.Label();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.contractAddNew = new System.Windows.Forms.Button();
+            this.contractTypeSelector = new System.Windows.Forms.ComboBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.contractSalaryTextBox = new System.Windows.Forms.TextBox();
+            this.contractPositionComboBox = new System.Windows.Forms.ComboBox();
+            this.contractDepartmentComboBox = new System.Windows.Forms.ComboBox();
+            this.actionsHolidayPage = new System.Windows.Forms.TabPage();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.courseWorkSecondVariantDataSet = new MyCourseWork.CourseWorkSecondVariantDataSet();
+            this.absenceRegisterBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.absenceRegisterTableAdapter = new MyCourseWork.CourseWorkSecondVariantDataSetTableAdapters.AbsenceRegisterTableAdapter();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.label9 = new System.Windows.Forms.Label();
             label7 = new System.Windows.Forms.Label();
             label6 = new System.Windows.Forms.Label();
             label5 = new System.Windows.Forms.Label();
@@ -157,12 +161,13 @@
             this.actionsAddMemberPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.addMemberComunicationDataGrid)).BeginInit();
             this.actionsAddContract.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.contractSchudeleDataGridView)).BeginInit();
             this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.actionsHolidayPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.courseWorkSecondVariantDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.absenceRegisterBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.contractSchudeleDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // label7
@@ -296,6 +301,7 @@
             // 
             // absentToReasonComboBox
             // 
+            this.absentToReasonComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.absentToReasonComboBox.FormattingEnabled = true;
             this.absentToReasonComboBox.Location = new System.Drawing.Point(4, 158);
             this.absentToReasonComboBox.Margin = new System.Windows.Forms.Padding(2);
@@ -323,6 +329,7 @@
             // 
             // groupBox3
             // 
+            groupBox3.Controls.Add(this.button3);
             groupBox3.Controls.Add(label23);
             groupBox3.Controls.Add(this.absentFromDatePicker);
             groupBox3.Controls.Add(label21);
@@ -341,6 +348,15 @@
             groupBox3.TabIndex = 4;
             groupBox3.TabStop = false;
             groupBox3.Text = "Добавить отсутствие";
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(213, 296);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(186, 49);
+            this.button3.TabIndex = 24;
+            this.button3.Text = "Добавить";
+            this.button3.UseVisualStyleBackColor = true;
             // 
             // label23
             // 
@@ -372,6 +388,7 @@
             // 
             // absentFromReasonComboBox
             // 
+            this.absentFromReasonComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.absentFromReasonComboBox.FormattingEnabled = true;
             this.absentFromReasonComboBox.Location = new System.Drawing.Point(213, 41);
             this.absentFromReasonComboBox.Margin = new System.Windows.Forms.Padding(2);
@@ -410,6 +427,7 @@
             // 
             // absentFromPositionComboBox
             // 
+            this.absentFromPositionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.absentFromPositionComboBox.FormattingEnabled = true;
             this.absentFromPositionComboBox.Location = new System.Drawing.Point(83, 41);
             this.absentFromPositionComboBox.Margin = new System.Windows.Forms.Padding(2);
@@ -419,12 +437,14 @@
             // 
             // absentFromDepartmentComboBox
             // 
+            this.absentFromDepartmentComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.absentFromDepartmentComboBox.FormattingEnabled = true;
             this.absentFromDepartmentComboBox.Location = new System.Drawing.Point(83, 17);
             this.absentFromDepartmentComboBox.Margin = new System.Windows.Forms.Padding(2);
             this.absentFromDepartmentComboBox.Name = "absentFromDepartmentComboBox";
             this.absentFromDepartmentComboBox.Size = new System.Drawing.Size(126, 21);
             this.absentFromDepartmentComboBox.TabIndex = 15;
+            this.absentFromDepartmentComboBox.SelectedIndexChanged += new System.EventHandler(this.absentFromDepartmentComboBox_SelectedIndexChanged);
             // 
             // label20
             // 
@@ -456,6 +476,16 @@
             this.dataGridView1.Size = new System.Drawing.Size(315, 327);
             this.dataGridView1.TabIndex = 0;
             // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new System.Drawing.Point(313, 180);
+            label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            label8.Name = "label8";
+            label8.Size = new System.Drawing.Size(91, 13);
+            label8.TabIndex = 22;
+            label8.Text = "С рассписанием";
+            // 
             // mainFormTab
             // 
             this.mainFormTab.Controls.Add(this.mainInfoPage);
@@ -466,6 +496,7 @@
             this.mainFormTab.SelectedIndex = 0;
             this.mainFormTab.Size = new System.Drawing.Size(974, 421);
             this.mainFormTab.TabIndex = 0;
+            this.mainFormTab.SelectedIndexChanged += new System.EventHandler(this.mainFormTab_SelectedIndexChanged);
             // 
             // mainInfoPage
             // 
@@ -701,6 +732,7 @@
             this.tabControl1.Controls.Add(this.actionsAddMemberPage);
             this.tabControl1.Controls.Add(this.actionsAddContract);
             this.tabControl1.Controls.Add(this.actionsHolidayPage);
+            this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Location = new System.Drawing.Point(5, 5);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -823,13 +855,15 @@
             // 
             // actionsAddContract
             // 
+            this.actionsAddContract.Controls.Add(this.label9);
+            this.actionsAddContract.Controls.Add(this.dateTimePicker1);
             this.actionsAddContract.Controls.Add(label8);
             this.actionsAddContract.Controls.Add(this.contractSchudeleDataGridView);
             this.actionsAddContract.Controls.Add(this.salaryLabel);
             this.actionsAddContract.Controls.Add(label12);
             this.actionsAddContract.Controls.Add(this.groupBox4);
             this.actionsAddContract.Controls.Add(label11);
-            this.actionsAddContract.Controls.Add(this.button1);
+            this.actionsAddContract.Controls.Add(this.contractAddNew);
             this.actionsAddContract.Controls.Add(this.contractTypeSelector);
             this.actionsAddContract.Controls.Add(this.label16);
             this.actionsAddContract.Controls.Add(this.contractSalaryTextBox);
@@ -844,120 +878,6 @@
             this.actionsAddContract.Text = "Добавить контракт";
             this.actionsAddContract.UseVisualStyleBackColor = true;
             // 
-            // salaryLabel
-            // 
-            this.salaryLabel.AutoSize = true;
-            this.salaryLabel.Location = new System.Drawing.Point(646, 88);
-            this.salaryLabel.Name = "salaryLabel";
-            this.salaryLabel.Size = new System.Drawing.Size(13, 13);
-            this.salaryLabel.TabIndex = 20;
-            this.salaryLabel.Text = "0";
-            this.salaryLabel.Visible = false;
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.contractHumanSelectorTreeView);
-            this.groupBox4.Location = new System.Drawing.Point(6, 6);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(302, 347);
-            this.groupBox4.TabIndex = 19;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Зачислить";
-            // 
-            // contractHumanSelectorTreeView
-            // 
-            this.contractHumanSelectorTreeView.Location = new System.Drawing.Point(6, 19);
-            this.contractHumanSelectorTreeView.Name = "contractHumanSelectorTreeView";
-            this.contractHumanSelectorTreeView.Size = new System.Drawing.Size(290, 322);
-            this.contractHumanSelectorTreeView.TabIndex = 18;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(586, 308);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(122, 46);
-            this.button1.TabIndex = 17;
-            this.button1.Text = "Добавить";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // contractTypeSelector
-            // 
-            this.contractTypeSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.contractTypeSelector.FormattingEnabled = true;
-            this.contractTypeSelector.Location = new System.Drawing.Point(767, 82);
-            this.contractTypeSelector.Margin = new System.Windows.Forms.Padding(2);
-            this.contractTypeSelector.Name = "contractTypeSelector";
-            this.contractTypeSelector.Size = new System.Drawing.Size(176, 21);
-            this.contractTypeSelector.TabIndex = 16;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(742, 86);
-            this.label16.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(21, 13);
-            this.label16.TabIndex = 15;
-            this.label16.Text = "На";
-            // 
-            // contractSalaryTextBox
-            // 
-            this.contractSalaryTextBox.Location = new System.Drawing.Point(455, 83);
-            this.contractSalaryTextBox.Margin = new System.Windows.Forms.Padding(2);
-            this.contractSalaryTextBox.Name = "contractSalaryTextBox";
-            this.contractSalaryTextBox.Size = new System.Drawing.Size(176, 20);
-            this.contractSalaryTextBox.TabIndex = 14;
-            // 
-            // contractPositionComboBox
-            // 
-            this.contractPositionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.contractPositionComboBox.FormattingEnabled = true;
-            this.contractPositionComboBox.Location = new System.Drawing.Point(455, 58);
-            this.contractPositionComboBox.Margin = new System.Windows.Forms.Padding(2);
-            this.contractPositionComboBox.Name = "contractPositionComboBox";
-            this.contractPositionComboBox.Size = new System.Drawing.Size(176, 21);
-            this.contractPositionComboBox.TabIndex = 7;
-            this.contractPositionComboBox.SelectedIndexChanged += new System.EventHandler(this.contractPositionComboBox_SelectedIndexChanged);
-            // 
-            // contractDepartmentComboBox
-            // 
-            this.contractDepartmentComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.contractDepartmentComboBox.FormattingEnabled = true;
-            this.contractDepartmentComboBox.Location = new System.Drawing.Point(455, 34);
-            this.contractDepartmentComboBox.Margin = new System.Windows.Forms.Padding(2);
-            this.contractDepartmentComboBox.Name = "contractDepartmentComboBox";
-            this.contractDepartmentComboBox.Size = new System.Drawing.Size(176, 21);
-            this.contractDepartmentComboBox.TabIndex = 6;
-            this.contractDepartmentComboBox.SelectedIndexChanged += new System.EventHandler(this.contractDepartmentComboBox_SelectedIndexChanged);
-            // 
-            // actionsHolidayPage
-            // 
-            this.actionsHolidayPage.Controls.Add(groupBox1);
-            this.actionsHolidayPage.Controls.Add(groupBox3);
-            this.actionsHolidayPage.Controls.Add(groupBox2);
-            this.actionsHolidayPage.Location = new System.Drawing.Point(4, 22);
-            this.actionsHolidayPage.Name = "actionsHolidayPage";
-            this.actionsHolidayPage.Padding = new System.Windows.Forms.Padding(3);
-            this.actionsHolidayPage.Size = new System.Drawing.Size(948, 359);
-            this.actionsHolidayPage.TabIndex = 2;
-            this.actionsHolidayPage.Text = "Отпуски и пропуски";
-            this.actionsHolidayPage.UseVisualStyleBackColor = true;
-            // 
-            // courseWorkSecondVariantDataSet
-            // 
-            this.courseWorkSecondVariantDataSet.DataSetName = "CourseWorkSecondVariantDataSet";
-            this.courseWorkSecondVariantDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // absenceRegisterBindingSource
-            // 
-            this.absenceRegisterBindingSource.DataMember = "AbsenceRegister";
-            this.absenceRegisterBindingSource.DataSource = this.courseWorkSecondVariantDataSet;
-            // 
-            // absenceRegisterTableAdapter
-            // 
-            this.absenceRegisterTableAdapter.ClearBeforeFill = true;
-            // 
             // contractSchudeleDataGridView
             // 
             this.contractSchudeleDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -970,7 +890,7 @@
             this.Friday,
             this.Saturday,
             this.Sunday});
-            this.contractSchudeleDataGridView.Location = new System.Drawing.Point(453, 143);
+            this.contractSchudeleDataGridView.Location = new System.Drawing.Point(453, 180);
             this.contractSchudeleDataGridView.Margin = new System.Windows.Forms.Padding(2);
             this.contractSchudeleDataGridView.Name = "contractSchudeleDataGridView";
             this.contractSchudeleDataGridView.RowTemplate.Height = 24;
@@ -1018,15 +938,148 @@
             this.Sunday.HeaderText = "Воскресенье";
             this.Sunday.Name = "Sunday";
             // 
-            // label8
+            // salaryLabel
             // 
-            label8.AutoSize = true;
-            label8.Location = new System.Drawing.Point(313, 143);
-            label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            label8.Name = "label8";
-            label8.Size = new System.Drawing.Size(114, 13);
-            label8.TabIndex = 22;
-            label8.Text = "С зароботной платой";
+            this.salaryLabel.AutoSize = true;
+            this.salaryLabel.Location = new System.Drawing.Point(680, 86);
+            this.salaryLabel.Name = "salaryLabel";
+            this.salaryLabel.Size = new System.Drawing.Size(13, 13);
+            this.salaryLabel.TabIndex = 20;
+            this.salaryLabel.Text = "0";
+            this.salaryLabel.Visible = false;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.dataGridView2);
+            this.groupBox4.Location = new System.Drawing.Point(6, 6);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(302, 347);
+            this.groupBox4.TabIndex = 19;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Зачислить";
+            // 
+            // dataGridView2
+            // 
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Location = new System.Drawing.Point(6, 19);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.Size = new System.Drawing.Size(290, 322);
+            this.dataGridView2.TabIndex = 0;
+            this.dataGridView2.SelectionChanged += new System.EventHandler(this.dataGridView2_SelectionChanged);
+            // 
+            // contractAddNew
+            // 
+            this.contractAddNew.Location = new System.Drawing.Point(586, 308);
+            this.contractAddNew.Margin = new System.Windows.Forms.Padding(2);
+            this.contractAddNew.Name = "contractAddNew";
+            this.contractAddNew.Size = new System.Drawing.Size(122, 46);
+            this.contractAddNew.TabIndex = 17;
+            this.contractAddNew.Text = "Добавить";
+            this.contractAddNew.UseVisualStyleBackColor = true;
+            this.contractAddNew.Click += new System.EventHandler(this.contractAddNew_Click);
+            // 
+            // contractTypeSelector
+            // 
+            this.contractTypeSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.contractTypeSelector.FormattingEnabled = true;
+            this.contractTypeSelector.Location = new System.Drawing.Point(455, 107);
+            this.contractTypeSelector.Margin = new System.Windows.Forms.Padding(2);
+            this.contractTypeSelector.Name = "contractTypeSelector";
+            this.contractTypeSelector.Size = new System.Drawing.Size(204, 21);
+            this.contractTypeSelector.TabIndex = 16;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(313, 110);
+            this.label16.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(21, 13);
+            this.label16.TabIndex = 15;
+            this.label16.Text = "На";
+            // 
+            // contractSalaryTextBox
+            // 
+            this.contractSalaryTextBox.Location = new System.Drawing.Point(455, 83);
+            this.contractSalaryTextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.contractSalaryTextBox.Name = "contractSalaryTextBox";
+            this.contractSalaryTextBox.Size = new System.Drawing.Size(204, 20);
+            this.contractSalaryTextBox.TabIndex = 14;
+            // 
+            // contractPositionComboBox
+            // 
+            this.contractPositionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.contractPositionComboBox.FormattingEnabled = true;
+            this.contractPositionComboBox.Location = new System.Drawing.Point(455, 58);
+            this.contractPositionComboBox.Margin = new System.Windows.Forms.Padding(2);
+            this.contractPositionComboBox.Name = "contractPositionComboBox";
+            this.contractPositionComboBox.Size = new System.Drawing.Size(204, 21);
+            this.contractPositionComboBox.TabIndex = 7;
+            this.contractPositionComboBox.SelectedIndexChanged += new System.EventHandler(this.contractPositionComboBox_SelectedIndexChanged);
+            // 
+            // contractDepartmentComboBox
+            // 
+            this.contractDepartmentComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.contractDepartmentComboBox.FormattingEnabled = true;
+            this.contractDepartmentComboBox.Location = new System.Drawing.Point(455, 34);
+            this.contractDepartmentComboBox.Margin = new System.Windows.Forms.Padding(2);
+            this.contractDepartmentComboBox.Name = "contractDepartmentComboBox";
+            this.contractDepartmentComboBox.Size = new System.Drawing.Size(204, 21);
+            this.contractDepartmentComboBox.TabIndex = 6;
+            this.contractDepartmentComboBox.SelectedIndexChanged += new System.EventHandler(this.contractDepartmentComboBox_SelectedIndexChanged);
+            // 
+            // actionsHolidayPage
+            // 
+            this.actionsHolidayPage.Controls.Add(groupBox1);
+            this.actionsHolidayPage.Controls.Add(groupBox3);
+            this.actionsHolidayPage.Controls.Add(groupBox2);
+            this.actionsHolidayPage.Location = new System.Drawing.Point(4, 22);
+            this.actionsHolidayPage.Name = "actionsHolidayPage";
+            this.actionsHolidayPage.Padding = new System.Windows.Forms.Padding(3);
+            this.actionsHolidayPage.Size = new System.Drawing.Size(948, 359);
+            this.actionsHolidayPage.TabIndex = 2;
+            this.actionsHolidayPage.Text = "Отпуски и пропуски";
+            this.actionsHolidayPage.UseVisualStyleBackColor = true;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(948, 359);
+            this.tabPage1.TabIndex = 3;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // courseWorkSecondVariantDataSet
+            // 
+            this.courseWorkSecondVariantDataSet.DataSetName = "CourseWorkSecondVariantDataSet";
+            this.courseWorkSecondVariantDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // absenceRegisterBindingSource
+            // 
+            this.absenceRegisterBindingSource.DataMember = "AbsenceRegister";
+            this.absenceRegisterBindingSource.DataSource = this.courseWorkSecondVariantDataSet;
+            // 
+            // absenceRegisterTableAdapter
+            // 
+            this.absenceRegisterTableAdapter.ClearBeforeFill = true;
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(455, 139);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(204, 20);
+            this.dateTimePicker1.TabIndex = 23;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(313, 145);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(25, 13);
+            this.label9.TabIndex = 24;
+            this.label9.Text = "До:";
             // 
             // MainFormForAdmin
             // 
@@ -1063,12 +1116,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.addMemberComunicationDataGrid)).EndInit();
             this.actionsAddContract.ResumeLayout(false);
             this.actionsAddContract.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.contractSchudeleDataGridView)).EndInit();
             this.groupBox4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.actionsHolidayPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.courseWorkSecondVariantDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.absenceRegisterBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.contractSchudeleDataGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1115,7 +1169,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Value;
         private System.Windows.Forms.Button addMemberSubmitButton;
         private System.Windows.Forms.Button addMemberResetButton;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button contractAddNew;
         private System.Windows.Forms.ComboBox contractTypeSelector;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TextBox contractSalaryTextBox;
@@ -1129,7 +1183,6 @@
         private System.Windows.Forms.ListBox absentFromHumanListBox;
         private System.Windows.Forms.ComboBox absentFromPositionComboBox;
         private System.Windows.Forms.ComboBox absentFromDepartmentComboBox;
-        private System.Windows.Forms.TreeView contractHumanSelectorTreeView;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label salaryLabel;
         private System.Windows.Forms.DataGridView contractSchudeleDataGridView;
@@ -1141,6 +1194,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Friday;
         private System.Windows.Forms.DataGridViewTextBoxColumn Saturday;
         private System.Windows.Forms.DataGridViewTextBoxColumn Sunday;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
 
     }
 }
