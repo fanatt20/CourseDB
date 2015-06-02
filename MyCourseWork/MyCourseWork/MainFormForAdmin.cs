@@ -39,14 +39,15 @@ namespace MyCourseWork
             AddMember = 0,
             AddContract = 1,
             Absence = 2,
+            Dissmis = 3
         }
-        #endregion
         public enum MainInfoCategories
         {
             Contracts = 0,
             Positions,
             Humans,
             Comunications,
+            Shucdele,
             UserDefined
         }
         public enum Operand
@@ -95,24 +96,29 @@ namespace MyCourseWork
 
         Dictionary<string, string> userDefinedQuery = new Dictionary<string, string>();
         SqlDataAdapter adapter;
-        BindingSource holidayTable;
-        List<VacantDepartment> vacantDepartments = new List<VacantDepartment>();
+        List<Department> vacantDepartments = new List<Department>();
+        List<Department> absentDepartments = new List<Department>();
+        List<Department> wholeDepartments = new List<Department>();
+        #endregion
+
+
 
         private SqlConnection connection;
-        private void button1_Click(object sender, EventArgs e)
+        private BindingSource dissmisBindigSource = new BindingSource();
+        private void selectButtom_Click(object sender, EventArgs e)
         {
 
             var select = String.Empty;
             var valueOfCategory = selectCategoryValueListBox.SelectedIndex;
-            switch (selectCategoryComboBox.SelectedIndex)
+            switch ((MainInfoCategories)selectCategoryComboBox.SelectedIndex)
             {
-                case _selectContracts:
+                case MainInfoCategories.Contracts:
                     select = "SELECT * FROM [Все контракты] ";
                     switch (valueOfCategory)
                     {
                         default:
                         case _selectAll:
-
+                            select += " ";
                             break;
                         case _selectWorkers:
                             select += " WHERE [Фактическое окончание] IS NULL ";
@@ -122,12 +128,13 @@ namespace MyCourseWork
                             break;
                     }
                     break;
-                case _selectPositions:
+                case MainInfoCategories.Positions:
                     select = "SELECT * FROM [Позиции] ";
                     switch (valueOfCategory)
                     {
                         default:
                         case _selectAllPosition:
+                            select += " ";
                             break;
                         case _selectHalfTimePosition:
                             select += @" WHERE [Состояние позиции] = 'Требуется полставки' ";
@@ -140,13 +147,13 @@ namespace MyCourseWork
                             break;
                     }
                     break;
-                case _selectComunication:
+                case MainInfoCategories.Comunications:
                     select = "SELECT * FROM [Связи с людьми] ";
                     switch (valueOfCategory)
                     {
                         default:
                         case _selectAll:
-
+                            select += " ";
                             break;
                         case _selectWorkers:
                             select += " WHERE [Является работником] =1 ";
@@ -156,13 +163,13 @@ namespace MyCourseWork
                             break;
                     }
                     break;
-                case _selectHuman:
+                case MainInfoCategories.Humans:
                     select = "SELECT * FROM [Сотрудники]";
                     switch (valueOfCategory)
                     {
                         default:
                         case _selectAll:
-
+                            select += " ";
                             break;
                         case _selectWorkers:
                             select += " WHERE [Зарплата] IS NOT NULL ";
@@ -172,8 +179,9 @@ namespace MyCourseWork
                             break;
                     }
                     break;
-                case _selectUserDefined:
-                    select = userDefinedQuery[(string)selectCategoryValueListBox.SelectedValue];
+                case MainInfoCategories.UserDefined:
+                    if (selectCategoryValueListBox.SelectedValue != null)
+                        select = userDefinedQuery[(string)selectCategoryValueListBox.SelectedValue];
                     break;
             }
             ExecuteSelectCommand(select);
@@ -224,19 +232,56 @@ namespace MyCourseWork
             InitializeComponent();
             this.connection = connection;
             adapter = new SqlDataAdapter();
-            filterOperationComboBox.SelectedIndex = 0;
 
-            dataGridView2.AllowUserToAddRows = false;
+            filterOperationComboBox.SelectedIndex = 0;
+            dataGridView3.DataSource = holidayManSource;
             mainInfoDataGrid.DataSource = bindingSource1;
-            mainInfoDataGrid.ReadOnly = true;
-            mainInfoSqlPage.Hide();
+            dataGridView4.DataSource = dissmisBindigSource;
+
+            dataGridView3.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView2.AllowUserToAddRows = false;
+            dataGridView4.AllowUserToAddRows = false;
             addMemberComunicationDataGrid.AllowUserToAddRows = false;
             mainInfoDataGrid.AllowUserToAddRows = false;
+            contractSchudeleDataGridView.AllowUserToAddRows = false;
+
+
+
             string begin = new TimeSpan(9, 0, 0).ToString();
             string end = new TimeSpan(17, 0, 0).ToString();
             contractSchudeleDataGridView.Rows.Add("Начало", begin, begin, begin, begin, begin, null, null);
             contractSchudeleDataGridView.Rows.Add("Конец", end, end, end, end, end, null, null);
-            contractSchudeleDataGridView.AllowUserToAddRows = false;
+            ApplyInterfaceByUserRole(SelectUserRoles());
+
+
+        }
+        private List<string> SelectUserRoles()
+        {
+            var select = connection.CreateCommand();
+            select.CommandText = @"select name from sys.database_principals dp  where dp.[type] = 'R' and is_member(name) = 1";
+            var result = new List<string>();
+            try
+            {
+                var reader = select.ExecuteReader();
+                while (reader.Read())
+                    result.Add(reader.GetString(0));
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return result;
+
+        }
+        private void ApplyInterfaceByUserRole(List<string> roles)
+        {
+            if (!roles.Contains("db_datareader"))
+                mainInfoPage.Dispose();
+            if (!roles.Contains("db_datawriter"))
+                mainActionPage.Dispose();
+            if (!roles.Contains("db_ddladmin"))
+                mainInfoSqlPage.Dispose();
         }
         private Dictionary<int, dynamic> ReadColumnFromDataGridview(int index, DataGridView table)
         {
@@ -433,13 +478,13 @@ namespace MyCourseWork
             {
                 connection.Open();
                 reader = selectVacantPositions.ExecuteReader();
-
+                vacantDepartments.Clear();
                 while (reader.Read())
                 {
-                    var department = new VacantDepartment(reader.GetInt32(5), reader.GetString(1));
+                    var department = new Department(reader.GetInt32(5), reader.GetString(1));
                     if (!vacantDepartments.Contains(department))
                         vacantDepartments.Add(department);
-                    var position = new VacantPosition((int)reader[4], (Decimal)reader[2], (string)reader[0], new PositionState((int)reader[7], (string)(reader[6])));
+                    var position = new Position((int)reader[4], (Decimal)reader[2], (string)reader[0], new PositionState((int)reader[7], (string)(reader[6])));
                     if (!department.VacantPositions.Contains(position))
                         department.AddToDepartment(position);
                 }
@@ -466,6 +511,44 @@ namespace MyCourseWork
         }
 
 
+        private void FillAbsencePage()
+        {
+
+            try
+            {
+                connection.Open();
+                adapter.SelectCommand = new SqlCommand("SELECT * FROM [Сотрудники] WHERE [Дата Подписания контракта] IS NOT NULL AND [EndAtPractically] IS NULL", connection);
+                var dt = new DataTable();
+                adapter.Fill(dt);
+                holidayManSource.DataSource = dt;
+                var reasons = new SqlCommand("Select Reason from AbsenceReason", connection);
+                var reader = reasons.ExecuteReader();
+                absentFromReasonComboBox.Items.Clear();
+                absentToReasonComboBox.Items.Clear();
+                while (reader.Read())
+                {
+                    absentFromReasonComboBox.Items.Add(reader.GetString(0));
+                    absentToReasonComboBox.Items.Add(reader.GetString(0));
+                }
+                reader.Close();
+                adapter.SelectCommand = new SqlCommand("Select * from [Не закрытые отсутствия]", connection);
+                var dt2 = new DataTable();
+                adapter.Fill(dt2);
+                dataGridView1.DataSource = dt2;
+            }
+            catch (Exception ex)
+            {
+                UserNotification.Error(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            foreach (var row in dataGridView3.Rows.Cast<DataGridViewRow>())
+                if (!absentFromDepartmentComboBox.Items.Contains(row.Cells["Отдел"].Value))
+                    absentFromDepartmentComboBox.Items.Add(row.Cells["Отдел"].Value);
+        }
 
         private void ActionsPage_TabIndexChanged(object sender, EventArgs e)
         {
@@ -478,12 +561,46 @@ namespace MyCourseWork
                 case ActionTabs.AddContract:
                     FillActionAddContractPage();
                     break;
+                case ActionTabs.Absence:
+                    FillAbsencePage();
+                    break;
+                case ActionTabs.Dissmis:
+                    FillDissmisPage();
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException("Invalid Tab index");
 
             }
 
         }
+
+        private void FillDissmisPage()
+        {
+            var selectWorkers = connection.CreateCommand();
+            selectWorkers.CommandText = "Select * from [Сотрудники] where EndAtPractically Is NULL";
+            try
+            {
+                connection.Open();
+                var adapter = new SqlDataAdapter("Select * from [Сотрудники] where EndAtPractically Is NULL AND [Дата Подписания контракта] IS NOT NULL", connection);
+                var dt = new DataTable();
+                adapter.Fill(dt);
+
+                dissmisBindigSource.DataSource = dt;
+            }
+            catch (Exception ex)
+            {
+                UserNotification.Error(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+            var departments = from row in dataGridView4.Rows.Cast<DataGridViewRow>() select row.Cells["Отдел"].Value;
+            foreach (var department in departments.Distinct())
+                comboBox1.Items.Add(department);
+        }
+
+
         private void MainFormForAdmin_Load(object sender, EventArgs e)
         {
             // TODO: данная строка кода позволяет загрузить данные в таблицу "courseWorkSecondVariantDataSet.AbsenceRegister". При необходимости она может быть перемещена или удалена.
@@ -544,7 +661,7 @@ namespace MyCourseWork
         {
             contractPositionComboBox.Items.Clear();
             var comboBox = sender as ComboBox;
-            foreach (var position in (comboBox.SelectedItem as VacantDepartment).VacantPositions)
+            foreach (var position in (comboBox.SelectedItem as Department).VacantPositions)
             {
                 contractPositionComboBox.Items.Add(position);
 
@@ -558,7 +675,7 @@ namespace MyCourseWork
         private void contractPositionComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             var comboBox = sender as ComboBox;
-            var selectedPosition = comboBox.SelectedItem as VacantPosition;
+            var selectedPosition = comboBox.SelectedItem as Position;
             salaryLabel.Text = "<=" + selectedPosition.MaxSalary.ToString();
             if (!salaryLabel.Visible)
                 salaryLabel.Visible = true;
@@ -571,6 +688,11 @@ namespace MyCourseWork
 
         private void absentFromDepartmentComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            holidayManSource.Filter = "[Отдел] = '" + absentFromDepartmentComboBox.SelectedItem + "'";
+            foreach (var row in dataGridView3.Rows.Cast<DataGridViewRow>())
+                if (row.Cells["Отдел"].Value == absentFromDepartmentComboBox.SelectedItem)
+                    if (!absentFromPositionComboBox.Items.Contains(row.Cells["Должность"].Value))
+                        absentFromPositionComboBox.Items.Add(row.Cells["Должность"].Value);
 
         }
 
@@ -588,7 +710,7 @@ namespace MyCourseWork
                     var insertIntoContracts = connection.CreateCommand();
                     insertIntoContracts.CommandText = "Insert into Contracts  values (@HumanID,@IDPosition,@Salary,@DateOfSigning,@EndAt,NULL,NULL)";
                     insertIntoContracts.Parameters.AddWithValue("HumanID", selectedHuman);
-                    insertIntoContracts.Parameters.AddWithValue("IDPosition", (contractPositionComboBox.SelectedItem as VacantPosition).ID);
+                    insertIntoContracts.Parameters.AddWithValue("IDPosition", (contractPositionComboBox.SelectedItem as Position).ID);
                     if (Decimal.Parse(contractSalaryTextBox.Text) > Decimal.Parse(salaryLabel.Text.Replace("<=", "")))
                         throw new ArgumentOutOfRangeException();
                     insertIntoContracts.Parameters.AddWithValue("Salary", Decimal.Parse(contractSalaryTextBox.Text));
@@ -604,8 +726,8 @@ namespace MyCourseWork
 
                     var update = connection.CreateCommand();
                     update.Transaction = trans;
-                    update.CommandText = "UPDATE Positions Set PositionStateID = " + ((contractPositionComboBox.SelectedItem as VacantPosition).State.GetPossibleStates().Count - (contractTypeSelector.SelectedItem as PositionState).ID).ToString() +
-                        "  where IDPosition = " + (contractPositionComboBox.SelectedItem as VacantPosition).ID.ToString();
+                    update.CommandText = "UPDATE Positions Set PositionStateID = " + ((contractPositionComboBox.SelectedItem as Position).State.GetPossibleStates().Count - (contractTypeSelector.SelectedItem as PositionState).ID).ToString() +
+                        "  where IDPosition = " + (contractPositionComboBox.SelectedItem as Position).ID.ToString();
                     update.ExecuteNonQuery();
                     var selectCurrentContractID = connection.CreateCommand();
                     selectCurrentContractID.CommandText = "Select TOP(1)ContractID from Contracts order by ContractID desc ";
@@ -638,8 +760,6 @@ namespace MyCourseWork
                     }
                     insertIntoShcudele.CommandText = insertIntoShcudele.CommandText.Remove(insertIntoShcudele.CommandText.Length - 1);
                     insertIntoShcudele.ExecuteNonQuery();
-
-
                     trans.Commit();
                 }
                 catch (Exception ex)
@@ -660,6 +780,156 @@ namespace MyCourseWork
         private void mainFormTab_SelectedIndexChanged(object sender, EventArgs e)
         {
             FillActionAddMemberPage();
+        }
+
+        private void absentFromPositionComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            holidayManSource.Filter = "[Отдел] = '" + absentFromDepartmentComboBox.SelectedItem + "' AND [Должность] = '" + absentFromPositionComboBox.SelectedItem + "'";
+        }
+
+        private void absenceAddToRegister_Click(object sender, EventArgs e)
+        {
+            if (dataGridView3.SelectedCells.Count != 1 && dataGridView3.SelectedCells.Count != 13)
+            {
+                UserNotification.Warn("Выбирете строку");
+            }
+            else
+            {
+
+                var selectedHuman = (dataGridView3.SelectedRows.Count == 1) ? dataGridView3.SelectedRows[0].Cells["HumanID"].Value :
+                                                                                         dataGridView3["HumanID", dataGridView3.SelectedCells[0].RowIndex].Value;
+                var insert = connection.CreateCommand();
+                insert.CommandText = "Insert Into AbsenceRegister Values (" + selectedHuman + "," +
+                    ((absentFromReasonComboBox.SelectedIndex != -1) ? absentFromReasonComboBox.SelectedIndex : 0) +
+                    ",'" + DateTime.Now.Date.ToString("yyy-MM-dd") + "',NULL)";
+                try
+                {
+                    connection.Open();
+                    insert.ExecuteNonQuery();
+                    UserNotification.Info("Успешно добавленно.");
+                }
+                catch (Exception ex)
+                {
+                    UserNotification.Error(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+                FillAbsencePage();
+            }
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+            if (dataGridView3.SelectedCells.Count != 1 && dataGridView3.SelectedCells.Count != 13)
+            {
+                UserNotification.Warn("Выбирете строку");
+            }
+            else
+            {
+                var command = connection.CreateCommand();
+                command.CommandText = "Update  [Не закрытые отсутствия] set EndAt= '" + absentToDatePicker.Value.Date.ToString("yyyy-MM-dd") +
+                    "', [IDAbsenceReason] = " + absentToReasonComboBox.SelectedIndex +
+                    " where [HumanID] = '" + dataGridView1["HumanID", dataGridView1.SelectedCells[0].RowIndex].Value + "'" +
+                    " AND [Начиная с] = '" + dataGridView1["Начиная с", dataGridView1.SelectedCells[0].RowIndex].Value + "'";
+                try
+                {
+                    connection.Open();
+                    if (command.ExecuteNonQuery() == 1)
+                        UserNotification.Info("Успешно добавленно.");
+                }
+                catch (Exception ex)
+                {
+                    UserNotification.Error(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+                FillAbsencePage();
+            }
+        }
+
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedCells.Count == 1 || dataGridView1.SelectedCells.Count == 13)
+            {
+                absentToReasonComboBox.SelectedItem = dataGridView1["Причина отсутствия", dataGridView1.SelectedCells[0].RowIndex].Value;
+            }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var positions = from row in dataGridView4.Rows.Cast<DataGridViewRow>() where row.Cells["Отдел"].Value == comboBox1.SelectedItem select row.Cells["Должность"].Value;
+            foreach (var position in positions.Distinct())
+                comboBox2.Items.Add(position);
+            dissmisBindigSource.Filter = "[Отдел]='" + comboBox1.SelectedItem + "'";
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            dissmisBindigSource.Filter = "[Отдел]='" + comboBox1.SelectedItem + "' and [Позиция]='" + comboBox2.SelectedItem + "'";
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (dataGridView4.SelectedCells.Count != 1 && dataGridView4.SelectedCells.Count != 13)
+            {
+                UserNotification.Warn("Выбирете строку");
+            }
+            else
+            {
+
+                var selectedHuman = (dataGridView4.SelectedRows.Count == 1) ? dataGridView4.SelectedRows[0].Cells["HumanID"].Value :
+                                                                                         dataGridView4["HumanID", dataGridView4.SelectedCells[0].RowIndex].Value;
+                var selectPostion = connection.CreateCommand();
+                selectPostion.CommandText = "Select IDPosition from Contracts where EndAtPractically IS NULL AND HumanID=" + selectedHuman;
+                var update = connection.CreateCommand();
+                update.CommandText = "update Contracts set EndAtPractically='" + DateTime.Now.Date.ToString("yyy-MM-dd") + "' where EndAtPractically IS NULL AND HumanID=" + selectedHuman;
+                var selectPositionState = connection.CreateCommand();
+                selectPositionState.CommandText = "Select PositionStateID from Positions where IDPosition=@PositionID";
+                var selectOtherContractsWithThisPosition = connection.CreateCommand();
+                selectOtherContractsWithThisPosition.CommandText = "Select * from Contracts where IDPosition=@PositionID AND EndAtPractically IS NOT NULL ";
+                SqlTransaction trans = null;
+                try
+                {
+
+                    connection.Open();
+                    trans = connection.BeginTransaction();
+                    selectPostion.Transaction = trans;
+                    var positionId = (int)selectPostion.ExecuteScalar();
+                    selectPositionState.Transaction = trans;
+                    selectPositionState.Parameters.AddWithValue("PositionID", positionId);
+                    var positionState = (int)selectPositionState.ExecuteScalar();
+                    update.Transaction = trans;
+                    update.ExecuteNonQuery();
+
+                    selectOtherContractsWithThisPosition.Transaction = trans;
+                    selectOtherContractsWithThisPosition.Parameters.AddWithValue("PositionID", positionId);
+                    var reader = selectOtherContractsWithThisPosition.ExecuteReader();
+                    if (!reader.HasRows && positionId == 0)
+                        positionState += 1;
+                    reader.Close();
+
+                    update.CommandText = "update Positions set PositionStateID = " + (positionState + 1) + " where IDPosition = " + positionId;
+                    update.ExecuteNonQuery();
+                    trans.Commit();
+                    UserNotification.Info("Успешно уволен.");
+                }
+                catch (Exception ex)
+                {
+                    if (trans != null) trans.Rollback();
+                    UserNotification.Error(ex.Message);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+                FillDissmisPage();
+            }
         }
     }
 }

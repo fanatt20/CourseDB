@@ -88,8 +88,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\UserNotification.cs" />
-    <Compile Include="VacantDepartment.cs" />
-    <Compile Include="VacantPosition.cs" />
+    <Compile Include="Department.cs" />
+    <Compile Include="Position.cs" />
     <EmbeddedResource Include="AddUserQueryToCollection.resx">
       <DependentUpon>AddUserQueryToCollection.cs</DependentUpon>
     </EmbeddedResource>

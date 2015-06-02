@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace MyCourseWork
 {
-    public class VacantPosition:IEquatable<VacantPosition>
+    public class Position:IEquatable<Position>
     {
         public readonly Int32 ID;
         public readonly String Name;
         public PositionState State;
         public readonly Decimal MaxSalary;
-        public VacantPosition(Int32 id,Decimal maxSalary ,String name, PositionState state)
+        public Position(Int32 id,Decimal maxSalary ,String name, PositionState state)
         {
             ID = id;
             Name = name;
@@ -24,7 +24,7 @@ namespace MyCourseWork
             return Name;
         }
 
-        public bool Equals(VacantPosition other)
+        public bool Equals(Position other)
         {
             return (Name.CompareTo(other.Name)==0)&&(ID==other.ID) &&(State==other.State);
         }

@@ -43,20 +43,21 @@
             System.Windows.Forms.Label label22;
             System.Windows.Forms.Label label17;
             System.Windows.Forms.GroupBox groupBox3;
-            System.Windows.Forms.Label label23;
             System.Windows.Forms.Label label21;
             System.Windows.Forms.Label label18;
             System.Windows.Forms.Label label19;
             System.Windows.Forms.Label label20;
             System.Windows.Forms.GroupBox groupBox2;
             System.Windows.Forms.Label label8;
+            System.Windows.Forms.Label label10;
+            System.Windows.Forms.Label label13;
+            System.Windows.Forms.Label label14;
             this.absentToReasonComboBox = new System.Windows.Forms.ComboBox();
             this.button2 = new System.Windows.Forms.Button();
             this.absentToDatePicker = new System.Windows.Forms.DateTimePicker();
-            this.button3 = new System.Windows.Forms.Button();
-            this.absentFromDatePicker = new System.Windows.Forms.DateTimePicker();
+            this.dataGridView3 = new System.Windows.Forms.DataGridView();
+            this.absenceAddToRegister = new System.Windows.Forms.Button();
             this.absentFromReasonComboBox = new System.Windows.Forms.ComboBox();
-            this.absentFromHumanListBox = new System.Windows.Forms.ListBox();
             this.absentFromPositionComboBox = new System.Windows.Forms.ComboBox();
             this.absentFromDepartmentComboBox = new System.Windows.Forms.ComboBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -94,6 +95,8 @@
             this.addMemeberSurnameTextBox = new System.Windows.Forms.TextBox();
             this.addMemebrNameTextBox = new System.Windows.Forms.TextBox();
             this.actionsAddContract = new System.Windows.Forms.TabPage();
+            this.label9 = new System.Windows.Forms.Label();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.contractSchudeleDataGridView = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Monday = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -113,13 +116,16 @@
             this.contractPositionComboBox = new System.Windows.Forms.ComboBox();
             this.contractDepartmentComboBox = new System.Windows.Forms.ComboBox();
             this.actionsHolidayPage = new System.Windows.Forms.TabPage();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.dissmisPage = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
+            this.dataGridView4 = new System.Windows.Forms.DataGridView();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.courseWorkSecondVariantDataSet = new MyCourseWork.CourseWorkSecondVariantDataSet();
             this.absenceRegisterBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.absenceRegisterTableAdapter = new MyCourseWork.CourseWorkSecondVariantDataSetTableAdapters.AbsenceRegisterTableAdapter();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.label9 = new System.Windows.Forms.Label();
+            this.holidayManSource = new System.Windows.Forms.BindingSource(this.components);
             label7 = new System.Windows.Forms.Label();
             label6 = new System.Windows.Forms.Label();
             label5 = new System.Windows.Forms.Label();
@@ -134,15 +140,18 @@
             label22 = new System.Windows.Forms.Label();
             label17 = new System.Windows.Forms.Label();
             groupBox3 = new System.Windows.Forms.GroupBox();
-            label23 = new System.Windows.Forms.Label();
             label21 = new System.Windows.Forms.Label();
             label18 = new System.Windows.Forms.Label();
             label19 = new System.Windows.Forms.Label();
             label20 = new System.Windows.Forms.Label();
             groupBox2 = new System.Windows.Forms.GroupBox();
             label8 = new System.Windows.Forms.Label();
+            label10 = new System.Windows.Forms.Label();
+            label13 = new System.Windows.Forms.Label();
+            label14 = new System.Windows.Forms.Label();
             groupBox1.SuspendLayout();
             groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.mainFormTab.SuspendLayout();
@@ -165,9 +174,12 @@
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.actionsHolidayPage.SuspendLayout();
+            this.dissmisPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.courseWorkSecondVariantDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.absenceRegisterBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.holidayManSource)).BeginInit();
             this.SuspendLayout();
             // 
             // label7
@@ -318,6 +330,7 @@
             this.button2.TabIndex = 1;
             this.button2.Text = "Закрыть";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // absentToDatePicker
             // 
@@ -329,14 +342,12 @@
             // 
             // groupBox3
             // 
-            groupBox3.Controls.Add(this.button3);
-            groupBox3.Controls.Add(label23);
-            groupBox3.Controls.Add(this.absentFromDatePicker);
+            groupBox3.Controls.Add(this.dataGridView3);
+            groupBox3.Controls.Add(this.absenceAddToRegister);
             groupBox3.Controls.Add(label21);
             groupBox3.Controls.Add(this.absentFromReasonComboBox);
             groupBox3.Controls.Add(label18);
             groupBox3.Controls.Add(label19);
-            groupBox3.Controls.Add(this.absentFromHumanListBox);
             groupBox3.Controls.Add(this.absentFromPositionComboBox);
             groupBox3.Controls.Add(this.absentFromDepartmentComboBox);
             groupBox3.Controls.Add(label20);
@@ -349,32 +360,24 @@
             groupBox3.TabStop = false;
             groupBox3.Text = "Добавить отсутствие";
             // 
-            // button3
+            // dataGridView3
             // 
-            this.button3.Location = new System.Drawing.Point(213, 296);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(186, 49);
-            this.button3.TabIndex = 24;
-            this.button3.Text = "Добавить";
-            this.button3.UseVisualStyleBackColor = true;
+            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView3.Location = new System.Drawing.Point(83, 76);
+            this.dataGridView3.Name = "dataGridView3";
+            this.dataGridView3.ReadOnly = true;
+            this.dataGridView3.Size = new System.Drawing.Size(124, 268);
+            this.dataGridView3.TabIndex = 25;
             // 
-            // label23
+            // absenceAddToRegister
             // 
-            label23.AutoSize = true;
-            label23.Location = new System.Drawing.Point(231, 101);
-            label23.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            label23.Name = "label23";
-            label23.Size = new System.Drawing.Size(25, 13);
-            label23.TabIndex = 23;
-            label23.Text = "До:";
-            // 
-            // absentFromDatePicker
-            // 
-            this.absentFromDatePicker.Location = new System.Drawing.Point(213, 117);
-            this.absentFromDatePicker.Margin = new System.Windows.Forms.Padding(2);
-            this.absentFromDatePicker.Name = "absentFromDatePicker";
-            this.absentFromDatePicker.Size = new System.Drawing.Size(182, 20);
-            this.absentFromDatePicker.TabIndex = 22;
+            this.absenceAddToRegister.Location = new System.Drawing.Point(213, 296);
+            this.absenceAddToRegister.Name = "absenceAddToRegister";
+            this.absenceAddToRegister.Size = new System.Drawing.Size(186, 49);
+            this.absenceAddToRegister.TabIndex = 24;
+            this.absenceAddToRegister.Text = "Добавить";
+            this.absenceAddToRegister.UseVisualStyleBackColor = true;
+            this.absenceAddToRegister.Click += new System.EventHandler(this.absenceAddToRegister_Click);
             // 
             // label21
             // 
@@ -416,15 +419,6 @@
             label19.TabIndex = 18;
             label19.Text = "На позиции";
             // 
-            // absentFromHumanListBox
-            // 
-            this.absentFromHumanListBox.FormattingEnabled = true;
-            this.absentFromHumanListBox.Location = new System.Drawing.Point(83, 66);
-            this.absentFromHumanListBox.Margin = new System.Windows.Forms.Padding(2);
-            this.absentFromHumanListBox.Name = "absentFromHumanListBox";
-            this.absentFromHumanListBox.Size = new System.Drawing.Size(126, 264);
-            this.absentFromHumanListBox.TabIndex = 17;
-            // 
             // absentFromPositionComboBox
             // 
             this.absentFromPositionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -434,6 +428,7 @@
             this.absentFromPositionComboBox.Name = "absentFromPositionComboBox";
             this.absentFromPositionComboBox.Size = new System.Drawing.Size(126, 21);
             this.absentFromPositionComboBox.TabIndex = 16;
+            this.absentFromPositionComboBox.SelectedIndexChanged += new System.EventHandler(this.absentFromPositionComboBox_SelectedIndexChanged);
             // 
             // absentFromDepartmentComboBox
             // 
@@ -471,10 +466,12 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(1, 18);
+            this.dataGridView1.Location = new System.Drawing.Point(5, 18);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(315, 327);
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.Size = new System.Drawing.Size(311, 326);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
             // label8
             // 
@@ -485,6 +482,36 @@
             label8.Size = new System.Drawing.Size(91, 13);
             label8.TabIndex = 22;
             label8.Text = "С рассписанием";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new System.Drawing.Point(5, 75);
+            label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            label10.Name = "label10";
+            label10.Size = new System.Drawing.Size(57, 13);
+            label10.TabIndex = 30;
+            label10.Text = "Человека";
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new System.Drawing.Point(5, 43);
+            label13.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            label13.Name = "label13";
+            label13.Size = new System.Drawing.Size(66, 13);
+            label13.TabIndex = 29;
+            label13.Text = "На позиции";
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new System.Drawing.Point(5, 19);
+            label14.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            label14.Name = "label14";
+            label14.Size = new System.Drawing.Size(59, 13);
+            label14.TabIndex = 26;
+            label14.Text = "Из отдела";
             // 
             // mainFormTab
             // 
@@ -535,6 +562,7 @@
             this.mainInfoDataGrid.Location = new System.Drawing.Point(2, 2);
             this.mainInfoDataGrid.Margin = new System.Windows.Forms.Padding(2);
             this.mainInfoDataGrid.Name = "mainInfoDataGrid";
+            this.mainInfoDataGrid.ReadOnly = true;
             this.mainInfoDataGrid.RowTemplate.Height = 24;
             this.mainInfoDataGrid.Size = new System.Drawing.Size(722, 388);
             this.mainInfoDataGrid.TabIndex = 0;
@@ -598,7 +626,7 @@
             this.selectButton.TabIndex = 0;
             this.selectButton.Text = "Выбрать";
             this.selectButton.UseVisualStyleBackColor = true;
-            this.selectButton.Click += new System.EventHandler(this.button1_Click);
+            this.selectButton.Click += new System.EventHandler(this.selectButtom_Click);
             // 
             // mainInfoFilterPage
             // 
@@ -732,7 +760,7 @@
             this.tabControl1.Controls.Add(this.actionsAddMemberPage);
             this.tabControl1.Controls.Add(this.actionsAddContract);
             this.tabControl1.Controls.Add(this.actionsHolidayPage);
-            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.dissmisPage);
             this.tabControl1.Location = new System.Drawing.Point(5, 5);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -878,6 +906,22 @@
             this.actionsAddContract.Text = "Добавить контракт";
             this.actionsAddContract.UseVisualStyleBackColor = true;
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(313, 145);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(25, 13);
+            this.label9.TabIndex = 24;
+            this.label9.Text = "До:";
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(455, 139);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(204, 20);
+            this.dateTimePicker1.TabIndex = 23;
+            // 
             // contractSchudeleDataGridView
             // 
             this.contractSchudeleDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -963,6 +1007,7 @@
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView2.Location = new System.Drawing.Point(6, 19);
             this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.ReadOnly = true;
             this.dataGridView2.Size = new System.Drawing.Size(290, 322);
             this.dataGridView2.TabIndex = 0;
             this.dataGridView2.SelectionChanged += new System.EventHandler(this.dataGridView2_SelectionChanged);
@@ -1041,15 +1086,63 @@
             this.actionsHolidayPage.Text = "Отпуски и пропуски";
             this.actionsHolidayPage.UseVisualStyleBackColor = true;
             // 
-            // tabPage1
+            // dissmisPage
             // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(948, 359);
-            this.tabPage1.TabIndex = 3;
-            this.tabPage1.Text = "tabPage1";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.dissmisPage.Controls.Add(this.button1);
+            this.dissmisPage.Controls.Add(this.dataGridView4);
+            this.dissmisPage.Controls.Add(label10);
+            this.dissmisPage.Controls.Add(label13);
+            this.dissmisPage.Controls.Add(this.comboBox1);
+            this.dissmisPage.Controls.Add(this.comboBox2);
+            this.dissmisPage.Controls.Add(label14);
+            this.dissmisPage.Location = new System.Drawing.Point(4, 22);
+            this.dissmisPage.Name = "dissmisPage";
+            this.dissmisPage.Padding = new System.Windows.Forms.Padding(3);
+            this.dissmisPage.Size = new System.Drawing.Size(948, 359);
+            this.dissmisPage.TabIndex = 3;
+            this.dissmisPage.Text = "Уволить";
+            this.dissmisPage.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(553, 279);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(143, 64);
+            this.button1.TabIndex = 32;
+            this.button1.Text = "Уволить";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // dataGridView4
+            // 
+            this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView4.Location = new System.Drawing.Point(109, 75);
+            this.dataGridView4.Name = "dataGridView4";
+            this.dataGridView4.ReadOnly = true;
+            this.dataGridView4.Size = new System.Drawing.Size(354, 268);
+            this.dataGridView4.TabIndex = 31;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(109, 16);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(354, 21);
+            this.comboBox1.TabIndex = 28;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(109, 43);
+            this.comboBox2.Margin = new System.Windows.Forms.Padding(2);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(354, 21);
+            this.comboBox2.TabIndex = 27;
+            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
             // courseWorkSecondVariantDataSet
             // 
@@ -1065,22 +1158,6 @@
             // 
             this.absenceRegisterTableAdapter.ClearBeforeFill = true;
             // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(455, 139);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(204, 20);
-            this.dateTimePicker1.TabIndex = 23;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(313, 145);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(25, 13);
-            this.label9.TabIndex = 24;
-            this.label9.Text = "До:";
-            // 
             // MainFormForAdmin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1095,6 +1172,7 @@
             groupBox1.PerformLayout();
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
             groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.mainFormTab.ResumeLayout(false);
@@ -1120,9 +1198,13 @@
             this.groupBox4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.actionsHolidayPage.ResumeLayout(false);
+            this.dissmisPage.ResumeLayout(false);
+            this.dissmisPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.courseWorkSecondVariantDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.absenceRegisterBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.holidayManSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1178,9 +1260,7 @@
         private System.Windows.Forms.ComboBox absentToReasonComboBox;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.DateTimePicker absentToDatePicker;
-        private System.Windows.Forms.DateTimePicker absentFromDatePicker;
         private System.Windows.Forms.ComboBox absentFromReasonComboBox;
-        private System.Windows.Forms.ListBox absentFromHumanListBox;
         private System.Windows.Forms.ComboBox absentFromPositionComboBox;
         private System.Windows.Forms.ComboBox absentFromDepartmentComboBox;
         private System.Windows.Forms.GroupBox groupBox4;
@@ -1194,11 +1274,17 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Friday;
         private System.Windows.Forms.DataGridViewTextBoxColumn Saturday;
         private System.Windows.Forms.DataGridViewTextBoxColumn Sunday;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.Button absenceAddToRegister;
+        private System.Windows.Forms.TabPage dissmisPage;
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DataGridView dataGridView3;
+        private System.Windows.Forms.BindingSource holidayManSource;
+        private System.Windows.Forms.DataGridView dataGridView4;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Button button1;
 
     }
 }
