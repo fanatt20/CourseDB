@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Data.SqlClient;
+﻿using MyCourseWork.Utils;
+using System;
 using System.Configuration;
-using MyCourseWork.Utils;
+using System.Data.SqlClient;
+using System.Windows.Forms;
 
 namespace MyCourseWork
 {
@@ -56,7 +49,7 @@ namespace MyCourseWork
         void newform_FormClosed(object sender, FormClosedEventArgs e)
         {
             var form = sender as MainFormForAdmin;
-            if (form !=null)
+            if (form != null)
             {
                 form.FormClosed -= newform_FormClosed;
             }

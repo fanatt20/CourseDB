@@ -1,20 +1,16 @@
 ﻿using MyCourseWork.Utils;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Data.Common;
 using System.Data.SqlClient;
-using System.Data.SqlTypes;
-using System.Drawing;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 
 namespace MyCourseWork
 {
+    
     public partial class MainFormForAdmin : Form
     {
         #region Constants
@@ -34,12 +30,15 @@ namespace MyCourseWork
         const byte _selectHalfTimePosition = 2;
         const byte _selectClosedPosition = 3;
         //actionTab indexes
+        const byte _holidaySelected = 2;
         public enum ActionTabs
         {
             AddMember = 0,
             AddContract = 1,
             Absence = 2,
-            Dissmis = 3
+            Dissmis = 3,
+            AddPosition = 4,
+            AddInspect = 5
         }
         public enum MainInfoCategories
         {
@@ -79,10 +78,11 @@ namespace MyCourseWork
                                                             { Operand.MoreOrEqualThan, ">=" },   { Operand.LessOrEqualThan, "<=" } };
 
         Dictionary<MainInfoCategories, string[]> _mainInfoCategories = new Dictionary<MainInfoCategories, string[]> {
-                                                            { MainInfoCategories.Contracts, new string[]        { "Все" , "Действующие" , "Не действующие контракты" } },
+                                                            { MainInfoCategories.Contracts, new string[]        { "Все" , "Действующие" , "Не действующие" } },
                                                             { MainInfoCategories.Positions, new string[]        { "Все" , "Свободные" , "Требующие полставки" , "Закрытые" } },
-                                                            { MainInfoCategories.Humans, new string []          { "Все люди" , "Работники" , "Не работающие" } },
-                                                            { MainInfoCategories.Comunications, new string []   { "Все люди" , "Работники" , "Не работающие" } }
+                                                            { MainInfoCategories.Humans, new string []          { "Все" , "Работники" , "Не работающие" } },
+                                                            { MainInfoCategories.Comunications, new string []   { "Все" , "Работники" , "Не работающие" } },
+                                                            { MainInfoCategories.Shucdele, new string[]         { "Все" , "Действующие", "Не действующие" }}
             };
         Dictionary<Days, string> _days = new Dictionary<Days, string>{
                                 {Days.Monday     ,"Понедельник"},
@@ -179,9 +179,25 @@ namespace MyCourseWork
                             break;
                     }
                     break;
+                case MainInfoCategories.Shucdele:
+                    select = "SELECT * FROM [Рассписание] ";
+                    switch (valueOfCategory)
+                    {
+                        default:
+                        case _selectAll:
+                            select += " ";
+                            break;
+                        case _selectWorkers:
+                            select += " WHERE [Является работником] =1 ";
+                            break;
+                        case _selectNotWorkers:
+                            select += " WHERE [Является работником] =0 ";
+                            break;
+                    }
+                    break;
                 case MainInfoCategories.UserDefined:
-                    if (selectCategoryValueListBox.SelectedValue != null)
-                        select = userDefinedQuery[(string)selectCategoryValueListBox.SelectedValue];
+                    if (valueOfCategory >= 0)
+                        select += userDefinedQuery.ElementAt(valueOfCategory).Value;
                     break;
             }
             ExecuteSelectCommand(select);
@@ -323,31 +339,11 @@ namespace MyCourseWork
                 filterValueCheckedListBox.Items.Add(cellValue ?? DBNull.Value);
 
         }
-        private void ReadToDataGridViewFromSQLReader(DataGridView table, SqlDataReader reader)
-        {
-            table.Columns.Clear();
-            for (int i = 0; i < reader.FieldCount; i++)
-            {
-                table.Columns.Add(reader.GetName(i), reader.GetName(i));
-                table.Columns[i].ValueType = reader.GetFieldType(i);
-            }
-            var row = new object[reader.FieldCount];
-            while (reader.Read())
-            {
-                reader.GetValues(row);
-                table.Rows.Add(row);
-            }
-        }
-        private void bindingSource1_CurrentChanged(object sender, EventArgs e)
-        {
 
-        }
         void filterColumnComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             FillFilterValueCheckedListBox();
         }
-
-
 
         private string SimpleFilter(string columnName, Operand operand, string value)
         {
@@ -420,8 +416,6 @@ namespace MyCourseWork
 
         }
 
-
-
         private void mainInfoComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -447,7 +441,6 @@ namespace MyCourseWork
         {
             ExecuteSelectCommand(queryRichTextBox.Text);
         }
-
 
         private void sqlAddToCollectionButton_Click(object sender, EventArgs e)
         {
@@ -510,7 +503,6 @@ namespace MyCourseWork
             contractDepartmentComboBox.SelectedIndex = 0;
         }
 
-
         private void FillAbsencePage()
         {
 
@@ -521,14 +513,16 @@ namespace MyCourseWork
                 var dt = new DataTable();
                 adapter.Fill(dt);
                 holidayManSource.DataSource = dt;
-                var reasons = new SqlCommand("Select Reason from AbsenceReason", connection);
+                var reasons = new SqlCommand("Select Reason,IDAbsenceReason from AbsenceReason", connection);
                 var reader = reasons.ExecuteReader();
                 absentFromReasonComboBox.Items.Clear();
                 absentToReasonComboBox.Items.Clear();
+
                 while (reader.Read())
                 {
                     absentFromReasonComboBox.Items.Add(reader.GetString(0));
-                    absentToReasonComboBox.Items.Add(reader.GetString(0));
+                    if (reader.GetInt32(1) != _holidaySelected)
+                        absentToReasonComboBox.Items.Add(reader.GetString(0));
                 }
                 reader.Close();
                 adapter.SelectCommand = new SqlCommand("Select * from [Не закрытые отсутствия]", connection);
@@ -548,6 +542,11 @@ namespace MyCourseWork
             foreach (var row in dataGridView3.Rows.Cast<DataGridViewRow>())
                 if (!absentFromDepartmentComboBox.Items.Contains(row.Cells["Отдел"].Value))
                     absentFromDepartmentComboBox.Items.Add(row.Cells["Отдел"].Value);
+
+            dateTimePicker2.Hide();
+            label23.Hide();
+
+
         }
 
         private void ActionsPage_TabIndexChanged(object sender, EventArgs e)
@@ -567,10 +566,47 @@ namespace MyCourseWork
                 case ActionTabs.Dissmis:
                     FillDissmisPage();
                     break;
+                case ActionTabs.AddPosition:
+                    FillAddPositionPage();
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException("Invalid Tab index");
 
             }
+
+        }
+
+        private void FillAddPositionPage()
+        {
+
+            var selectReq = connection.CreateCommand();
+            selectReq.CommandText = "Select * from Requirements";
+            var selectDepartments = connection.CreateCommand();
+            selectDepartments.CommandText = "Select * from Departments";
+            try
+            {
+                connection.Open();
+                var reader = selectReq.ExecuteReader();
+                checkedListBox1.Items.Clear();
+                while (reader.Read())
+                {
+                    checkedListBox1.Items.Add(new Requirement(reader.GetString(1),reader.GetInt32(0)));
+                }
+                reader.Close();
+                reader = selectDepartments.ExecuteReader();
+                comboBox4.Items.Clear();
+                while (reader.Read())
+                {
+                    comboBox4.Items.Add(new Department(reader.GetInt32(0),reader.GetString(1)));
+                }
+
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+
 
         }
 
@@ -598,14 +634,6 @@ namespace MyCourseWork
             var departments = from row in dataGridView4.Rows.Cast<DataGridViewRow>() select row.Cells["Отдел"].Value;
             foreach (var department in departments.Distinct())
                 comboBox1.Items.Add(department);
-        }
-
-
-        private void MainFormForAdmin_Load(object sender, EventArgs e)
-        {
-            // TODO: данная строка кода позволяет загрузить данные в таблицу "courseWorkSecondVariantDataSet.AbsenceRegister". При необходимости она может быть перемещена или удалена.
-            this.absenceRegisterTableAdapter.Fill(this.courseWorkSecondVariantDataSet.AbsenceRegister);
-
         }
 
         private void addMemberSubmitButton_Click(object sender, EventArgs e)
@@ -799,9 +827,11 @@ namespace MyCourseWork
                 var selectedHuman = (dataGridView3.SelectedRows.Count == 1) ? dataGridView3.SelectedRows[0].Cells["HumanID"].Value :
                                                                                          dataGridView3["HumanID", dataGridView3.SelectedCells[0].RowIndex].Value;
                 var insert = connection.CreateCommand();
-                insert.CommandText = "Insert Into AbsenceRegister Values (" + selectedHuman + "," +
-                    ((absentFromReasonComboBox.SelectedIndex != -1) ? absentFromReasonComboBox.SelectedIndex : 0) +
-                    ",'" + DateTime.Now.Date.ToString("yyy-MM-dd") + "',NULL)";
+                if (absentFromReasonComboBox.Items.Count == 4)
+                    insert.CommandText = "Insert Into AbsenceRegister Values (" + selectedHuman + "," +
+                        ((absentFromReasonComboBox.SelectedIndex == -1) ? 0 : absentFromReasonComboBox.SelectedIndex) +
+                        ",'" + DateTime.Now.Date.ToString("yyy-MM-dd") + "'," +
+                        ((absentFromReasonComboBox.SelectedIndex == _holidaySelected) ? ("'" + dateTimePicker2.Value.Date.ToString("yyyy-MM-dd") + "'") : "NULL") + ")";
                 try
                 {
                     connection.Open();
@@ -832,7 +862,7 @@ namespace MyCourseWork
             {
                 var command = connection.CreateCommand();
                 command.CommandText = "Update  [Не закрытые отсутствия] set EndAt= '" + absentToDatePicker.Value.Date.ToString("yyyy-MM-dd") +
-                    "', [IDAbsenceReason] = " + absentToReasonComboBox.SelectedIndex +
+                    "', [IDAbsenceReason] = " + ((absentFromReasonComboBox.SelectedIndex == 0 || absentFromReasonComboBox.SelectedIndex == 1) ? absentFromReasonComboBox.SelectedIndex : absentFromReasonComboBox.SelectedIndex + 1) +
                     " where [HumanID] = '" + dataGridView1["HumanID", dataGridView1.SelectedCells[0].RowIndex].Value + "'" +
                     " AND [Начиная с] = '" + dataGridView1["Начиная с", dataGridView1.SelectedCells[0].RowIndex].Value + "'";
                 try
@@ -931,5 +961,131 @@ namespace MyCourseWork
                 FillDissmisPage();
             }
         }
+
+        private void MainFormForAdmin_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                using (Stream stream = new FileStream("UserDefinedQuery", FileMode.OpenOrCreate, FileAccess.Read))
+                {
+                    userDefinedQuery = (Dictionary<string, string>)(new BinaryFormatter()).Deserialize(stream);
+
+                }
+
+            }
+            catch { }
+
+            this.reportViewer1.RefreshReport();
+            this.reportViewer1.RefreshReport();
+        }
+
+        private void absentFromReasonComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if ((sender as ComboBox) != null)
+                if ((sender as ComboBox).SelectedIndex == _holidaySelected)
+                {
+                    dateTimePicker2.Show();
+                    label23.Show();
+                }
+                else
+                {
+                    dateTimePicker2.Hide();
+                    label23.Hide();
+                }
+
+        }
+
+        private void MainFormForAdmin_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            using (var stream = Stream.Synchronized(new FileStream("UserDefinedQuery",
+    FileMode.OpenOrCreate, FileAccess.Write,
+    FileShare.Write, 4096, true)))
+                (new BinaryFormatter()).Serialize(stream, userDefinedQuery);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            var addReq = new AddRequirements(connection);
+            addReq.ShowDialog();
+        }
+
+        private void textBox2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            SqlTransaction transaction = null;
+            try
+            {
+                var insertInPositions = connection.CreateCommand();
+                insertInPositions.CommandText = @"Insert into Positions values(@PositionState,@Department,@Name,@SalaryMax,@Duties)";
+                insertInPositions.Parameters.AddWithValue("Name", String.IsNullOrEmpty(textBox1.Text) ? null : textBox1.Text);
+                Decimal.Parse(textBox2.Text);
+                insertInPositions.Parameters.AddWithValue("SalaryMax", Decimal.Parse(textBox2.Text));
+                insertInPositions.Parameters.AddWithValue("Department", (comboBox4.SelectedItem == null) ? null : (dynamic)(comboBox4.SelectedItem as Department).ID);
+                insertInPositions.Parameters.AddWithValue("PositionState", (comboBox3.SelectedIndex == -1) ? null : (dynamic)comboBox3.SelectedIndex + 1);
+                insertInPositions.Parameters.AddWithValue("Duties", richTextBox1.Text);
+
+
+
+                connection.Open();
+                transaction = connection.BeginTransaction();
+                insertInPositions.Transaction = transaction;
+                insertInPositions.ExecuteNonQuery();
+                var selectCurrentPositionID = connection.CreateCommand();
+                selectCurrentPositionID.CommandText = "Select TOP(1)IDPosition from Positions order by IDPosition desc";
+                selectCurrentPositionID.Transaction = transaction;
+                var index = (int)selectCurrentPositionID.ExecuteScalar();
+                var InsertIntoPositionRequarementsCmd = "Insert into PositionRequirements values ";
+
+                foreach (var item in checkedListBox1.SelectedItems.Cast<Requirement>())
+                {
+                    InsertIntoPositionRequarementsCmd += "(" + item.Index + "," + index + "),";
+
+                }
+                InsertIntoPositionRequarementsCmd = InsertIntoPositionRequarementsCmd.Remove(InsertIntoPositionRequarementsCmd.Length - 1);
+                var insertIntoComunication = connection.CreateCommand();
+                insertIntoComunication.CommandText = InsertIntoPositionRequarementsCmd;
+                insertIntoComunication.Transaction = transaction;
+                insertIntoComunication.ExecuteNonQuery();
+                transaction.Commit();
+                MessageBox.Show("Запись успешно добавлена");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                if (transaction != null) transaction.Rollback();
+
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+
+
+        }
     }
+    public class Requirement:IEquatable<Requirement> {
+        public string Name { get; private set; }
+        public int Index { get; private set; }
+        public Requirement(string name,int index)
+        {
+            Name = name;
+            Index = index;
+
+        }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+
+        public bool Equals(Requirement other)
+        {
+            return Index == other.Index;
+        }
+    }
+
 }

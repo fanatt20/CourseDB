@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="CourseWorkSecondVariantDataSet1" targetNamespace="http://tempuri.org/CourseWorkSecondVariantDataSet1.xsd" xmlns:mstns="http://tempuri.org/CourseWorkSecondVariantDataSet1.xsd" xmlns="http://tempuri.org/CourseWorkSecondVariantDataSet1.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="CourseWorkSecondVariantConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="CourseWorkSecondVariantConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.MyCourseWork.Properties.Settings.GlobalReference.Default.CourseWorkSecondVariantConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="РассписаниеTableAdapter" GeneratorDataComponentClassName="РассписаниеTableAdapter" Name="Рассписание" UserDataComponentName="РассписаниеTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="CourseWorkSecondVariantConnectionString (Settings)" DbObjectName="CourseWorkSecondVariant.dbo.Рассписание" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT Имя, Фамилия, Должность, Отдел, Понедельник, Вторник, Среда, Четверг, Пятница, Суббота, Воскресенье FROM dbo.Рассписание</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="Имя" DataSetColumn="Имя" />
+              <Mapping SourceColumn="Фамилия" DataSetColumn="Фамилия" />
+              <Mapping SourceColumn="Должность" DataSetColumn="Должность" />
+              <Mapping SourceColumn="Отдел" DataSetColumn="Отдел" />
+              <Mapping SourceColumn="Понедельник" DataSetColumn="Понедельник" />
+              <Mapping SourceColumn="Вторник" DataSetColumn="Вторник" />
+              <Mapping SourceColumn="Среда" DataSetColumn="Среда" />
+              <Mapping SourceColumn="Четверг" DataSetColumn="Четверг" />
+              <Mapping SourceColumn="Пятница" DataSetColumn="Пятница" />
+              <Mapping SourceColumn="Суббота" DataSetColumn="Суббота" />
+              <Mapping SourceColumn="Воскресенье" DataSetColumn="Воскресенье" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="CourseWorkSecondVariantDataSet1" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="CourseWorkSecondVariantDataSet1" msprop:Generator_UserDSName="CourseWorkSecondVariantDataSet1">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Рассписание" msprop:Generator_TableClassName="РассписаниеDataTable" msprop:Generator_TableVarName="tableРассписание" msprop:Generator_TablePropName="Рассписание" msprop:Generator_RowDeletingName="РассписаниеRowDeleting" msprop:Generator_RowChangingName="РассписаниеRowChanging" msprop:Generator_RowEvHandlerName="РассписаниеRowChangeEventHandler" msprop:Generator_RowDeletedName="РассписаниеRowDeleted" msprop:Generator_UserTableName="Рассписание" msprop:Generator_RowChangedName="РассписаниеRowChanged" msprop:Generator_RowEvArgName="РассписаниеRowChangeEvent" msprop:Generator_RowClassName="РассписаниеRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Имя" msprop:Generator_ColumnVarNameInTable="columnИмя" msprop:Generator_ColumnPropNameInRow="Имя" msprop:Generator_ColumnPropNameInTable="ИмяColumn" msprop:Generator_UserColumnName="Имя">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Фамилия" msprop:Generator_ColumnVarNameInTable="columnФамилия" msprop:Generator_ColumnPropNameInRow="Фамилия" msprop:Generator_ColumnPropNameInTable="ФамилияColumn" msprop:Generator_UserColumnName="Фамилия">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Должность" msprop:Generator_ColumnVarNameInTable="columnДолжность" msprop:Generator_ColumnPropNameInRow="Должность" msprop:Generator_ColumnPropNameInTable="ДолжностьColumn" msprop:Generator_UserColumnName="Должность">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Отдел" msprop:Generator_ColumnVarNameInTable="columnОтдел" msprop:Generator_ColumnPropNameInRow="Отдел" msprop:Generator_ColumnPropNameInTable="ОтделColumn" msprop:Generator_UserColumnName="Отдел">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Понедельник" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnПонедельник" msprop:Generator_ColumnPropNameInRow="Понедельник" msprop:Generator_ColumnPropNameInTable="ПонедельникColumn" msprop:Generator_UserColumnName="Понедельник" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="84" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Вторник" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnВторник" msprop:Generator_ColumnPropNameInRow="Вторник" msprop:Generator_ColumnPropNameInTable="ВторникColumn" msprop:Generator_UserColumnName="Вторник" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="84" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Среда" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnСреда" msprop:Generator_ColumnPropNameInRow="Среда" msprop:Generator_ColumnPropNameInTable="СредаColumn" msprop:Generator_UserColumnName="Среда" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="84" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Четверг" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnЧетверг" msprop:Generator_ColumnPropNameInRow="Четверг" msprop:Generator_ColumnPropNameInTable="ЧетвергColumn" msprop:Generator_UserColumnName="Четверг" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="84" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Пятница" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnПятница" msprop:Generator_ColumnPropNameInRow="Пятница" msprop:Generator_ColumnPropNameInTable="ПятницаColumn" msprop:Generator_UserColumnName="Пятница" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="84" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Суббота" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnСуббота" msprop:Generator_ColumnPropNameInRow="Суббота" msprop:Generator_ColumnPropNameInTable="СубботаColumn" msprop:Generator_UserColumnName="Суббота" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="84" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Воскресенье" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnВоскресенье" msprop:Generator_ColumnPropNameInRow="Воскресенье" msprop:Generator_ColumnPropNameInTable="ВоскресеньеColumn" msprop:Generator_UserColumnName="Воскресенье" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="84" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
