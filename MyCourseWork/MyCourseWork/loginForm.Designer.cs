@@ -45,9 +45,9 @@
             this.loginGroupBox.Controls.Add(this.loginPasswordTextBox);
             this.loginGroupBox.Controls.Add(this.loginLoginButton);
             this.loginGroupBox.Location = new System.Drawing.Point(9, 10);
-            this.loginGroupBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.loginGroupBox.Margin = new System.Windows.Forms.Padding(2);
             this.loginGroupBox.Name = "loginGroupBox";
-            this.loginGroupBox.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.loginGroupBox.Padding = new System.Windows.Forms.Padding(2);
             this.loginGroupBox.Size = new System.Drawing.Size(283, 111);
             this.loginGroupBox.TabIndex = 0;
             this.loginGroupBox.TabStop = false;
@@ -76,7 +76,7 @@
             // loginLoginTextBox
             // 
             this.loginLoginTextBox.Location = new System.Drawing.Point(88, 17);
-            this.loginLoginTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.loginLoginTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.loginLoginTextBox.Name = "loginLoginTextBox";
             this.loginLoginTextBox.Size = new System.Drawing.Size(192, 20);
             this.loginLoginTextBox.TabIndex = 0;
@@ -84,8 +84,9 @@
             // 
             // loginPasswordTextBox
             // 
+            this.loginPasswordTextBox.ImeMode = System.Windows.Forms.ImeMode.On;
             this.loginPasswordTextBox.Location = new System.Drawing.Point(88, 40);
-            this.loginPasswordTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.loginPasswordTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.loginPasswordTextBox.Name = "loginPasswordTextBox";
             this.loginPasswordTextBox.PasswordChar = '•';
             this.loginPasswordTextBox.Size = new System.Drawing.Size(192, 20);
@@ -95,7 +96,7 @@
             // loginLoginButton
             // 
             this.loginLoginButton.Location = new System.Drawing.Point(4, 63);
-            this.loginLoginButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.loginLoginButton.Margin = new System.Windows.Forms.Padding(2);
             this.loginLoginButton.Name = "loginLoginButton";
             this.loginLoginButton.Size = new System.Drawing.Size(274, 44);
             this.loginLoginButton.TabIndex = 2;
@@ -110,9 +111,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(301, 131);
             this.Controls.Add(this.loginGroupBox);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "loginForm";
-            this.Text = "Form1";
+            this.Text = "LibraryHR";
             this.loginGroupBox.ResumeLayout(false);
             this.loginGroupBox.PerformLayout();
             this.ResumeLayout(false);

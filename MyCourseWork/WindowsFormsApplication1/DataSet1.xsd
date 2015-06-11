@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xs:schema id="CourseWorkSecondVariantDataSet" targetNamespace="http://tempuri.org/CourseWorkSecondVariantDataSet.xsd" xmlns:mstns="http://tempuri.org/CourseWorkSecondVariantDataSet.xsd" xmlns="http://tempuri.org/CourseWorkSecondVariantDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+<xs:schema id="DataSet1" targetNamespace="http://tempuri.org/DataSet1.xsd" xmlns:mstns="http://tempuri.org/DataSet1.xsd" xmlns="http://tempuri.org/DataSet1.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
   <xs:annotation>
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
       <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
         <Connections>
-          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="CourseWorkSecondVariantConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="CourseWorkSecondVariantConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.MyCourseWork.Properties.Settings.GlobalReference.Default.CourseWorkSecondVariantConnectionString" Provider="System.Data.SqlClient" />
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="CourseWorkSecondVariantConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="CourseWorkSecondVariantConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.WindowsFormsApplication1.Properties.Settings.GlobalReference.Default.CourseWorkSecondVariantConnectionString" Provider="System.Data.SqlClient" />
         </Connections>
         <Tables>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="РассписаниеTableAdapter" GeneratorDataComponentClassName="РассписаниеTableAdapter" Name="Рассписание" UserDataComponentName="РассписаниеTableAdapter">
@@ -12,7 +12,7 @@
               <DbSource ConnectionRef="CourseWorkSecondVariantConnectionString (Settings)" DbObjectName="CourseWorkSecondVariant.dbo.Рассписание" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
-                    <CommandText>SELECT Имя, Фамилия, Должность, Отдел, Понедельник, Вторник, Среда, Четверг, Пятница, Суббота, Воскресенье, [Является работником] FROM dbo.Рассписание</CommandText>
+                    <CommandText>SELECT Имя, Фамилия, Должность, Отдел, Понедельник, Вторник, Среда, Четверг, Пятница, Суббота, Воскресенье FROM Рассписание</CommandText>
                     <Parameters />
                   </DbCommand>
                 </SelectCommand>
@@ -30,7 +30,6 @@
               <Mapping SourceColumn="Пятница" DataSetColumn="Пятница" />
               <Mapping SourceColumn="Суббота" DataSetColumn="Суббота" />
               <Mapping SourceColumn="Воскресенье" DataSetColumn="Воскресенье" />
-              <Mapping SourceColumn="Является работником" DataSetColumn="Является работником" />
             </Mappings>
             <Sources />
           </TableAdapter>
@@ -39,7 +38,7 @@
       </DataSource>
     </xs:appinfo>
   </xs:annotation>
-  <xs:element name="CourseWorkSecondVariantDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="CourseWorkSecondVariantDataSet" msprop:Generator_UserDSName="CourseWorkSecondVariantDataSet">
+  <xs:element name="DataSet1" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DataSet1" msprop:Generator_UserDSName="DataSet1">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
         <xs:element name="Рассписание" msprop:Generator_TableClassName="РассписаниеDataTable" msprop:Generator_TableVarName="tableРассписание" msprop:Generator_TablePropName="Рассписание" msprop:Generator_RowDeletingName="РассписаниеRowDeleting" msprop:Generator_RowChangingName="РассписаниеRowChanging" msprop:Generator_RowEvHandlerName="РассписаниеRowChangeEventHandler" msprop:Generator_RowDeletedName="РассписаниеRowDeleted" msprop:Generator_UserTableName="Рассписание" msprop:Generator_RowChangedName="РассписаниеRowChanged" msprop:Generator_RowEvArgName="РассписаниеRowChangeEvent" msprop:Generator_RowClassName="РассписаниеRow">
@@ -122,7 +121,6 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="Является_x0020_работником" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnЯвляется_работником" msprop:Generator_ColumnPropNameInRow="Является_работником" msprop:Generator_ColumnPropNameInTable="Является_работникомColumn" msprop:Generator_UserColumnName="Является работником" type="xs:int" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

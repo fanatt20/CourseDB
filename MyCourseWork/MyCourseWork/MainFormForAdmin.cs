@@ -10,17 +10,10 @@ using System.Windows.Forms;
 
 namespace MyCourseWork
 {
-    
+
     public partial class MainFormForAdmin : Form
     {
         #region Constants
-        //Select category ComboBox
-        const byte _selectContracts = 0;
-        const byte _selectPositions = 1;
-        const byte _selectComunication = 2;
-        const byte _selectHuman = 3;
-        const byte _selectUserDefined = 4;
-        const byte _selectSchudele = 5;
         //select value category listBox
         const byte _selectAll = 0;
         const byte _selectWorkers = 1;
@@ -34,11 +27,11 @@ namespace MyCourseWork
         public enum ActionTabs
         {
             AddMember = 0,
-            AddContract = 1,
-            Absence = 2,
-            Dissmis = 3,
-            AddPosition = 4,
-            AddInspect = 5
+            AddContract,
+            Absence,
+            Dissmis,
+            AddPosition,
+            AddInspect
         }
         public enum MainInfoCategories
         {
@@ -71,20 +64,19 @@ namespace MyCourseWork
             Sunday = 7
 
         }
-
         private Dictionary<Operand, string> _operands = new Dictionary<Operand, string> { 
                                                             { Operand.Equal, "=" },              { Operand.NotEqual, "<>" },
                                                             { Operand.MoreThen, ">" },           { Operand.LessThan, "<" },
                                                             { Operand.MoreOrEqualThan, ">=" },   { Operand.LessOrEqualThan, "<=" } };
 
-        Dictionary<MainInfoCategories, string[]> _mainInfoCategories = new Dictionary<MainInfoCategories, string[]> {
+        private Dictionary<MainInfoCategories, string[]> _mainInfoCategories = new Dictionary<MainInfoCategories, string[]> {
                                                             { MainInfoCategories.Contracts, new string[]        { "Все" , "Действующие" , "Не действующие" } },
                                                             { MainInfoCategories.Positions, new string[]        { "Все" , "Свободные" , "Требующие полставки" , "Закрытые" } },
                                                             { MainInfoCategories.Humans, new string []          { "Все" , "Работники" , "Не работающие" } },
                                                             { MainInfoCategories.Comunications, new string []   { "Все" , "Работники" , "Не работающие" } },
                                                             { MainInfoCategories.Shucdele, new string[]         { "Все" , "Действующие", "Не действующие" }}
             };
-        Dictionary<Days, string> _days = new Dictionary<Days, string>{
+        private Dictionary<Days, string> _days = new Dictionary<Days, string>{
                                 {Days.Monday     ,"Понедельник"},
                                 {Days.Tuesday    ,"Вторник"},
                                 {Days.Wednesday  ,"Среда"},
@@ -93,6 +85,7 @@ namespace MyCourseWork
                                 {Days.Saturday   ,"Суббота"},
                                 {Days.Sunday     ,"Воскресенье"},
         };
+
 
         Dictionary<string, string> userDefinedQuery = new Dictionary<string, string>();
         SqlDataAdapter adapter;
@@ -105,6 +98,39 @@ namespace MyCourseWork
 
         private SqlConnection connection;
         private BindingSource dissmisBindigSource = new BindingSource();
+        private BindingSource medicalInspectSource = new BindingSource();
+
+        public MainFormForAdmin(SqlConnection connection)
+        {
+            InitializeComponent();
+            this.connection = connection;
+            adapter = new SqlDataAdapter();
+
+            filterOperationComboBox.SelectedIndex = 0;
+            dataGridView3.DataSource = holidayManSource;
+            mainInfoDataGrid.DataSource = bindingSource1;
+            dataGridView4.DataSource = dissmisBindigSource;
+            medicalInspectDataGrid.DataSource = medicalInspectSource;
+
+            dataGridView3.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView2.AllowUserToAddRows = false;
+            dataGridView4.AllowUserToAddRows = false;
+            addMemberComunicationDataGrid.AllowUserToAddRows = false;
+            mainInfoDataGrid.AllowUserToAddRows = false;
+            contractSchudeleDataGridView.AllowUserToAddRows = false;
+
+
+
+            string begin = new TimeSpan(9, 0, 0).ToString();
+            string end = new TimeSpan(17, 0, 0).ToString();
+            contractSchudeleDataGridView.Rows.Add("Начало", begin, begin, begin, begin, begin, null, null);
+            contractSchudeleDataGridView.Rows.Add("Конец", end, end, end, end, end, null, null);
+            ApplyInterfaceByUserRole(SelectUserRoles());
+
+
+        }
+
         private void selectButtom_Click(object sender, EventArgs e)
         {
 
@@ -243,35 +269,7 @@ namespace MyCourseWork
             }
 
         }
-        public MainFormForAdmin(SqlConnection connection)
-        {
-            InitializeComponent();
-            this.connection = connection;
-            adapter = new SqlDataAdapter();
 
-            filterOperationComboBox.SelectedIndex = 0;
-            dataGridView3.DataSource = holidayManSource;
-            mainInfoDataGrid.DataSource = bindingSource1;
-            dataGridView4.DataSource = dissmisBindigSource;
-
-            dataGridView3.AllowUserToAddRows = false;
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView2.AllowUserToAddRows = false;
-            dataGridView4.AllowUserToAddRows = false;
-            addMemberComunicationDataGrid.AllowUserToAddRows = false;
-            mainInfoDataGrid.AllowUserToAddRows = false;
-            contractSchudeleDataGridView.AllowUserToAddRows = false;
-
-
-
-            string begin = new TimeSpan(9, 0, 0).ToString();
-            string end = new TimeSpan(17, 0, 0).ToString();
-            contractSchudeleDataGridView.Rows.Add("Начало", begin, begin, begin, begin, begin, null, null);
-            contractSchudeleDataGridView.Rows.Add("Конец", end, end, end, end, end, null, null);
-            ApplyInterfaceByUserRole(SelectUserRoles());
-
-
-        }
         private List<string> SelectUserRoles()
         {
             var select = connection.CreateCommand();
@@ -290,15 +288,17 @@ namespace MyCourseWork
             return result;
 
         }
+
         private void ApplyInterfaceByUserRole(List<string> roles)
         {
             if (!roles.Contains("db_datareader"))
                 mainInfoPage.Dispose();
             if (!roles.Contains("db_datawriter"))
-                mainActionPage.Dispose();
+                actionPage.Dispose();
             if (!roles.Contains("db_ddladmin"))
                 mainInfoSqlPage.Dispose();
         }
+
         private Dictionary<int, dynamic> ReadColumnFromDataGridview(int index, DataGridView table)
         {
             var result = new Dictionary<int, dynamic>();
@@ -312,6 +312,7 @@ namespace MyCourseWork
             return result;
 
         }
+
         private void FillFilterColumnComboBox()
         {
             filterColumnComboBox.Items.Clear();
@@ -321,6 +322,7 @@ namespace MyCourseWork
             if (filterColumnComboBox.Items.Count != 0)
                 filterColumnComboBox.SelectedIndex = 0;
         }
+
         private void FillFilterValueCheckedListBox()
         {
 
@@ -445,7 +447,7 @@ namespace MyCourseWork
         private void sqlAddToCollectionButton_Click(object sender, EventArgs e)
         {
             var name = new AddUserQueryToCollection(userDefinedQuery.Add, queryRichTextBox.Text);
-            name.Show();
+            name.ShowDialog();
         }
 
         private void FillActionAddMemberPage()
@@ -569,11 +571,50 @@ namespace MyCourseWork
                 case ActionTabs.AddPosition:
                     FillAddPositionPage();
                     break;
+                case ActionTabs.AddInspect:
+                    FillMedicalInspectPage();
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException("Invalid Tab index");
 
             }
 
+        }
+
+        private void FillMedicalInspectPage()
+        {
+            try
+            {
+                connection.Open();
+                var adapter = new SqlDataAdapter("Select * from [Сотрудники] where EndAtPractically Is NULL AND [Дата Подписания контракта] IS NOT NULL", connection);
+                var dt = new DataTable();
+                adapter.Fill(dt);
+
+                medicalInspectSource.DataSource = dt;
+            }
+            catch (Exception ex)
+            {
+                UserNotification.Error(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            {
+                medicalInspectDataGrid.Columns["Education"].Visible = false;
+                medicalInspectDataGrid.Columns["EndAtPractically"].Visible = false;
+                medicalInspectDataGrid.Columns["HumanID"].Visible = false;
+                medicalInspectDataGrid.Columns["Дата Подписания контракта"].Visible = false;
+                medicalInspectDataGrid.Columns["Состояние позиции"].Visible = false;
+                medicalInspectDataGrid.Columns["Официальное окончание"].Visible = false;
+                medicalInspectDataGrid.Columns["Зарплата"].Visible = false;
+            }
+
+            var departments = from row in medicalInspectDataGrid.Rows.Cast<DataGridViewRow>() select row.Cells["Отдел"].Value;
+            medicalInspectDepartmentSelector.Items.Clear();
+            foreach (var department in departments.Distinct())
+                medicalInspectDepartmentSelector.Items.Add(department);
         }
 
         private void FillAddPositionPage()
@@ -590,14 +631,14 @@ namespace MyCourseWork
                 checkedListBox1.Items.Clear();
                 while (reader.Read())
                 {
-                    checkedListBox1.Items.Add(new Requirement(reader.GetString(1),reader.GetInt32(0)));
+                    checkedListBox1.Items.Add(new Requirement(reader.GetString(1), reader.GetInt32(0)));
                 }
                 reader.Close();
                 reader = selectDepartments.ExecuteReader();
                 comboBox4.Items.Clear();
                 while (reader.Read())
                 {
-                    comboBox4.Items.Add(new Department(reader.GetInt32(0),reader.GetString(1)));
+                    comboBox4.Items.Add(new Department(reader.GetInt32(0), reader.GetString(1)));
                 }
 
             }
@@ -635,7 +676,16 @@ namespace MyCourseWork
             foreach (var department in departments.Distinct())
                 comboBox1.Items.Add(department);
         }
+        private bool CommunicationsGridIsNotEmpty()
+        {
+            foreach (var row in addMemberComunicationDataGrid.Rows.Cast<DataGridViewRow>())
+            {
+                if (!row.IsNewRow && !String.IsNullOrWhiteSpace(row.Cells[0].Value.ToString()) && !String.IsNullOrWhiteSpace(row.Cells[1].Value.ToString()))
+                    return true;
+            }
+            return false;
 
+        }
         private void addMemberSubmitButton_Click(object sender, EventArgs e)
         {
             var insertInHuman = connection.CreateCommand();
@@ -658,17 +708,20 @@ namespace MyCourseWork
                 selectCurrentHumanID.CommandText = "Select TOP(1)HumanID from Human order by HumanID desc ";
                 selectCurrentHumanID.Transaction = transaction;
                 var index = (int)selectCurrentHumanID.ExecuteScalar();
-                var InsertIntoComunicationCmd = "Insert into Comunications values ";
-                foreach (var item in addMemberComunicationDataGrid.Rows.Cast<DataGridViewRow>())
+                if (CommunicationsGridIsNotEmpty())
                 {
-                    if (!item.IsNewRow && !String.IsNullOrEmpty(item.Cells[0].Value.ToString()) && !String.IsNullOrEmpty(item.Cells[1].Value.ToString()))
-                        InsertIntoComunicationCmd += @"(' " + index + @"','" + item.Index + @"','" + item.Cells[1].Value.ToString() + @"'),";
+                    var InsertIntoComunicationCmd = "Insert into Comunications values ";
+                    foreach (var item in addMemberComunicationDataGrid.Rows.Cast<DataGridViewRow>())
+                    {
+                        if (!item.IsNewRow && !String.IsNullOrWhiteSpace(item.Cells[1].Value.ToString()))
+                            InsertIntoComunicationCmd += @"(' " + index + @"','" + item.Index + @"','" + item.Cells[1].Value.ToString() + @"'),";
+                    }
+                    InsertIntoComunicationCmd = InsertIntoComunicationCmd.Remove(InsertIntoComunicationCmd.Length - 1);
+                    var insertIntoComunication = connection.CreateCommand();
+                    insertIntoComunication.CommandText = InsertIntoComunicationCmd;
+                    insertIntoComunication.Transaction = transaction;
+                    insertIntoComunication.ExecuteNonQuery();
                 }
-                InsertIntoComunicationCmd = InsertIntoComunicationCmd.Remove(InsertIntoComunicationCmd.Length - 1);
-                var insertIntoComunication = connection.CreateCommand();
-                insertIntoComunication.CommandText = InsertIntoComunicationCmd;
-                insertIntoComunication.Transaction = transaction;
-                insertIntoComunication.ExecuteNonQuery();
                 transaction.Commit();
                 MessageBox.Show("Запись успешно добавлена");
             }
@@ -726,21 +779,23 @@ namespace MyCourseWork
 
         private void contractAddNew_Click(object sender, EventArgs e)
         {
-            if (dataGridView2.SelectedCells.Count != 1 && dataGridView2.SelectedCells.Count != 13)
-                UserNotification.Warn("Выберите строку");
+            if (dataGridView2.SelectedRows.Count != 1)
+                UserNotification.Warn("Выберите одну строку");
             else
             {
                 SqlTransaction trans = null;
                 try
                 {
-                    var selectedHuman = (dataGridView2.SelectedRows.Count == 1) ? dataGridView2.SelectedRows[0].Cells["HumanID"].Value :
-                                                                                    dataGridView2["HumanID", dataGridView2.SelectedCells[0].RowIndex].Value;
+                    var selectedHuman =  dataGridView2.SelectedRows[0].Cells["HumanID"].Value;
+                                                                                    
                     var insertIntoContracts = connection.CreateCommand();
-                    insertIntoContracts.CommandText = "Insert into Contracts  values (@HumanID,@IDPosition,@Salary,@DateOfSigning,@EndAt,NULL,NULL)";
+                    insertIntoContracts.CommandText = "Insert into Contracts  values (@HumanID,@IDPosition,@Salary,@DateOfSigning,@EndAt,NULL)";
                     insertIntoContracts.Parameters.AddWithValue("HumanID", selectedHuman);
                     insertIntoContracts.Parameters.AddWithValue("IDPosition", (contractPositionComboBox.SelectedItem as Position).ID);
                     if (Decimal.Parse(contractSalaryTextBox.Text) > Decimal.Parse(salaryLabel.Text.Replace("<=", "")))
-                        throw new ArgumentOutOfRangeException();
+                        throw new ArgumentOutOfRangeException("Слишком большая зарплата");
+                    if (Decimal.Parse(contractSalaryTextBox.Text) < 0)
+                        throw new ArgumentOutOfRangeException("Зарплата не может быть меньше нуля");
                     insertIntoContracts.Parameters.AddWithValue("Salary", Decimal.Parse(contractSalaryTextBox.Text));
                     insertIntoContracts.Parameters.AddWithValue("DateOfSigning", DateTime.Now.Date.ToString("yyyy-MM-dd"));
                     insertIntoContracts.Parameters.AddWithValue("EndAt", dateTimePicker1.Value.Date.ToString("yyyy-MM-dd"));
@@ -789,6 +844,7 @@ namespace MyCourseWork
                     insertIntoShcudele.CommandText = insertIntoShcudele.CommandText.Remove(insertIntoShcudele.CommandText.Length - 1);
                     insertIntoShcudele.ExecuteNonQuery();
                     trans.Commit();
+                    UserNotification.Info("Контракт успешно составлен!");
                 }
                 catch (Exception ex)
                 {
@@ -796,6 +852,7 @@ namespace MyCourseWork
                     UserNotification.Error(ex.Message);
                 }
                 finally { connection.Close(); }
+                FillActionAddContractPage();
             }
         }
 
@@ -807,7 +864,12 @@ namespace MyCourseWork
 
         private void mainFormTab_SelectedIndexChanged(object sender, EventArgs e)
         {
-            FillActionAddMemberPage();
+            if (!actionPage.IsDisposed)
+                FillActionAddMemberPage();
+            if (!reportPage.IsDisposed)
+                reportViewer1.Refresh();
+
+
         }
 
         private void absentFromPositionComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -964,6 +1026,9 @@ namespace MyCourseWork
 
         private void MainFormForAdmin_Load(object sender, EventArgs e)
         {
+            // TODO: This line of code loads data into the 'dataSet11.Рассписание' table. You can move, or remove it, as needed.
+            // TODO: This line of code loads data into the 'dataSet1.Рассписание' table. You can move, or remove it, as needed.
+            // TODO: This line of code loads data into the 'dataSet1.Рассписание' table. You can move, or remove it, as needed.
             try
             {
                 using (Stream stream = new FileStream("UserDefinedQuery", FileMode.OpenOrCreate, FileAccess.Read))
@@ -975,6 +1040,7 @@ namespace MyCourseWork
             }
             catch { }
 
+            this.reportViewer1.RefreshReport();
             this.reportViewer1.RefreshReport();
             this.reportViewer1.RefreshReport();
         }
@@ -1066,11 +1132,39 @@ namespace MyCourseWork
 
 
         }
+
+        private void medicalInspectDepartmentSelector_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var positions = from row in medicalInspectDataGrid.Rows.Cast<DataGridViewRow>() 
+                            where row.Cells["Отдел"].Value == medicalInspectDepartmentSelector.SelectedItem select row.Cells["Должность"].Value;
+            foreach (var position in positions.Distinct())
+                medicalInspectPositionSelector.Items.Add(position);
+
+            medicalInspectSource.Filter = "[Отдел]='" + medicalInspectDepartmentSelector.SelectedItem + "'";
+        }
+
+        private void medicalInspectDataGrid_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+
+            var index = (int)(sender as DataGridView).SelectedRows[0].Cells["HumanID"].Value;
+            MedicalInspectForm view = new MedicalInspectForm(index, connection);
+            view.ShowDialog();
+
+        }
+
+        private void medicalInspectPositionSelector_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            medicalInspectSource.Filter = "[Отдел]='" + medicalInspectDepartmentSelector.SelectedItem + 
+                "' and [Позиция]='"+medicalInspectPositionSelector.SelectedItem+"'";
+        }
+
     }
-    public class Requirement:IEquatable<Requirement> {
+    public class Requirement : IEquatable<Requirement>
+    {
         public string Name { get; private set; }
         public int Index { get; private set; }
-        public Requirement(string name,int index)
+        public Requirement(string name, int index)
         {
             Name = name;
             Index = index;

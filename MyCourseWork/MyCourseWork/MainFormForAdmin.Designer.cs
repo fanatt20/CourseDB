@@ -52,6 +52,7 @@
             System.Windows.Forms.Label label10;
             System.Windows.Forms.Label label13;
             System.Windows.Forms.Label label14;
+            System.Windows.Forms.GroupBox groupBox5;
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
             this.absentToReasonComboBox = new System.Windows.Forms.ComboBox();
             this.button2 = new System.Windows.Forms.Button();
@@ -64,8 +65,9 @@
             this.absentFromPositionComboBox = new System.Windows.Forms.ComboBox();
             this.absentFromDepartmentComboBox = new System.Windows.Forms.ComboBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.РассписаниеBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.CourseWorkSecondVariantDataSet1 = new MyCourseWork.CourseWorkSecondVariantDataSet1();
+            this.medicalInspectDataGrid = new System.Windows.Forms.DataGridView();
+            this.ОтсутствияBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.courseWorkSecondVariantDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.mainFormTab = new System.Windows.Forms.TabControl();
             this.mainInfoPage = new System.Windows.Forms.TabPage();
             this.infoPageSplitContainer = new System.Windows.Forms.SplitContainer();
@@ -85,9 +87,9 @@
             this.sqlExcecuteButton = new System.Windows.Forms.Button();
             this.sqlAddToCollectionButton = new System.Windows.Forms.Button();
             this.queryRichTextBox = new System.Windows.Forms.RichTextBox();
-            this.mainActionPage = new System.Windows.Forms.TabPage();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.actionsAddMemberPage = new System.Windows.Forms.TabPage();
+            this.actionPage = new System.Windows.Forms.TabPage();
+            this.actionMedicalInspectPage = new System.Windows.Forms.TabControl();
+            this.actionsMemberAddPage = new System.Windows.Forms.TabPage();
             this.addMemberSubmitButton = new System.Windows.Forms.Button();
             this.addMemberComunicationDataGrid = new System.Windows.Forms.DataGridView();
             this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -98,7 +100,7 @@
             this.addMemebrPatronimycTextBox = new System.Windows.Forms.TextBox();
             this.addMemeberSurnameTextBox = new System.Windows.Forms.TextBox();
             this.addMemebrNameTextBox = new System.Windows.Forms.TextBox();
-            this.actionsAddContract = new System.Windows.Forms.TabPage();
+            this.actionsContractAddPage = new System.Windows.Forms.TabPage();
             this.label9 = new System.Windows.Forms.Label();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.contractSchudeleDataGridView = new System.Windows.Forms.DataGridView();
@@ -120,12 +122,12 @@
             this.contractPositionComboBox = new System.Windows.Forms.ComboBox();
             this.contractDepartmentComboBox = new System.Windows.Forms.ComboBox();
             this.actionsHolidayPage = new System.Windows.Forms.TabPage();
-            this.dissmisPage = new System.Windows.Forms.TabPage();
+            this.actionDissmisPage = new System.Windows.Forms.TabPage();
             this.button1 = new System.Windows.Forms.Button();
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.actionPositionAddPage = new System.Windows.Forms.TabPage();
             this.label29 = new System.Windows.Forms.Label();
             this.comboBox4 = new System.Windows.Forms.ComboBox();
             this.button4 = new System.Windows.Forms.Button();
@@ -141,11 +143,23 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label31 = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
+            this.medicalInspectDepartmentSelector = new System.Windows.Forms.ComboBox();
+            this.medicalInspectPositionSelector = new System.Windows.Forms.ComboBox();
+            this.reportPage = new System.Windows.Forms.TabPage();
             this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.absenceRegisterBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.holidayManSource = new System.Windows.Forms.BindingSource(this.components);
-            this.РассписаниеTableAdapter = new MyCourseWork.CourseWorkSecondVariantDataSet1TableAdapters.РассписаниеTableAdapter();
+            this.dataSet2BindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.dataSet2BindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.DataSet2 = new MyCourseWork.DataSet2();
+            this.ОтсутствияTableAdapter = new MyCourseWork.DataSet2TableAdapters.ОтсутствияTableAdapter();
+            this.отсутствияBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.DataSet1 = new MyCourseWork.DataSet1();
+            this.РассписаниеBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.РассписаниеTableAdapter = new MyCourseWork.DataSet1TableAdapters.РассписаниеTableAdapter();
             label7 = new System.Windows.Forms.Label();
             label6 = new System.Windows.Forms.Label();
             label5 = new System.Windows.Forms.Label();
@@ -169,13 +183,16 @@
             label10 = new System.Windows.Forms.Label();
             label13 = new System.Windows.Forms.Label();
             label14 = new System.Windows.Forms.Label();
+            groupBox5 = new System.Windows.Forms.GroupBox();
             groupBox1.SuspendLayout();
             groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.РассписаниеBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CourseWorkSecondVariantDataSet1)).BeginInit();
+            groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.medicalInspectDataGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ОтсутствияBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.courseWorkSecondVariantDataSetBindingSource)).BeginInit();
             this.mainFormTab.SuspendLayout();
             this.mainInfoPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.infoPageSplitContainer)).BeginInit();
@@ -187,22 +204,29 @@
             this.mainInfoSelectPage.SuspendLayout();
             this.mainInfoFilterPage.SuspendLayout();
             this.mainInfoSqlPage.SuspendLayout();
-            this.mainActionPage.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.actionsAddMemberPage.SuspendLayout();
+            this.actionPage.SuspendLayout();
+            this.actionMedicalInspectPage.SuspendLayout();
+            this.actionsMemberAddPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.addMemberComunicationDataGrid)).BeginInit();
-            this.actionsAddContract.SuspendLayout();
+            this.actionsContractAddPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.contractSchudeleDataGridView)).BeginInit();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.actionsHolidayPage.SuspendLayout();
-            this.dissmisPage.SuspendLayout();
+            this.actionDissmisPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
-            this.tabPage2.SuspendLayout();
+            this.actionPositionAddPage.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.reportPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.absenceRegisterBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.holidayManSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataSet2BindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataSet2BindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DataSet2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.отсутствияBindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DataSet1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.РассписаниеBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // label7
@@ -409,8 +433,10 @@
             // 
             this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView3.Location = new System.Drawing.Point(83, 76);
+            this.dataGridView3.MultiSelect = false;
             this.dataGridView3.Name = "dataGridView3";
             this.dataGridView3.ReadOnly = true;
+            this.dataGridView3.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView3.Size = new System.Drawing.Size(124, 268);
             this.dataGridView3.TabIndex = 25;
             // 
@@ -512,10 +538,13 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(5, 18);
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(2, 15);
+            this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(311, 326);
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView1.Size = new System.Drawing.Size(317, 333);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
@@ -559,21 +588,40 @@
             label14.TabIndex = 26;
             label14.Text = "Из отдела";
             // 
-            // РассписаниеBindingSource
+            // groupBox5
             // 
-            this.РассписаниеBindingSource.DataMember = "Рассписание";
-            this.РассписаниеBindingSource.DataSource = this.CourseWorkSecondVariantDataSet1;
+            groupBox5.Controls.Add(this.medicalInspectDataGrid);
+            groupBox5.Location = new System.Drawing.Point(322, 6);
+            groupBox5.Name = "groupBox5";
+            groupBox5.Size = new System.Drawing.Size(620, 347);
+            groupBox5.TabIndex = 11;
+            groupBox5.TabStop = false;
+            groupBox5.Text = "Выбрать сотрудника";
             // 
-            // CourseWorkSecondVariantDataSet1
+            // medicalInspectDataGrid
             // 
-            this.CourseWorkSecondVariantDataSet1.DataSetName = "CourseWorkSecondVariantDataSet1";
-            this.CourseWorkSecondVariantDataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            this.medicalInspectDataGrid.AllowUserToAddRows = false;
+            this.medicalInspectDataGrid.AllowUserToDeleteRows = false;
+            this.medicalInspectDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.medicalInspectDataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.medicalInspectDataGrid.Location = new System.Drawing.Point(3, 16);
+            this.medicalInspectDataGrid.MultiSelect = false;
+            this.medicalInspectDataGrid.Name = "medicalInspectDataGrid";
+            this.medicalInspectDataGrid.ReadOnly = true;
+            this.medicalInspectDataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.medicalInspectDataGrid.Size = new System.Drawing.Size(614, 328);
+            this.medicalInspectDataGrid.TabIndex = 8;
+            this.medicalInspectDataGrid.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.medicalInspectDataGrid_CellMouseDoubleClick);
+            // 
+            // ОтсутствияBindingSource
+            // 
+            this.ОтсутствияBindingSource.DataMember = "Отсутствия";
             // 
             // mainFormTab
             // 
             this.mainFormTab.Controls.Add(this.mainInfoPage);
-            this.mainFormTab.Controls.Add(this.mainActionPage);
-            this.mainFormTab.Controls.Add(this.tabPage1);
+            this.mainFormTab.Controls.Add(this.actionPage);
+            this.mainFormTab.Controls.Add(this.reportPage);
             this.mainFormTab.Location = new System.Drawing.Point(9, 10);
             this.mainFormTab.Margin = new System.Windows.Forms.Padding(2);
             this.mainFormTab.Name = "mainFormTab";
@@ -616,12 +664,13 @@
             // mainInfoDataGrid
             // 
             this.mainInfoDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.mainInfoDataGrid.Location = new System.Drawing.Point(2, 2);
+            this.mainInfoDataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainInfoDataGrid.Location = new System.Drawing.Point(0, 0);
             this.mainInfoDataGrid.Margin = new System.Windows.Forms.Padding(2);
             this.mainInfoDataGrid.Name = "mainInfoDataGrid";
             this.mainInfoDataGrid.ReadOnly = true;
             this.mainInfoDataGrid.RowTemplate.Height = 24;
-            this.mainInfoDataGrid.Size = new System.Drawing.Size(722, 388);
+            this.mainInfoDataGrid.Size = new System.Drawing.Size(725, 391);
             this.mainInfoDataGrid.TabIndex = 0;
             // 
             // mainInfoTab
@@ -801,56 +850,57 @@
             this.queryRichTextBox.TabIndex = 2;
             this.queryRichTextBox.Text = "";
             // 
-            // mainActionPage
+            // actionPage
             // 
-            this.mainActionPage.Controls.Add(this.tabControl1);
-            this.mainActionPage.Location = new System.Drawing.Point(4, 22);
-            this.mainActionPage.Margin = new System.Windows.Forms.Padding(2);
-            this.mainActionPage.Name = "mainActionPage";
-            this.mainActionPage.Padding = new System.Windows.Forms.Padding(2);
-            this.mainActionPage.Size = new System.Drawing.Size(966, 395);
-            this.mainActionPage.TabIndex = 1;
-            this.mainActionPage.Text = "Действия";
-            this.mainActionPage.UseVisualStyleBackColor = true;
+            this.actionPage.Controls.Add(this.actionMedicalInspectPage);
+            this.actionPage.Location = new System.Drawing.Point(4, 22);
+            this.actionPage.Margin = new System.Windows.Forms.Padding(2);
+            this.actionPage.Name = "actionPage";
+            this.actionPage.Padding = new System.Windows.Forms.Padding(2);
+            this.actionPage.Size = new System.Drawing.Size(966, 395);
+            this.actionPage.TabIndex = 1;
+            this.actionPage.Text = "Действия";
+            this.actionPage.UseVisualStyleBackColor = true;
             // 
-            // tabControl1
+            // actionMedicalInspectPage
             // 
-            this.tabControl1.Controls.Add(this.actionsAddMemberPage);
-            this.tabControl1.Controls.Add(this.actionsAddContract);
-            this.tabControl1.Controls.Add(this.actionsHolidayPage);
-            this.tabControl1.Controls.Add(this.dissmisPage);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(5, 5);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(956, 385);
-            this.tabControl1.TabIndex = 0;
-            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.ActionsPage_TabIndexChanged);
+            this.actionMedicalInspectPage.Controls.Add(this.actionsMemberAddPage);
+            this.actionMedicalInspectPage.Controls.Add(this.actionsContractAddPage);
+            this.actionMedicalInspectPage.Controls.Add(this.actionsHolidayPage);
+            this.actionMedicalInspectPage.Controls.Add(this.actionDissmisPage);
+            this.actionMedicalInspectPage.Controls.Add(this.actionPositionAddPage);
+            this.actionMedicalInspectPage.Controls.Add(this.tabPage1);
+            this.actionMedicalInspectPage.Location = new System.Drawing.Point(5, 5);
+            this.actionMedicalInspectPage.Name = "actionMedicalInspectPage";
+            this.actionMedicalInspectPage.SelectedIndex = 0;
+            this.actionMedicalInspectPage.Size = new System.Drawing.Size(956, 385);
+            this.actionMedicalInspectPage.TabIndex = 0;
+            this.actionMedicalInspectPage.SelectedIndexChanged += new System.EventHandler(this.ActionsPage_TabIndexChanged);
             // 
-            // actionsAddMemberPage
+            // actionsMemberAddPage
             // 
-            this.actionsAddMemberPage.Controls.Add(this.addMemberSubmitButton);
-            this.actionsAddMemberPage.Controls.Add(label7);
-            this.actionsAddMemberPage.Controls.Add(this.addMemberComunicationDataGrid);
-            this.actionsAddMemberPage.Controls.Add(label6);
-            this.actionsAddMemberPage.Controls.Add(label5);
-            this.actionsAddMemberPage.Controls.Add(this.addMemberMedicalCardTextBox);
-            this.actionsAddMemberPage.Controls.Add(this.addMemeberEducationRichTextBox);
-            this.actionsAddMemberPage.Controls.Add(label4);
-            this.actionsAddMemberPage.Controls.Add(this.addMemberBirthdayDatePicker);
-            this.actionsAddMemberPage.Controls.Add(this.addMemebrPatronimycTextBox);
-            this.actionsAddMemberPage.Controls.Add(label3);
-            this.actionsAddMemberPage.Controls.Add(this.addMemeberSurnameTextBox);
-            this.actionsAddMemberPage.Controls.Add(label2);
-            this.actionsAddMemberPage.Controls.Add(this.addMemebrNameTextBox);
-            this.actionsAddMemberPage.Controls.Add(label1);
-            this.actionsAddMemberPage.Location = new System.Drawing.Point(4, 22);
-            this.actionsAddMemberPage.Name = "actionsAddMemberPage";
-            this.actionsAddMemberPage.Padding = new System.Windows.Forms.Padding(3);
-            this.actionsAddMemberPage.Size = new System.Drawing.Size(948, 359);
-            this.actionsAddMemberPage.TabIndex = 0;
-            this.actionsAddMemberPage.Text = "Добавитть человека в систему";
-            this.actionsAddMemberPage.UseVisualStyleBackColor = true;
+            this.actionsMemberAddPage.Controls.Add(this.addMemberSubmitButton);
+            this.actionsMemberAddPage.Controls.Add(label7);
+            this.actionsMemberAddPage.Controls.Add(this.addMemberComunicationDataGrid);
+            this.actionsMemberAddPage.Controls.Add(label6);
+            this.actionsMemberAddPage.Controls.Add(label5);
+            this.actionsMemberAddPage.Controls.Add(this.addMemberMedicalCardTextBox);
+            this.actionsMemberAddPage.Controls.Add(this.addMemeberEducationRichTextBox);
+            this.actionsMemberAddPage.Controls.Add(label4);
+            this.actionsMemberAddPage.Controls.Add(this.addMemberBirthdayDatePicker);
+            this.actionsMemberAddPage.Controls.Add(this.addMemebrPatronimycTextBox);
+            this.actionsMemberAddPage.Controls.Add(label3);
+            this.actionsMemberAddPage.Controls.Add(this.addMemeberSurnameTextBox);
+            this.actionsMemberAddPage.Controls.Add(label2);
+            this.actionsMemberAddPage.Controls.Add(this.addMemebrNameTextBox);
+            this.actionsMemberAddPage.Controls.Add(label1);
+            this.actionsMemberAddPage.Location = new System.Drawing.Point(4, 22);
+            this.actionsMemberAddPage.Name = "actionsMemberAddPage";
+            this.actionsMemberAddPage.Padding = new System.Windows.Forms.Padding(3);
+            this.actionsMemberAddPage.Size = new System.Drawing.Size(948, 359);
+            this.actionsMemberAddPage.TabIndex = 0;
+            this.actionsMemberAddPage.Text = "Добавитть человека в систему";
+            this.actionsMemberAddPage.UseVisualStyleBackColor = true;
             // 
             // addMemberSubmitButton
             // 
@@ -930,30 +980,30 @@
             this.addMemebrNameTextBox.Size = new System.Drawing.Size(204, 20);
             this.addMemebrNameTextBox.TabIndex = 1;
             // 
-            // actionsAddContract
+            // actionsContractAddPage
             // 
-            this.actionsAddContract.Controls.Add(this.label9);
-            this.actionsAddContract.Controls.Add(this.dateTimePicker1);
-            this.actionsAddContract.Controls.Add(label8);
-            this.actionsAddContract.Controls.Add(this.contractSchudeleDataGridView);
-            this.actionsAddContract.Controls.Add(this.salaryLabel);
-            this.actionsAddContract.Controls.Add(label12);
-            this.actionsAddContract.Controls.Add(this.groupBox4);
-            this.actionsAddContract.Controls.Add(label11);
-            this.actionsAddContract.Controls.Add(this.contractAddNew);
-            this.actionsAddContract.Controls.Add(this.contractTypeSelector);
-            this.actionsAddContract.Controls.Add(this.label16);
-            this.actionsAddContract.Controls.Add(this.contractSalaryTextBox);
-            this.actionsAddContract.Controls.Add(label15);
-            this.actionsAddContract.Controls.Add(this.contractPositionComboBox);
-            this.actionsAddContract.Controls.Add(this.contractDepartmentComboBox);
-            this.actionsAddContract.Location = new System.Drawing.Point(4, 22);
-            this.actionsAddContract.Name = "actionsAddContract";
-            this.actionsAddContract.Padding = new System.Windows.Forms.Padding(3);
-            this.actionsAddContract.Size = new System.Drawing.Size(948, 359);
-            this.actionsAddContract.TabIndex = 1;
-            this.actionsAddContract.Text = "Добавить контракт";
-            this.actionsAddContract.UseVisualStyleBackColor = true;
+            this.actionsContractAddPage.Controls.Add(this.label9);
+            this.actionsContractAddPage.Controls.Add(this.dateTimePicker1);
+            this.actionsContractAddPage.Controls.Add(label8);
+            this.actionsContractAddPage.Controls.Add(this.contractSchudeleDataGridView);
+            this.actionsContractAddPage.Controls.Add(this.salaryLabel);
+            this.actionsContractAddPage.Controls.Add(label12);
+            this.actionsContractAddPage.Controls.Add(this.groupBox4);
+            this.actionsContractAddPage.Controls.Add(label11);
+            this.actionsContractAddPage.Controls.Add(this.contractAddNew);
+            this.actionsContractAddPage.Controls.Add(this.contractTypeSelector);
+            this.actionsContractAddPage.Controls.Add(this.label16);
+            this.actionsContractAddPage.Controls.Add(this.contractSalaryTextBox);
+            this.actionsContractAddPage.Controls.Add(label15);
+            this.actionsContractAddPage.Controls.Add(this.contractPositionComboBox);
+            this.actionsContractAddPage.Controls.Add(this.contractDepartmentComboBox);
+            this.actionsContractAddPage.Location = new System.Drawing.Point(4, 22);
+            this.actionsContractAddPage.Name = "actionsContractAddPage";
+            this.actionsContractAddPage.Padding = new System.Windows.Forms.Padding(3);
+            this.actionsContractAddPage.Size = new System.Drawing.Size(948, 359);
+            this.actionsContractAddPage.TabIndex = 1;
+            this.actionsContractAddPage.Text = "Добавить контракт";
+            this.actionsContractAddPage.UseVisualStyleBackColor = true;
             // 
             // label9
             // 
@@ -1054,10 +1104,13 @@
             // dataGridView2
             // 
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(6, 19);
+            this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView2.Location = new System.Drawing.Point(3, 16);
+            this.dataGridView2.MultiSelect = false;
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.ReadOnly = true;
-            this.dataGridView2.Size = new System.Drawing.Size(290, 322);
+            this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView2.Size = new System.Drawing.Size(296, 328);
             this.dataGridView2.TabIndex = 0;
             this.dataGridView2.SelectionChanged += new System.EventHandler(this.dataGridView2_SelectionChanged);
             // 
@@ -1135,22 +1188,22 @@
             this.actionsHolidayPage.Text = "Отпуски и пропуски";
             this.actionsHolidayPage.UseVisualStyleBackColor = true;
             // 
-            // dissmisPage
+            // actionDissmisPage
             // 
-            this.dissmisPage.Controls.Add(this.button1);
-            this.dissmisPage.Controls.Add(this.dataGridView4);
-            this.dissmisPage.Controls.Add(label10);
-            this.dissmisPage.Controls.Add(label13);
-            this.dissmisPage.Controls.Add(this.comboBox1);
-            this.dissmisPage.Controls.Add(this.comboBox2);
-            this.dissmisPage.Controls.Add(label14);
-            this.dissmisPage.Location = new System.Drawing.Point(4, 22);
-            this.dissmisPage.Name = "dissmisPage";
-            this.dissmisPage.Padding = new System.Windows.Forms.Padding(3);
-            this.dissmisPage.Size = new System.Drawing.Size(948, 359);
-            this.dissmisPage.TabIndex = 3;
-            this.dissmisPage.Text = "Уволить";
-            this.dissmisPage.UseVisualStyleBackColor = true;
+            this.actionDissmisPage.Controls.Add(this.button1);
+            this.actionDissmisPage.Controls.Add(this.dataGridView4);
+            this.actionDissmisPage.Controls.Add(label10);
+            this.actionDissmisPage.Controls.Add(label13);
+            this.actionDissmisPage.Controls.Add(this.comboBox1);
+            this.actionDissmisPage.Controls.Add(this.comboBox2);
+            this.actionDissmisPage.Controls.Add(label14);
+            this.actionDissmisPage.Location = new System.Drawing.Point(4, 22);
+            this.actionDissmisPage.Name = "actionDissmisPage";
+            this.actionDissmisPage.Padding = new System.Windows.Forms.Padding(3);
+            this.actionDissmisPage.Size = new System.Drawing.Size(948, 359);
+            this.actionDissmisPage.TabIndex = 3;
+            this.actionDissmisPage.Text = "Уволить";
+            this.actionDissmisPage.UseVisualStyleBackColor = true;
             // 
             // button1
             // 
@@ -1193,29 +1246,29 @@
             this.comboBox2.TabIndex = 27;
             this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
-            // tabPage2
+            // actionPositionAddPage
             // 
-            this.tabPage2.Controls.Add(this.label29);
-            this.tabPage2.Controls.Add(this.comboBox4);
-            this.tabPage2.Controls.Add(this.button4);
-            this.tabPage2.Controls.Add(this.button3);
-            this.tabPage2.Controls.Add(this.label28);
-            this.tabPage2.Controls.Add(this.richTextBox1);
-            this.tabPage2.Controls.Add(this.textBox2);
-            this.tabPage2.Controls.Add(this.label27);
-            this.tabPage2.Controls.Add(this.label26);
-            this.tabPage2.Controls.Add(this.label25);
-            this.tabPage2.Controls.Add(this.label24);
-            this.tabPage2.Controls.Add(this.comboBox3);
-            this.tabPage2.Controls.Add(this.textBox1);
-            this.tabPage2.Controls.Add(this.checkedListBox1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(948, 359);
-            this.tabPage2.TabIndex = 4;
-            this.tabPage2.Text = "Добавить позицию";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.actionPositionAddPage.Controls.Add(this.label29);
+            this.actionPositionAddPage.Controls.Add(this.comboBox4);
+            this.actionPositionAddPage.Controls.Add(this.button4);
+            this.actionPositionAddPage.Controls.Add(this.button3);
+            this.actionPositionAddPage.Controls.Add(this.label28);
+            this.actionPositionAddPage.Controls.Add(this.richTextBox1);
+            this.actionPositionAddPage.Controls.Add(this.textBox2);
+            this.actionPositionAddPage.Controls.Add(this.label27);
+            this.actionPositionAddPage.Controls.Add(this.label26);
+            this.actionPositionAddPage.Controls.Add(this.label25);
+            this.actionPositionAddPage.Controls.Add(this.label24);
+            this.actionPositionAddPage.Controls.Add(this.comboBox3);
+            this.actionPositionAddPage.Controls.Add(this.textBox1);
+            this.actionPositionAddPage.Controls.Add(this.checkedListBox1);
+            this.actionPositionAddPage.Location = new System.Drawing.Point(4, 22);
+            this.actionPositionAddPage.Name = "actionPositionAddPage";
+            this.actionPositionAddPage.Padding = new System.Windows.Forms.Padding(3);
+            this.actionPositionAddPage.Size = new System.Drawing.Size(948, 359);
+            this.actionPositionAddPage.TabIndex = 4;
+            this.actionPositionAddPage.Text = "Добавить позицию";
+            this.actionPositionAddPage.UseVisualStyleBackColor = true;
             // 
             // label29
             // 
@@ -1343,25 +1396,105 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.reportViewer1);
+            this.tabPage1.Controls.Add(this.label31);
+            this.tabPage1.Controls.Add(this.label30);
+            this.tabPage1.Controls.Add(this.medicalInspectDepartmentSelector);
+            this.tabPage1.Controls.Add(this.medicalInspectPositionSelector);
+            this.tabPage1.Controls.Add(groupBox5);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(966, 395);
-            this.tabPage1.TabIndex = 2;
-            this.tabPage1.Text = "Отчет";
+            this.tabPage1.Size = new System.Drawing.Size(948, 359);
+            this.tabPage1.TabIndex = 5;
+            this.tabPage1.Text = "Медосмотры";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(6, 74);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(51, 13);
+            this.label31.TabIndex = 13;
+            this.label31.Text = "Позиция";
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(6, 36);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(38, 13);
+            this.label30.TabIndex = 12;
+            this.label30.Text = "Отдел";
+            // 
+            // medicalInspectDepartmentSelector
+            // 
+            this.medicalInspectDepartmentSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.medicalInspectDepartmentSelector.FormattingEnabled = true;
+            this.medicalInspectDepartmentSelector.Location = new System.Drawing.Point(113, 33);
+            this.medicalInspectDepartmentSelector.Margin = new System.Windows.Forms.Padding(2);
+            this.medicalInspectDepartmentSelector.Name = "medicalInspectDepartmentSelector";
+            this.medicalInspectDepartmentSelector.Size = new System.Drawing.Size(204, 21);
+            this.medicalInspectDepartmentSelector.TabIndex = 9;
+            this.medicalInspectDepartmentSelector.SelectedIndexChanged += new System.EventHandler(this.medicalInspectDepartmentSelector_SelectedIndexChanged);
+            // 
+            // medicalInspectPositionSelector
+            // 
+            this.medicalInspectPositionSelector.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.medicalInspectPositionSelector.FormattingEnabled = true;
+            this.medicalInspectPositionSelector.Location = new System.Drawing.Point(113, 71);
+            this.medicalInspectPositionSelector.Margin = new System.Windows.Forms.Padding(2);
+            this.medicalInspectPositionSelector.Name = "medicalInspectPositionSelector";
+            this.medicalInspectPositionSelector.Size = new System.Drawing.Size(204, 21);
+            this.medicalInspectPositionSelector.TabIndex = 10;
+            this.medicalInspectPositionSelector.SelectedIndexChanged += new System.EventHandler(this.medicalInspectPositionSelector_SelectedIndexChanged);
+            // 
+            // reportPage
+            // 
+            this.reportPage.Controls.Add(this.reportViewer1);
+            this.reportPage.Location = new System.Drawing.Point(4, 22);
+            this.reportPage.Name = "reportPage";
+            this.reportPage.Padding = new System.Windows.Forms.Padding(3);
+            this.reportPage.Size = new System.Drawing.Size(966, 395);
+            this.reportPage.TabIndex = 2;
+            this.reportPage.Text = "Отчет";
+            this.reportPage.UseVisualStyleBackColor = true;
             // 
             // reportViewer1
             // 
+            this.reportViewer1.Dock = System.Windows.Forms.DockStyle.Fill;
             reportDataSource1.Name = "DataSet1";
             reportDataSource1.Value = this.РассписаниеBindingSource;
             this.reportViewer1.LocalReport.DataSources.Add(reportDataSource1);
-            this.reportViewer1.LocalReport.ReportEmbeddedResource = "MyCourseWork.Report2.rdlc";
-            this.reportViewer1.Location = new System.Drawing.Point(6, 6);
+            this.reportViewer1.LocalReport.ReportEmbeddedResource = "MyCourseWork.Report1.rdlc";
+            this.reportViewer1.Location = new System.Drawing.Point(3, 3);
             this.reportViewer1.Name = "reportViewer1";
-            this.reportViewer1.Size = new System.Drawing.Size(954, 383);
+            this.reportViewer1.Size = new System.Drawing.Size(960, 389);
             this.reportViewer1.TabIndex = 0;
+            // 
+            // DataSet2
+            // 
+            this.DataSet2.DataSetName = "DataSet2";
+            this.DataSet2.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // ОтсутствияTableAdapter
+            // 
+            this.ОтсутствияTableAdapter.ClearBeforeFill = true;
+            // 
+            // отсутствияBindingSource1
+            // 
+            this.отсутствияBindingSource1.DataMember = "Отсутствия";
+            this.отсутствияBindingSource1.DataSource = this.DataSet2;
+            // 
+            // DataSet1
+            // 
+            this.DataSet1.DataSetName = "DataSet1";
+            this.DataSet1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // РассписаниеBindingSource
+            // 
+            this.РассписаниеBindingSource.DataMember = "Рассписание";
+            this.РассписаниеBindingSource.DataSource = this.DataSet1;
             // 
             // РассписаниеTableAdapter
             // 
@@ -1375,7 +1508,7 @@
             this.Controls.Add(this.mainFormTab);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainFormForAdmin";
-            this.Text = "MainForm";
+            this.Text = "LibraryHR";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormForAdmin_FormClosing);
             this.Load += new System.EventHandler(this.MainFormForAdmin_Load);
             groupBox1.ResumeLayout(false);
@@ -1385,8 +1518,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
             groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.РассписаниеBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CourseWorkSecondVariantDataSet1)).EndInit();
+            groupBox5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.medicalInspectDataGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ОтсутствияBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.courseWorkSecondVariantDataSetBindingSource)).EndInit();
             this.mainFormTab.ResumeLayout(false);
             this.mainInfoPage.ResumeLayout(false);
             this.infoPageSplitContainer.Panel1.ResumeLayout(false);
@@ -1399,26 +1534,34 @@
             this.mainInfoFilterPage.ResumeLayout(false);
             this.mainInfoFilterPage.PerformLayout();
             this.mainInfoSqlPage.ResumeLayout(false);
-            this.mainActionPage.ResumeLayout(false);
-            this.tabControl1.ResumeLayout(false);
-            this.actionsAddMemberPage.ResumeLayout(false);
-            this.actionsAddMemberPage.PerformLayout();
+            this.actionPage.ResumeLayout(false);
+            this.actionMedicalInspectPage.ResumeLayout(false);
+            this.actionsMemberAddPage.ResumeLayout(false);
+            this.actionsMemberAddPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.addMemberComunicationDataGrid)).EndInit();
-            this.actionsAddContract.ResumeLayout(false);
-            this.actionsAddContract.PerformLayout();
+            this.actionsContractAddPage.ResumeLayout(false);
+            this.actionsContractAddPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.contractSchudeleDataGridView)).EndInit();
             this.groupBox4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.actionsHolidayPage.ResumeLayout(false);
-            this.dissmisPage.ResumeLayout(false);
-            this.dissmisPage.PerformLayout();
+            this.actionDissmisPage.ResumeLayout(false);
+            this.actionDissmisPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
+            this.actionPositionAddPage.ResumeLayout(false);
+            this.actionPositionAddPage.PerformLayout();
             this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.reportPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.absenceRegisterBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.holidayManSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataSet2BindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataSet2BindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DataSet2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.отсутствияBindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DataSet1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.РассписаниеBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1428,7 +1571,7 @@
         private System.Windows.Forms.TabPage mainInfoPage;
         private System.Windows.Forms.SplitContainer infoPageSplitContainer;
         private System.Windows.Forms.DataGridView mainInfoDataGrid;
-        private System.Windows.Forms.TabPage mainActionPage;
+        private System.Windows.Forms.TabPage actionPage;
         private System.Windows.Forms.BindingSource bindingSource1;
         private System.Windows.Forms.TabControl mainInfoTab;
         private System.Windows.Forms.TabPage mainInfoSelectPage;
@@ -1445,9 +1588,9 @@
         private System.Windows.Forms.ListBox selectCategoryValueListBox;
         private System.Windows.Forms.Button sqlExcecuteButton;
         private System.Windows.Forms.Button sqlAddToCollectionButton;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage actionsAddMemberPage;
-        private System.Windows.Forms.TabPage actionsAddContract;
+        private System.Windows.Forms.TabControl actionMedicalInspectPage;
+        private System.Windows.Forms.TabPage actionsMemberAddPage;
+        private System.Windows.Forms.TabPage actionsContractAddPage;
         private System.Windows.Forms.TabPage actionsHolidayPage;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.BindingSource absenceRegisterBindingSource;
@@ -1485,7 +1628,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Saturday;
         private System.Windows.Forms.DataGridViewTextBoxColumn Sunday;
         private System.Windows.Forms.Button absenceAddToRegister;
-        private System.Windows.Forms.TabPage dissmisPage;
+        private System.Windows.Forms.TabPage actionDissmisPage;
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
@@ -1497,13 +1640,10 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DateTimePicker dateTimePicker2;
         private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.BindingSource Все_контрактыBindingSource;
-     
 
-        private System.Windows.Forms.TabPage tabPage1;
-        private Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
-        private System.Windows.Forms.BindingSource СотрудникиBindingSource;
-        private System.Windows.Forms.TabPage tabPage2;
+
+        private System.Windows.Forms.TabPage reportPage;
+        private System.Windows.Forms.TabPage actionPositionAddPage;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label28;
@@ -1518,10 +1658,23 @@
         private System.Windows.Forms.CheckedListBox checkedListBox1;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.TabPage tabPage1;
+        private Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.ComboBox medicalInspectDepartmentSelector;
+        private System.Windows.Forms.ComboBox medicalInspectPositionSelector;
+        private System.Windows.Forms.DataGridView medicalInspectDataGrid;
+        private System.Windows.Forms.BindingSource courseWorkSecondVariantDataSetBindingSource;
+        private System.Windows.Forms.BindingSource ОтсутствияBindingSource;
+        private System.Windows.Forms.BindingSource dataSet2BindingSource;
+        private System.Windows.Forms.BindingSource dataSet2BindingSource1;
+        private DataSet1 DataSet1;
+        private DataSet2 DataSet2;
+        private DataSet2TableAdapters.ОтсутствияTableAdapter ОтсутствияTableAdapter;
+        private System.Windows.Forms.BindingSource отсутствияBindingSource1;
         private System.Windows.Forms.BindingSource РассписаниеBindingSource;
-        private CourseWorkSecondVariantDataSet1 CourseWorkSecondVariantDataSet1;
-        private CourseWorkSecondVariantDataSet1TableAdapters.РассписаниеTableAdapter РассписаниеTableAdapter;
-       
+        private DataSet1TableAdapters.РассписаниеTableAdapter РассписаниеTableAdapter;
 
         
 

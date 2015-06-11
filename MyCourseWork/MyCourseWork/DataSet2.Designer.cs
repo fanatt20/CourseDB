@@ -20,17 +20,17 @@ namespace MyCourseWork {
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
     [global::System.ComponentModel.ToolboxItem(true)]
     [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema")]
-    [global::System.Xml.Serialization.XmlRootAttribute("CourseWorkSecondVariantDataSet1")]
+    [global::System.Xml.Serialization.XmlRootAttribute("DataSet2")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
-    public partial class CourseWorkSecondVariantDataSet1 : global::System.Data.DataSet {
+    public partial class DataSet2 : global::System.Data.DataSet {
         
-        private РассписаниеDataTable tableРассписание;
+        private ОтсутствияDataTable tableОтсутствия;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public CourseWorkSecondVariantDataSet1() {
+        public DataSet2() {
             this.BeginInit();
             this.InitClass();
             global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
@@ -41,7 +41,7 @@ namespace MyCourseWork {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        protected CourseWorkSecondVariantDataSet1(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+        protected DataSet2(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                 base(info, context, false) {
             if ((this.IsBinarySerialized(info, context) == true)) {
                 this.InitVars(false);
@@ -54,8 +54,8 @@ namespace MyCourseWork {
             if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
-                if ((ds.Tables["Рассписание"] != null)) {
-                    base.Tables.Add(new РассписаниеDataTable(ds.Tables["Рассписание"]));
+                if ((ds.Tables["Отсутствия"] != null)) {
+                    base.Tables.Add(new ОтсутствияDataTable(ds.Tables["Отсутствия"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -79,9 +79,9 @@ namespace MyCourseWork {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public РассписаниеDataTable Рассписание {
+        public ОтсутствияDataTable Отсутствия {
             get {
-                return this.tableРассписание;
+                return this.tableОтсутствия;
             }
         }
         
@@ -127,7 +127,7 @@ namespace MyCourseWork {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public override global::System.Data.DataSet Clone() {
-            CourseWorkSecondVariantDataSet1 cln = ((CourseWorkSecondVariantDataSet1)(base.Clone()));
+            DataSet2 cln = ((DataSet2)(base.Clone()));
             cln.InitVars();
             cln.SchemaSerializationMode = this.SchemaSerializationMode;
             return cln;
@@ -152,8 +152,8 @@ namespace MyCourseWork {
                 this.Reset();
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXml(reader);
-                if ((ds.Tables["Рассписание"] != null)) {
-                    base.Tables.Add(new РассписаниеDataTable(ds.Tables["Рассписание"]));
+                if ((ds.Tables["Отсутствия"] != null)) {
+                    base.Tables.Add(new ОтсутствияDataTable(ds.Tables["Отсутствия"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -188,10 +188,10 @@ namespace MyCourseWork {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         internal void InitVars(bool initTable) {
-            this.tableРассписание = ((РассписаниеDataTable)(base.Tables["Рассписание"]));
+            this.tableОтсутствия = ((ОтсутствияDataTable)(base.Tables["Отсутствия"]));
             if ((initTable == true)) {
-                if ((this.tableРассписание != null)) {
-                    this.tableРассписание.InitVars();
+                if ((this.tableОтсутствия != null)) {
+                    this.tableОтсутствия.InitVars();
                 }
             }
         }
@@ -199,18 +199,18 @@ namespace MyCourseWork {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitClass() {
-            this.DataSetName = "CourseWorkSecondVariantDataSet1";
+            this.DataSetName = "DataSet2";
             this.Prefix = "";
-            this.Namespace = "http://tempuri.org/CourseWorkSecondVariantDataSet1.xsd";
+            this.Namespace = "http://tempuri.org/DataSet2.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
-            this.tableРассписание = new РассписаниеDataTable();
-            base.Tables.Add(this.tableРассписание);
+            this.tableОтсутствия = new ОтсутствияDataTable();
+            base.Tables.Add(this.tableОтсутствия);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private bool ShouldSerializeРассписание() {
+        private bool ShouldSerializeОтсутствия() {
             return false;
         }
         
@@ -225,7 +225,7 @@ namespace MyCourseWork {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedDataSetSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-            CourseWorkSecondVariantDataSet1 ds = new CourseWorkSecondVariantDataSet1();
+            DataSet2 ds = new DataSet2();
             global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
             global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
             global::System.Xml.Schema.XmlSchemaAny any = new global::System.Xml.Schema.XmlSchemaAny();
@@ -270,41 +270,33 @@ namespace MyCourseWork {
         }
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public delegate void РассписаниеRowChangeEventHandler(object sender, РассписаниеRowChangeEvent e);
+        public delegate void ОтсутствияRowChangeEventHandler(object sender, ОтсутствияRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class РассписаниеDataTable : global::System.Data.TypedTableBase<РассписаниеRow> {
+        public partial class ОтсутствияDataTable : global::System.Data.TypedTableBase<ОтсутствияRow> {
             
             private global::System.Data.DataColumn columnИмя;
             
             private global::System.Data.DataColumn columnФамилия;
             
-            private global::System.Data.DataColumn columnДолжность;
-            
             private global::System.Data.DataColumn columnОтдел;
             
-            private global::System.Data.DataColumn columnПонедельник;
+            private global::System.Data.DataColumn columnДолжность;
             
-            private global::System.Data.DataColumn columnВторник;
+            private global::System.Data.DataColumn columnПричина;
             
-            private global::System.Data.DataColumn columnСреда;
+            private global::System.Data.DataColumn columnС;
             
-            private global::System.Data.DataColumn columnЧетверг;
-            
-            private global::System.Data.DataColumn columnПятница;
-            
-            private global::System.Data.DataColumn columnСуббота;
-            
-            private global::System.Data.DataColumn columnВоскресенье;
+            private global::System.Data.DataColumn columnПо;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public РассписаниеDataTable() {
-                this.TableName = "Рассписание";
+            public ОтсутствияDataTable() {
+                this.TableName = "Отсутствия";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -312,7 +304,7 @@ namespace MyCourseWork {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal РассписаниеDataTable(global::System.Data.DataTable table) {
+            internal ОтсутствияDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -329,7 +321,7 @@ namespace MyCourseWork {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected РассписаниеDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected ОтсутствияDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
@@ -352,14 +344,6 @@ namespace MyCourseWork {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn ДолжностьColumn {
-                get {
-                    return this.columnДолжность;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public global::System.Data.DataColumn ОтделColumn {
                 get {
                     return this.columnОтдел;
@@ -368,57 +352,33 @@ namespace MyCourseWork {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn ПонедельникColumn {
+            public global::System.Data.DataColumn ДолжностьColumn {
                 get {
-                    return this.columnПонедельник;
+                    return this.columnДолжность;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn ВторникColumn {
+            public global::System.Data.DataColumn ПричинаColumn {
                 get {
-                    return this.columnВторник;
+                    return this.columnПричина;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn СредаColumn {
+            public global::System.Data.DataColumn СColumn {
                 get {
-                    return this.columnСреда;
+                    return this.columnС;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn ЧетвергColumn {
+            public global::System.Data.DataColumn ПоColumn {
                 get {
-                    return this.columnЧетверг;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn ПятницаColumn {
-                get {
-                    return this.columnПятница;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn СубботаColumn {
-                get {
-                    return this.columnСуббота;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn ВоскресеньеColumn {
-                get {
-                    return this.columnВоскресенье;
+                    return this.columnПо;
                 }
             }
             
@@ -433,55 +393,51 @@ namespace MyCourseWork {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public РассписаниеRow this[int index] {
+            public ОтсутствияRow this[int index] {
                 get {
-                    return ((РассписаниеRow)(this.Rows[index]));
+                    return ((ОтсутствияRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event РассписаниеRowChangeEventHandler РассписаниеRowChanging;
+            public event ОтсутствияRowChangeEventHandler ОтсутствияRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event РассписаниеRowChangeEventHandler РассписаниеRowChanged;
+            public event ОтсутствияRowChangeEventHandler ОтсутствияRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event РассписаниеRowChangeEventHandler РассписаниеRowDeleting;
+            public event ОтсутствияRowChangeEventHandler ОтсутствияRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event РассписаниеRowChangeEventHandler РассписаниеRowDeleted;
+            public event ОтсутствияRowChangeEventHandler ОтсутствияRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void AddРассписаниеRow(РассписаниеRow row) {
+            public void AddОтсутствияRow(ОтсутствияRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public РассписаниеRow AddРассписаниеRow(string Имя, string Фамилия, string Должность, string Отдел, string Понедельник, string Вторник, string Среда, string Четверг, string Пятница, string Суббота, string Воскресенье) {
-                РассписаниеRow rowРассписаниеRow = ((РассписаниеRow)(this.NewRow()));
+            public ОтсутствияRow AddОтсутствияRow(string Имя, string Фамилия, string Отдел, string Должность, string Причина, System.DateTime С, System.DateTime По) {
+                ОтсутствияRow rowОтсутствияRow = ((ОтсутствияRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Имя,
                         Фамилия,
-                        Должность,
                         Отдел,
-                        Понедельник,
-                        Вторник,
-                        Среда,
-                        Четверг,
-                        Пятница,
-                        Суббота,
-                        Воскресенье};
-                rowРассписаниеRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowРассписаниеRow);
-                return rowРассписаниеRow;
+                        Должность,
+                        Причина,
+                        С,
+                        По};
+                rowОтсутствияRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowОтсутствияRow);
+                return rowОтсутствияRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                РассписаниеDataTable cln = ((РассписаниеDataTable)(base.Clone()));
+                ОтсутствияDataTable cln = ((ОтсутствияDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -489,7 +445,7 @@ namespace MyCourseWork {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new РассписаниеDataTable();
+                return new ОтсутствияDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -497,15 +453,11 @@ namespace MyCourseWork {
             internal void InitVars() {
                 this.columnИмя = base.Columns["Имя"];
                 this.columnФамилия = base.Columns["Фамилия"];
-                this.columnДолжность = base.Columns["Должность"];
                 this.columnОтдел = base.Columns["Отдел"];
-                this.columnПонедельник = base.Columns["Понедельник"];
-                this.columnВторник = base.Columns["Вторник"];
-                this.columnСреда = base.Columns["Среда"];
-                this.columnЧетверг = base.Columns["Четверг"];
-                this.columnПятница = base.Columns["Пятница"];
-                this.columnСуббота = base.Columns["Суббота"];
-                this.columnВоскресенье = base.Columns["Воскресенье"];
+                this.columnДолжность = base.Columns["Должность"];
+                this.columnПричина = base.Columns["Причина"];
+                this.columnС = base.Columns["С"];
+                this.columnПо = base.Columns["По"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -515,72 +467,53 @@ namespace MyCourseWork {
                 base.Columns.Add(this.columnИмя);
                 this.columnФамилия = new global::System.Data.DataColumn("Фамилия", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnФамилия);
-                this.columnДолжность = new global::System.Data.DataColumn("Должность", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnДолжность);
                 this.columnОтдел = new global::System.Data.DataColumn("Отдел", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnОтдел);
-                this.columnПонедельник = new global::System.Data.DataColumn("Понедельник", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnПонедельник);
-                this.columnВторник = new global::System.Data.DataColumn("Вторник", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnВторник);
-                this.columnСреда = new global::System.Data.DataColumn("Среда", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnСреда);
-                this.columnЧетверг = new global::System.Data.DataColumn("Четверг", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnЧетверг);
-                this.columnПятница = new global::System.Data.DataColumn("Пятница", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnПятница);
-                this.columnСуббота = new global::System.Data.DataColumn("Суббота", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnСуббота);
-                this.columnВоскресенье = new global::System.Data.DataColumn("Воскресенье", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnВоскресенье);
+                this.columnДолжность = new global::System.Data.DataColumn("Должность", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnДолжность);
+                this.columnПричина = new global::System.Data.DataColumn("Причина", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnПричина);
+                this.columnС = new global::System.Data.DataColumn("С", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnС);
+                this.columnПо = new global::System.Data.DataColumn("По", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnПо);
                 this.columnИмя.AllowDBNull = false;
                 this.columnИмя.MaxLength = 20;
                 this.columnФамилия.AllowDBNull = false;
                 this.columnФамилия.MaxLength = 20;
-                this.columnДолжность.AllowDBNull = false;
-                this.columnДолжность.MaxLength = 50;
                 this.columnОтдел.AllowDBNull = false;
                 this.columnОтдел.MaxLength = 50;
-                this.columnПонедельник.ReadOnly = true;
-                this.columnПонедельник.MaxLength = 84;
-                this.columnВторник.ReadOnly = true;
-                this.columnВторник.MaxLength = 84;
-                this.columnСреда.ReadOnly = true;
-                this.columnСреда.MaxLength = 84;
-                this.columnЧетверг.ReadOnly = true;
-                this.columnЧетверг.MaxLength = 84;
-                this.columnПятница.ReadOnly = true;
-                this.columnПятница.MaxLength = 84;
-                this.columnСуббота.ReadOnly = true;
-                this.columnСуббота.MaxLength = 84;
-                this.columnВоскресенье.ReadOnly = true;
-                this.columnВоскресенье.MaxLength = 84;
+                this.columnДолжность.AllowDBNull = false;
+                this.columnДолжность.MaxLength = 50;
+                this.columnПричина.AllowDBNull = false;
+                this.columnПричина.MaxLength = 50;
+                this.columnПо.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public РассписаниеRow NewРассписаниеRow() {
-                return ((РассписаниеRow)(this.NewRow()));
+            public ОтсутствияRow NewОтсутствияRow() {
+                return ((ОтсутствияRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new РассписаниеRow(builder);
+                return new ОтсутствияRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(РассписаниеRow);
+                return typeof(ОтсутствияRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.РассписаниеRowChanged != null)) {
-                    this.РассписаниеRowChanged(this, new РассписаниеRowChangeEvent(((РассписаниеRow)(e.Row)), e.Action));
+                if ((this.ОтсутствияRowChanged != null)) {
+                    this.ОтсутствияRowChanged(this, new ОтсутствияRowChangeEvent(((ОтсутствияRow)(e.Row)), e.Action));
                 }
             }
             
@@ -588,8 +521,8 @@ namespace MyCourseWork {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.РассписаниеRowChanging != null)) {
-                    this.РассписаниеRowChanging(this, new РассписаниеRowChangeEvent(((РассписаниеRow)(e.Row)), e.Action));
+                if ((this.ОтсутствияRowChanging != null)) {
+                    this.ОтсутствияRowChanging(this, new ОтсутствияRowChangeEvent(((ОтсутствияRow)(e.Row)), e.Action));
                 }
             }
             
@@ -597,8 +530,8 @@ namespace MyCourseWork {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.РассписаниеRowDeleted != null)) {
-                    this.РассписаниеRowDeleted(this, new РассписаниеRowChangeEvent(((РассписаниеRow)(e.Row)), e.Action));
+                if ((this.ОтсутствияRowDeleted != null)) {
+                    this.ОтсутствияRowDeleted(this, new ОтсутствияRowChangeEvent(((ОтсутствияRow)(e.Row)), e.Action));
                 }
             }
             
@@ -606,14 +539,14 @@ namespace MyCourseWork {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.РассписаниеRowDeleting != null)) {
-                    this.РассписаниеRowDeleting(this, new РассписаниеRowChangeEvent(((РассписаниеRow)(e.Row)), e.Action));
+                if ((this.ОтсутствияRowDeleting != null)) {
+                    this.ОтсутствияRowDeleting(this, new ОтсутствияRowChangeEvent(((ОтсутствияRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void RemoveРассписаниеRow(РассписаниеRow row) {
+            public void RemoveОтсутствияRow(ОтсутствияRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -622,7 +555,7 @@ namespace MyCourseWork {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                CourseWorkSecondVariantDataSet1 ds = new CourseWorkSecondVariantDataSet1();
+                DataSet2 ds = new DataSet2();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -640,7 +573,7 @@ namespace MyCourseWork {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "РассписаниеDataTable";
+                attribute2.FixedValue = "ОтсутствияDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -684,25 +617,25 @@ namespace MyCourseWork {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class РассписаниеRow : global::System.Data.DataRow {
+        public partial class ОтсутствияRow : global::System.Data.DataRow {
             
-            private РассписаниеDataTable tableРассписание;
+            private ОтсутствияDataTable tableОтсутствия;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal РассписаниеRow(global::System.Data.DataRowBuilder rb) : 
+            internal ОтсутствияRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tableРассписание = ((РассписаниеDataTable)(this.Table));
+                this.tableОтсутствия = ((ОтсутствияDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string Имя {
                 get {
-                    return ((string)(this[this.tableРассписание.ИмяColumn]));
+                    return ((string)(this[this.tableОтсутствия.ИмяColumn]));
                 }
                 set {
-                    this[this.tableРассписание.ИмяColumn] = value;
+                    this[this.tableОтсутствия.ИмяColumn] = value;
                 }
             }
             
@@ -710,21 +643,10 @@ namespace MyCourseWork {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string Фамилия {
                 get {
-                    return ((string)(this[this.tableРассписание.ФамилияColumn]));
+                    return ((string)(this[this.tableОтсутствия.ФамилияColumn]));
                 }
                 set {
-                    this[this.tableРассписание.ФамилияColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Должность {
-                get {
-                    return ((string)(this[this.tableРассписание.ДолжностьColumn]));
-                }
-                set {
-                    this[this.tableРассписание.ДолжностьColumn] = value;
+                    this[this.tableОтсутствия.ФамилияColumn] = value;
                 }
             }
             
@@ -732,207 +654,72 @@ namespace MyCourseWork {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string Отдел {
                 get {
-                    return ((string)(this[this.tableРассписание.ОтделColumn]));
+                    return ((string)(this[this.tableОтсутствия.ОтделColumn]));
                 }
                 set {
-                    this[this.tableРассписание.ОтделColumn] = value;
+                    this[this.tableОтсутствия.ОтделColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Понедельник {
+            public string Должность {
+                get {
+                    return ((string)(this[this.tableОтсутствия.ДолжностьColumn]));
+                }
+                set {
+                    this[this.tableОтсутствия.ДолжностьColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Причина {
+                get {
+                    return ((string)(this[this.tableОтсутствия.ПричинаColumn]));
+                }
+                set {
+                    this[this.tableОтсутствия.ПричинаColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public System.DateTime С {
                 get {
                     try {
-                        return ((string)(this[this.tableРассписание.ПонедельникColumn]));
+                        return ((global::System.DateTime)(this[this.tableОтсутствия.СColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Понедельник\' in table \'Рассписание\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'С\' in table \'Отсутствия\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableРассписание.ПонедельникColumn] = value;
+                    this[this.tableОтсутствия.СColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Вторник {
+            public System.DateTime По {
                 get {
-                    try {
-                        return ((string)(this[this.tableРассписание.ВторникColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Вторник\' in table \'Рассписание\' is DBNull.", e);
-                    }
+                    return ((global::System.DateTime)(this[this.tableОтсутствия.ПоColumn]));
                 }
                 set {
-                    this[this.tableРассписание.ВторникColumn] = value;
+                    this[this.tableОтсутствия.ПоColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Среда {
-                get {
-                    try {
-                        return ((string)(this[this.tableРассписание.СредаColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Среда\' in table \'Рассписание\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableРассписание.СредаColumn] = value;
-                }
+            public bool IsСNull() {
+                return this.IsNull(this.tableОтсутствия.СColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Четверг {
-                get {
-                    try {
-                        return ((string)(this[this.tableРассписание.ЧетвергColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Четверг\' in table \'Рассписание\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableРассписание.ЧетвергColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Пятница {
-                get {
-                    try {
-                        return ((string)(this[this.tableРассписание.ПятницаColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Пятница\' in table \'Рассписание\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableРассписание.ПятницаColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Суббота {
-                get {
-                    try {
-                        return ((string)(this[this.tableРассписание.СубботаColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Суббота\' in table \'Рассписание\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableРассписание.СубботаColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Воскресенье {
-                get {
-                    try {
-                        return ((string)(this[this.tableРассписание.ВоскресеньеColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Воскресенье\' in table \'Рассписание\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableРассписание.ВоскресеньеColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsПонедельникNull() {
-                return this.IsNull(this.tableРассписание.ПонедельникColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetПонедельникNull() {
-                this[this.tableРассписание.ПонедельникColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsВторникNull() {
-                return this.IsNull(this.tableРассписание.ВторникColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetВторникNull() {
-                this[this.tableРассписание.ВторникColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsСредаNull() {
-                return this.IsNull(this.tableРассписание.СредаColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetСредаNull() {
-                this[this.tableРассписание.СредаColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsЧетвергNull() {
-                return this.IsNull(this.tableРассписание.ЧетвергColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetЧетвергNull() {
-                this[this.tableРассписание.ЧетвергColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsПятницаNull() {
-                return this.IsNull(this.tableРассписание.ПятницаColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetПятницаNull() {
-                this[this.tableРассписание.ПятницаColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsСубботаNull() {
-                return this.IsNull(this.tableРассписание.СубботаColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetСубботаNull() {
-                this[this.tableРассписание.СубботаColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsВоскресеньеNull() {
-                return this.IsNull(this.tableРассписание.ВоскресеньеColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetВоскресеньеNull() {
-                this[this.tableРассписание.ВоскресеньеColumn] = global::System.Convert.DBNull;
+            public void SetСNull() {
+                this[this.tableОтсутствия.СColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -940,22 +727,22 @@ namespace MyCourseWork {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public class РассписаниеRowChangeEvent : global::System.EventArgs {
+        public class ОтсутствияRowChangeEvent : global::System.EventArgs {
             
-            private РассписаниеRow eventRow;
+            private ОтсутствияRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public РассписаниеRowChangeEvent(РассписаниеRow row, global::System.Data.DataRowAction action) {
+            public ОтсутствияRowChangeEvent(ОтсутствияRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public РассписаниеRow Row {
+            public ОтсутствияRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -971,7 +758,7 @@ namespace MyCourseWork {
         }
     }
 }
-namespace MyCourseWork.CourseWorkSecondVariantDataSet1TableAdapters {
+namespace MyCourseWork.DataSet2TableAdapters {
     
     
     /// <summary>
@@ -983,7 +770,7 @@ namespace MyCourseWork.CourseWorkSecondVariantDataSet1TableAdapters {
     [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class РассписаниеTableAdapter : global::System.ComponentModel.Component {
+    public partial class ОтсутствияTableAdapter : global::System.ComponentModel.Component {
         
         private global::System.Data.SqlClient.SqlDataAdapter _adapter;
         
@@ -997,7 +784,7 @@ namespace MyCourseWork.CourseWorkSecondVariantDataSet1TableAdapters {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public РассписаниеTableAdapter() {
+        public ОтсутствияTableAdapter() {
             this.ClearBeforeFill = true;
         }
         
@@ -1094,18 +881,14 @@ namespace MyCourseWork.CourseWorkSecondVariantDataSet1TableAdapters {
             this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "Рассписание";
+            tableMapping.DataSetTable = "Отсутствия";
             tableMapping.ColumnMappings.Add("Имя", "Имя");
             tableMapping.ColumnMappings.Add("Фамилия", "Фамилия");
-            tableMapping.ColumnMappings.Add("Должность", "Должность");
             tableMapping.ColumnMappings.Add("Отдел", "Отдел");
-            tableMapping.ColumnMappings.Add("Понедельник", "Понедельник");
-            tableMapping.ColumnMappings.Add("Вторник", "Вторник");
-            tableMapping.ColumnMappings.Add("Среда", "Среда");
-            tableMapping.ColumnMappings.Add("Четверг", "Четверг");
-            tableMapping.ColumnMappings.Add("Пятница", "Пятница");
-            tableMapping.ColumnMappings.Add("Суббота", "Суббота");
-            tableMapping.ColumnMappings.Add("Воскресенье", "Воскресенье");
+            tableMapping.ColumnMappings.Add("Должность", "Должность");
+            tableMapping.ColumnMappings.Add("Причина", "Причина");
+            tableMapping.ColumnMappings.Add("С", "С");
+            tableMapping.ColumnMappings.Add("По", "По");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -1122,8 +905,7 @@ namespace MyCourseWork.CourseWorkSecondVariantDataSet1TableAdapters {
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT Имя, Фамилия, Должность, Отдел, Понедельник, Вторник, Среда, Четверг, Пятн" +
-                "ица, Суббота, Воскресенье FROM dbo.Рассписание";
+            this._commandCollection[0].CommandText = "SELECT Имя, Фамилия, Отдел, Должность, Причина, С, По FROM dbo.Отсутствия";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -1131,7 +913,7 @@ namespace MyCourseWork.CourseWorkSecondVariantDataSet1TableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(CourseWorkSecondVariantDataSet1.РассписаниеDataTable dataTable) {
+        public virtual int Fill(DataSet2.ОтсутствияDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -1144,9 +926,9 @@ namespace MyCourseWork.CourseWorkSecondVariantDataSet1TableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual CourseWorkSecondVariantDataSet1.РассписаниеDataTable GetData() {
+        public virtual DataSet2.ОтсутствияDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            CourseWorkSecondVariantDataSet1.РассписаниеDataTable dataTable = new CourseWorkSecondVariantDataSet1.РассписаниеDataTable();
+            DataSet2.ОтсутствияDataTable dataTable = new DataSet2.ОтсутствияDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -1220,7 +1002,7 @@ namespace MyCourseWork.CourseWorkSecondVariantDataSet1TableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private int UpdateUpdatedRows(CourseWorkSecondVariantDataSet1 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateUpdatedRows(DataSet2 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
             return result;
         }
@@ -1230,7 +1012,7 @@ namespace MyCourseWork.CourseWorkSecondVariantDataSet1TableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private int UpdateInsertedRows(CourseWorkSecondVariantDataSet1 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateInsertedRows(DataSet2 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
             return result;
         }
@@ -1240,7 +1022,7 @@ namespace MyCourseWork.CourseWorkSecondVariantDataSet1TableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private int UpdateDeletedRows(CourseWorkSecondVariantDataSet1 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
+        private int UpdateDeletedRows(DataSet2 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
             return result;
         }
@@ -1274,7 +1056,7 @@ namespace MyCourseWork.CourseWorkSecondVariantDataSet1TableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public virtual int UpdateAll(CourseWorkSecondVariantDataSet1 dataSet) {
+        public virtual int UpdateAll(DataSet2 dataSet) {
             if ((dataSet == null)) {
                 throw new global::System.ArgumentNullException("dataSet");
             }

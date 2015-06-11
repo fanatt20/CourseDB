@@ -10,7 +10,7 @@
 
 #pragma warning disable 1591
 
-namespace MyCourseWork {
+namespace WindowsFormsApplication1 {
     
     
     /// <summary>
@@ -20,9 +20,9 @@ namespace MyCourseWork {
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
     [global::System.ComponentModel.ToolboxItem(true)]
     [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema")]
-    [global::System.Xml.Serialization.XmlRootAttribute("CourseWorkSecondVariantDataSet")]
+    [global::System.Xml.Serialization.XmlRootAttribute("DataSet1")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
-    public partial class CourseWorkSecondVariantDataSet : global::System.Data.DataSet {
+    public partial class DataSet1 : global::System.Data.DataSet {
         
         private РассписаниеDataTable tableРассписание;
         
@@ -30,7 +30,7 @@ namespace MyCourseWork {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public CourseWorkSecondVariantDataSet() {
+        public DataSet1() {
             this.BeginInit();
             this.InitClass();
             global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
@@ -41,7 +41,7 @@ namespace MyCourseWork {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        protected CourseWorkSecondVariantDataSet(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+        protected DataSet1(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                 base(info, context, false) {
             if ((this.IsBinarySerialized(info, context) == true)) {
                 this.InitVars(false);
@@ -127,7 +127,7 @@ namespace MyCourseWork {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public override global::System.Data.DataSet Clone() {
-            CourseWorkSecondVariantDataSet cln = ((CourseWorkSecondVariantDataSet)(base.Clone()));
+            DataSet1 cln = ((DataSet1)(base.Clone()));
             cln.InitVars();
             cln.SchemaSerializationMode = this.SchemaSerializationMode;
             return cln;
@@ -199,9 +199,9 @@ namespace MyCourseWork {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitClass() {
-            this.DataSetName = "CourseWorkSecondVariantDataSet";
+            this.DataSetName = "DataSet1";
             this.Prefix = "";
-            this.Namespace = "http://tempuri.org/CourseWorkSecondVariantDataSet.xsd";
+            this.Namespace = "http://tempuri.org/DataSet1.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
             this.tableРассписание = new РассписаниеDataTable();
@@ -225,7 +225,7 @@ namespace MyCourseWork {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedDataSetSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-            CourseWorkSecondVariantDataSet ds = new CourseWorkSecondVariantDataSet();
+            DataSet1 ds = new DataSet1();
             global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
             global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
             global::System.Xml.Schema.XmlSchemaAny any = new global::System.Xml.Schema.XmlSchemaAny();
@@ -300,8 +300,6 @@ namespace MyCourseWork {
             private global::System.Data.DataColumn columnСуббота;
             
             private global::System.Data.DataColumn columnВоскресенье;
-            
-            private global::System.Data.DataColumn columnЯвляется_работником;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -426,14 +424,6 @@ namespace MyCourseWork {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn Является_работникомColumn {
-                get {
-                    return this.columnЯвляется_работником;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -469,7 +459,7 @@ namespace MyCourseWork {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public РассписаниеRow AddРассписаниеRow(string Имя, string Фамилия, string Должность, string Отдел, string Понедельник, string Вторник, string Среда, string Четверг, string Пятница, string Суббота, string Воскресенье, int Является_работником) {
+            public РассписаниеRow AddРассписаниеRow(string Имя, string Фамилия, string Должность, string Отдел, string Понедельник, string Вторник, string Среда, string Четверг, string Пятница, string Суббота, string Воскресенье) {
                 РассписаниеRow rowРассписаниеRow = ((РассписаниеRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Имя,
@@ -482,8 +472,7 @@ namespace MyCourseWork {
                         Четверг,
                         Пятница,
                         Суббота,
-                        Воскресенье,
-                        Является_работником};
+                        Воскресенье};
                 rowРассписаниеRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowРассписаниеRow);
                 return rowРассписаниеRow;
@@ -517,7 +506,6 @@ namespace MyCourseWork {
                 this.columnПятница = base.Columns["Пятница"];
                 this.columnСуббота = base.Columns["Суббота"];
                 this.columnВоскресенье = base.Columns["Воскресенье"];
-                this.columnЯвляется_работником = base.Columns["Является работником"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -545,8 +533,6 @@ namespace MyCourseWork {
                 base.Columns.Add(this.columnСуббота);
                 this.columnВоскресенье = new global::System.Data.DataColumn("Воскресенье", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnВоскресенье);
-                this.columnЯвляется_работником = new global::System.Data.DataColumn("Является работником", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnЯвляется_работником);
                 this.columnИмя.AllowDBNull = false;
                 this.columnИмя.MaxLength = 20;
                 this.columnФамилия.AllowDBNull = false;
@@ -569,7 +555,6 @@ namespace MyCourseWork {
                 this.columnСуббота.MaxLength = 84;
                 this.columnВоскресенье.ReadOnly = true;
                 this.columnВоскресенье.MaxLength = 84;
-                this.columnЯвляется_работником.ReadOnly = true;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -637,7 +622,7 @@ namespace MyCourseWork {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                CourseWorkSecondVariantDataSet ds = new CourseWorkSecondVariantDataSet();
+                DataSet1 ds = new DataSet1();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -868,22 +853,6 @@ namespace MyCourseWork {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int Является_работником {
-                get {
-                    try {
-                        return ((int)(this[this.tableРассписание.Является_работникомColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Является работником\' in table \'Рассписание\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableРассписание.Является_работникомColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsПонедельникNull() {
                 return this.IsNull(this.tableРассписание.ПонедельникColumn);
             }
@@ -965,18 +934,6 @@ namespace MyCourseWork {
             public void SetВоскресеньеNull() {
                 this[this.tableРассписание.ВоскресеньеColumn] = global::System.Convert.DBNull;
             }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsЯвляется_работникомNull() {
-                return this.IsNull(this.tableРассписание.Является_работникомColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetЯвляется_работникомNull() {
-                this[this.tableРассписание.Является_работникомColumn] = global::System.Convert.DBNull;
-            }
         }
         
         /// <summary>
@@ -1014,7 +971,7 @@ namespace MyCourseWork {
         }
     }
 }
-namespace MyCourseWork.CourseWorkSecondVariantDataSetTableAdapters {
+namespace WindowsFormsApplication1.DataSet1TableAdapters {
     
     
     /// <summary>
@@ -1149,7 +1106,6 @@ namespace MyCourseWork.CourseWorkSecondVariantDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("Пятница", "Пятница");
             tableMapping.ColumnMappings.Add("Суббота", "Суббота");
             tableMapping.ColumnMappings.Add("Воскресенье", "Воскресенье");
-            tableMapping.ColumnMappings.Add("Является работником", "Является работником");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -1157,7 +1113,7 @@ namespace MyCourseWork.CourseWorkSecondVariantDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::MyCourseWork.Properties.Settings.Default.CourseWorkSecondVariantConnectionString;
+            this._connection.ConnectionString = global::WindowsFormsApplication1.Properties.Settings.Default.CourseWorkSecondVariantConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1167,7 +1123,7 @@ namespace MyCourseWork.CourseWorkSecondVariantDataSetTableAdapters {
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT Имя, Фамилия, Должность, Отдел, Понедельник, Вторник, Среда, Четверг, Пятн" +
-                "ица, Суббота, Воскресенье, [Является работником] FROM dbo.Рассписание";
+                "ица, Суббота, Воскресенье FROM Рассписание";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -1175,7 +1131,7 @@ namespace MyCourseWork.CourseWorkSecondVariantDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(CourseWorkSecondVariantDataSet.РассписаниеDataTable dataTable) {
+        public virtual int Fill(DataSet1.РассписаниеDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -1188,9 +1144,9 @@ namespace MyCourseWork.CourseWorkSecondVariantDataSetTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual CourseWorkSecondVariantDataSet.РассписаниеDataTable GetData() {
+        public virtual DataSet1.РассписаниеDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            CourseWorkSecondVariantDataSet.РассписаниеDataTable dataTable = new CourseWorkSecondVariantDataSet.РассписаниеDataTable();
+            DataSet1.РассписаниеDataTable dataTable = new DataSet1.РассписаниеDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -1264,7 +1220,7 @@ namespace MyCourseWork.CourseWorkSecondVariantDataSetTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private int UpdateUpdatedRows(CourseWorkSecondVariantDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateUpdatedRows(DataSet1 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
             return result;
         }
@@ -1274,7 +1230,7 @@ namespace MyCourseWork.CourseWorkSecondVariantDataSetTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private int UpdateInsertedRows(CourseWorkSecondVariantDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateInsertedRows(DataSet1 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
             return result;
         }
@@ -1284,7 +1240,7 @@ namespace MyCourseWork.CourseWorkSecondVariantDataSetTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private int UpdateDeletedRows(CourseWorkSecondVariantDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
+        private int UpdateDeletedRows(DataSet1 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
             return result;
         }
@@ -1318,7 +1274,7 @@ namespace MyCourseWork.CourseWorkSecondVariantDataSetTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public virtual int UpdateAll(CourseWorkSecondVariantDataSet dataSet) {
+        public virtual int UpdateAll(DataSet1 dataSet) {
             if ((dataSet == null)) {
                 throw new global::System.ArgumentNullException("dataSet");
             }

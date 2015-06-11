@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xs:schema id="CourseWorkSecondVariantDataSet1" targetNamespace="http://tempuri.org/CourseWorkSecondVariantDataSet1.xsd" xmlns:mstns="http://tempuri.org/CourseWorkSecondVariantDataSet1.xsd" xmlns="http://tempuri.org/CourseWorkSecondVariantDataSet1.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+<xs:schema id="DataSet1" targetNamespace="http://tempuri.org/DataSet1.xsd" xmlns:mstns="http://tempuri.org/DataSet1.xsd" xmlns="http://tempuri.org/DataSet1.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
   <xs:annotation>
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
       <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
@@ -12,7 +12,7 @@
               <DbSource ConnectionRef="CourseWorkSecondVariantConnectionString (Settings)" DbObjectName="CourseWorkSecondVariant.dbo.Рассписание" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
-                    <CommandText>SELECT Имя, Фамилия, Должность, Отдел, Понедельник, Вторник, Среда, Четверг, Пятница, Суббота, Воскресенье FROM dbo.Рассписание</CommandText>
+                    <CommandText>SELECT Имя, Фамилия, Должность, Отдел, Понедельник, Вторник, Среда, Четверг, Пятница, Суббота, Воскресенье FROM Рассписание</CommandText>
                     <Parameters />
                   </DbCommand>
                 </SelectCommand>
@@ -38,10 +38,10 @@
       </DataSource>
     </xs:appinfo>
   </xs:annotation>
-  <xs:element name="CourseWorkSecondVariantDataSet1" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="CourseWorkSecondVariantDataSet1" msprop:Generator_UserDSName="CourseWorkSecondVariantDataSet1">
+  <xs:element name="DataSet1" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DataSet1" msprop:Generator_UserDSName="DataSet1">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="Рассписание" msprop:Generator_TableClassName="РассписаниеDataTable" msprop:Generator_TableVarName="tableРассписание" msprop:Generator_TablePropName="Рассписание" msprop:Generator_RowDeletingName="РассписаниеRowDeleting" msprop:Generator_RowChangingName="РассписаниеRowChanging" msprop:Generator_RowEvHandlerName="РассписаниеRowChangeEventHandler" msprop:Generator_RowDeletedName="РассписаниеRowDeleted" msprop:Generator_UserTableName="Рассписание" msprop:Generator_RowChangedName="РассписаниеRowChanged" msprop:Generator_RowEvArgName="РассписаниеRowChangeEvent" msprop:Generator_RowClassName="РассписаниеRow">
+        <xs:element name="Рассписание" msprop:Generator_TableClassName="РассписаниеDataTable" msprop:Generator_TableVarName="tableРассписание" msprop:Generator_RowChangedName="РассписаниеRowChanged" msprop:Generator_TablePropName="Рассписание" msprop:Generator_RowDeletingName="РассписаниеRowDeleting" msprop:Generator_RowChangingName="РассписаниеRowChanging" msprop:Generator_RowEvHandlerName="РассписаниеRowChangeEventHandler" msprop:Generator_RowDeletedName="РассписаниеRowDeleted" msprop:Generator_RowClassName="РассписаниеRow" msprop:Generator_UserTableName="Рассписание" msprop:Generator_RowEvArgName="РассписаниеRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Имя" msprop:Generator_ColumnVarNameInTable="columnИмя" msprop:Generator_ColumnPropNameInRow="Имя" msprop:Generator_ColumnPropNameInTable="ИмяColumn" msprop:Generator_UserColumnName="Имя">
